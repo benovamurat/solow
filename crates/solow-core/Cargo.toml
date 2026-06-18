@@ -1,0 +1,17 @@
+[package]
+name = "solow-core"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+description = "Core error types, numeric aliases, and shared data-handling tools for the Solow statistical library"
+
+[dependencies]
+ndarray.workspace = true
+num-traits.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+approx.workspace = true

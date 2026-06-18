@@ -1,0 +1,18 @@
+[package]
+name = "solow-summary"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+description = "Labeled results and summary tables for the Solow statistical library"
+
+[dependencies]
+ndarray.workspace = true
+solow-core.workspace = true
+solow-distributions.workspace = true
+
+[dev-dependencies]
+approx.workspace = true
+serde_json.workspace = true

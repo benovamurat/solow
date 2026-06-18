@@ -1,0 +1,23 @@
+[package]
+name = "solow-viz"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+description = "General-purpose data-visualization backend (SVG output) for the Solow statistical library"
+
+[dependencies]
+ndarray.workspace = true
+solow-core.workspace = true
+resvg = { version = "0.47", default-features = false, optional = true }
+
+[features]
+default = []
+# Optional raster export: rasterizes the SVG to PNG via resvg (usvg + tiny-skia).
+# Kept out of the default build so the core stays dependency-light.
+png = ["dep:resvg"]
+
+[dev-dependencies]
+approx.workspace = true

@@ -1,0 +1,11 @@
+/target
+**/*.rs.bk
+Cargo.lock.bak
+.DS_Store
+*.profraw
+/docs/book/book/
+*.png
+!/assets/og-image.png
+!/docs/book/src/og-image.png
+/crates/solow-gallery/target/
+/crates/solow-polars/target/

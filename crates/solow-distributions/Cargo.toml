@@ -1,0 +1,18 @@
+[package]
+name = "solow-distributions"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+description = "Special functions and statistical distributions (normal, Student-t, F, chi-squared) for the Solow statistical library"
+
+[dependencies]
+num-traits.workspace = true
+solow-core.workspace = true
+
+[dev-dependencies]
+approx.workspace = true
+serde_json.workspace = true
+proptest = "1.8"

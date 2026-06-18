@@ -1,0 +1,135 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Cancel superseded runs on the same ref.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+
+jobs:
+  # Formatting is OS-independent; run it once.
+  fmt:
+    name: rustfmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install stable toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - name: cargo fmt --check
+        run: cargo fmt --all -- --check
+
+  # Naming rule: the source statistics package's name must never appear in the
+  # tree. This guard must produce no output.
+  token-guard:
+    name: token guard (naming rule)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Forbidden-token scan (must be empty)
+        run: |
+          set -euo pipefail
+          hits=$(grep -rniE 'stats''models' \
+            --include='*.rs' --include='*.md' --include='*.toml' \
+            --include='*.yml' --include='*.yaml' --include='*.py' \
+            . | grep -v '/target/' || true)
+          if [ -n "$hits" ]; then
+            echo "Forbidden reference-name token found:"
+            echo "$hits"
+            exit 1
+          fi
+          echo "Token guard clean."
+
+  # Lint, test, and doctest across the ubuntu + macos matrix on stable Rust.
+  test:
+    name: clippy + test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install stable toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - name: Cache cargo registry and build
+        uses: Swatinem/rust-cache@v2
+      - name: cargo clippy
+        run: cargo clippy --workspace --all-targets -- -D warnings
+      - name: cargo test
+        run: cargo test --workspace
+      - name: cargo test --doc
+        run: cargo test --workspace --doc
+
+  # MSRV: the crate declares rust-version = "1.80"; verify it still builds there.
+  msrv:
+    name: MSRV (1.80)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust 1.80
+        uses: dtolnay/rust-toolchain@1.80
+      - name: Cache cargo registry and build
+        uses: Swatinem/rust-cache@v2
+      - name: cargo check on MSRV
+        run: cargo check --workspace --all-targets
+
+  # Coverage with cargo-llvm-cov; uploaded as an artifact (target ≥85%).
+  coverage:
+    name: coverage (cargo-llvm-cov)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install stable toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: llvm-tools-preview
+      - name: Cache cargo registry and build
+        uses: Swatinem/rust-cache@v2
+      - name: Install cargo-llvm-cov
+        uses: taiki-e/install-action@cargo-llvm-cov
+      - name: Generate coverage (lcov)
+        run: cargo llvm-cov --workspace --lcov --output-path lcov.info
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-lcov
+          path: lcov.info
+          if-no-files-found: error
+
+  # Build the API docs and the mdBook user guide.
+  docs:
+    name: docs (rustdoc + mdBook)
+    runs-on: ubuntu-latest
+    env:
+      RUSTDOCFLAGS: -D warnings
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install stable toolchain
+        uses: dtolnay/rust-toolchain@stable
+      - name: Cache cargo registry and build
+        uses: Swatinem/rust-cache@v2
+      - name: cargo doc
+        run: cargo doc --workspace --no-deps
+      - name: Install mdBook
+        run: cargo install mdbook --locked --version "^0.4"
+      - name: Build the book
+        run: mdbook build docs/book
+      - name: Upload rendered book
+        uses: actions/upload-artifact@v4
+        with:
+          name: book
+          path: docs/book/book
+          if-no-files-found: error

@@ -1,0 +1,143 @@
+name: Release dry-run
+
+# Manual only. This workflow runs the full pre-release gate and a
+# `cargo publish --dry-run` for every publishable crate in dependency order.
+# It NEVER publishes: real crates.io / PyPI uploads are a human-gated step
+# documented in RELEASE.md.
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Why this release dry-run is being triggered"
+        required: false
+        default: "pre-release verification"
+
+concurrency:
+  group: release-dry-run-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+
+jobs:
+  # --- Full pre-release gate -------------------------------------------------
+  gate:
+    name: pre-release gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install stable toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - name: Cache cargo registry and build
+        uses: Swatinem/rust-cache@v2
+
+      - name: Token guard (naming rule, must be empty)
+        run: |
+          set -euo pipefail
+          hits=$(grep -rniE 'stats''models' \
+            --include='*.rs' --include='*.md' --include='*.toml' \
+            --include='*.yml' --include='*.yaml' --include='*.py' \
+            . | grep -v '/target/' || true)
+          if [ -n "$hits" ]; then
+            echo "Forbidden reference-name token found:"
+            echo "$hits"
+            exit 1
+          fi
+          echo "Token guard clean."
+
+      - name: cargo fmt --check
+        run: cargo fmt --all -- --check
+
+      - name: cargo clippy -D warnings
+        run: cargo clippy --workspace --all-targets -- -D warnings
+
+      - name: cargo test --workspace
+        run: cargo test --workspace
+
+      - name: cargo test --doc
+        run: cargo test --workspace --doc
+
+      - name: cargo doc
+        env:
+          RUSTDOCFLAGS: -D warnings
+        run: cargo doc --workspace --no-deps
+
+      - name: Build the book
+        run: |
+          cargo install mdbook --locked --version "^0.4"
+          mdbook build docs/book
+
+  # --- Per-crate publish dry-run, in dependency order ------------------------
+  publish-dry-run:
+    name: cargo publish --dry-run (dependency order)
+    needs: gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install stable toolchain
+        uses: dtolnay/rust-toolchain@stable
+      - name: Cache cargo registry and build
+        uses: Swatinem/rust-cache@v2
+
+      - name: Dry-run package every crate in topological order
+        run: |
+          set -euo pipefail
+          # Dependency-ordered list of the 30 publishable crates.
+          # (solow-bench and solow-py are publish=false and excluded.)
+          crates=(
+            solow-core
+            solow-distributions
+            solow-formula
+            solow-linalg
+            solow-viz
+            solow-optimize
+            solow-summary
+            solow-copula
+            solow-glm
+            solow-multivariate
+            solow-nonparametric
+            solow-regression
+            solow-discrete
+            solow-duration
+            solow-emplike
+            solow-mixed
+            solow-othermod
+            solow-regime
+            solow-statespace
+            solow-bayes
+            solow-gee
+            solow-robust
+            solow-stats
+            solow-var
+            solow-graphics
+            solow-gam
+            solow-impute
+            solow-tsa
+            solow-fit
+            solow
+          )
+          echo "DRY RUN ONLY — nothing is published."
+          for c in "${crates[@]}"; do
+            echo "::group::cargo publish --dry-run -p $c"
+            # On a clean checkout only the true leaf (solow-core) can fully
+            # resolve, because dry-run re-resolves deps against the live
+            # crates.io index and the other solow-* crates are not published
+            # yet. We therefore allow the dependency-unavailable failure but
+            # surface every other (real packaging) error.
+            if cargo publish --dry-run -p "$c" 2>&1 | tee /tmp/dr.log; then
+              echo "OK: $c packaged."
+            else
+              if grep -qE "no matching package named .solow-" /tmp/dr.log; then
+                echo "EXPECTED: $c depends on a not-yet-published solow crate; \
+                      it becomes dry-runnable once its deps are live (see RELEASE.md)."
+              else
+                echo "FAIL: $c failed for a non-dependency reason."
+                exit 1
+              fi
+            fi
+            echo "::endgroup::"
+          done
+          echo "Release dry-run complete. NO crate was published."

@@ -1,0 +1,142 @@
+# Standalone gallery of runnable examples for the Solow statistical stack.
+#
+# This crate has its OWN `[workspace]` table (with an empty `members` list) so
+# that it is NOT pulled into the root workspace as a member. It depends on the
+# published crates purely by path. Build/run an example with:
+#
+#   cargo run --manifest-path crates/solow-gallery/Cargo.toml --bin ols
+#
+# Each binary loads deterministic example data, fits a model, prints the
+# canonical results summary, and writes a plot SVG into
+# docs/book/src/examples/img/.
+
+[package]
+name = "solow-gallery"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.80"
+license = "BSD-3-Clause"
+authors = ["Murat Ova"]
+description = "Runnable examples gallery for the Solow statistical library"
+publish = false
+
+# An explicit, empty workspace makes this package its own workspace root,
+# keeping it out of the repository's root workspace.
+[workspace]
+members = []
+
+[dependencies]
+ndarray = "0.16"
+solow-core = { path = "../solow-core" }
+solow-regression = { path = "../solow-regression" }
+solow-glm = { path = "../solow-glm" }
+solow-gam = { path = "../solow-gam" }
+solow-discrete = { path = "../solow-discrete" }
+solow-tsa = { path = "../solow-tsa" }
+solow-distributions = { path = "../solow-distributions" }
+solow-statespace = { path = "../solow-statespace" }
+solow-regime = { path = "../solow-regime" }
+solow-duration = { path = "../solow-duration" }
+solow-multivariate = { path = "../solow-multivariate" }
+solow-robust = { path = "../solow-robust" }
+solow-fit = { path = "../solow-fit" }
+solow-formula = { path = "../solow-formula" }
+solow-var = { path = "../solow-var" }
+solow-graphics = { path = "../solow-graphics" }
+solow-copula = { path = "../solow-copula" }
+solow-gee = { path = "../solow-gee" }
+solow-mixed = { path = "../solow-mixed" }
+solow-emplike = { path = "../solow-emplike" }
+solow-othermod = { path = "../solow-othermod" }
+solow-impute = { path = "../solow-impute" }
+solow-bayes = { path = "../solow-bayes" }
+solow-optimize = { path = "../solow-optimize" }
+solow-viz = { path = "../solow-viz" }
+
+[[bin]]
+name = "ols"
+path = "src/bin/ols.rs"
+
+[[bin]]
+name = "wls_gls"
+path = "src/bin/wls_gls.rs"
+
+[[bin]]
+name = "glm_poisson_logit"
+path = "src/bin/glm_poisson_logit.rs"
+
+[[bin]]
+name = "robust"
+path = "src/bin/robust.rs"
+
+[[bin]]
+name = "time_series"
+path = "src/bin/time_series.rs"
+
+[[bin]]
+name = "survival"
+path = "src/bin/survival.rs"
+
+[[bin]]
+name = "pca"
+path = "src/bin/pca.rs"
+
+[[bin]]
+name = "formula"
+path = "src/bin/formula.rs"
+
+[[bin]]
+name = "copula_density"
+path = "src/bin/copula_density.rs"
+
+[[bin]]
+name = "var_forecast"
+path = "src/bin/var_forecast.rs"
+
+[[bin]]
+name = "gam_smooth"
+path = "src/bin/gam_smooth.rs"
+
+[[bin]]
+name = "graphics_qq"
+path = "src/bin/graphics_qq.rs"
+
+[[bin]]
+name = "state_space"
+path = "src/bin/state_space.rs"
+
+[[bin]]
+name = "regime"
+path = "src/bin/regime.rs"
+
+[[bin]]
+name = "gee_marginal"
+path = "src/bin/gee_marginal.rs"
+
+[[bin]]
+name = "mixed_ranef"
+path = "src/bin/mixed_ranef.rs"
+
+[[bin]]
+name = "emplike_ratio"
+path = "src/bin/emplike_ratio.rs"
+
+[[bin]]
+name = "beta_reg"
+path = "src/bin/beta_reg.rs"
+
+[[bin]]
+name = "mice_convergence"
+path = "src/bin/mice_convergence.rs"
+
+[[bin]]
+name = "bayes_posterior"
+path = "src/bin/bayes_posterior.rs"
+
+[[bin]]
+name = "optim_convergence"
+path = "src/bin/optim_convergence.rs"
+
+[[bin]]
+name = "case_forecasting"
+path = "src/bin/case_forecasting.rs"

@@ -1,0 +1,95 @@
+[workspace]
+resolver = "2"
+exclude = ["crates/solow-py"]
+members = [
+    "crates/solow-core",
+    "crates/solow-linalg",
+    "crates/solow-distributions",
+    "crates/solow-optimize",
+    "crates/solow-regression",
+    "crates/solow-glm",
+    "crates/solow-discrete",
+    "crates/solow-stats",
+    "crates/solow-tsa",
+    "crates/solow-robust",
+    "crates/solow-nonparametric",
+    "crates/solow-multivariate",
+    "crates/solow-duration",
+    "crates/solow-statespace",
+    "crates/solow-var",
+    "crates/solow-mixed",
+    "crates/solow-gee",
+    "crates/solow-gam",
+    "crates/solow-impute",
+    "crates/solow-graphics",
+    "crates/solow-regime",
+    "crates/solow-othermod",
+    "crates/solow-copula",
+    "crates/solow-fit",
+    "crates/solow-bayes",
+    "crates/solow-emplike",
+    "crates/solow-formula",
+    "crates/solow-summary",
+    "crates/solow-bench",
+    "crates/solow-viz",
+    "crates/solow",
+]
+
+[workspace.package]
+version = "0.1.1"
+edition = "2021"
+rust-version = "1.80"
+license = "BSD-3-Clause"
+authors = ["Murat Ova"]
+description = "A complete statistical modeling, econometrics, and data-visualization toolkit for Rust"
+repository = "https://github.com/benovamurat/solow"
+homepage = "https://stochasticminds.com"
+documentation = "https://docs.rs/solow"
+keywords = ["statistics", "econometrics", "regression", "time-series", "data-science"]
+categories = ["science", "mathematics"]
+
+[workspace.dependencies]
+ndarray = "0.16"
+num-traits = "0.2"
+num-complex = "0.4"
+thiserror = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+approx = "0.5"
+criterion = "0.5"
+
+solow-core = { path = "crates/solow-core", version = "0.1.1" }
+solow-linalg = { path = "crates/solow-linalg", version = "0.1.1" }
+solow-distributions = { path = "crates/solow-distributions", version = "0.1.1" }
+solow-optimize = { path = "crates/solow-optimize", version = "0.1.1" }
+solow-regression = { path = "crates/solow-regression", version = "0.1.1" }
+solow-glm = { path = "crates/solow-glm", version = "0.1.1" }
+solow-discrete = { path = "crates/solow-discrete", version = "0.1.1" }
+solow-stats = { path = "crates/solow-stats", version = "0.1.1" }
+solow-tsa = { path = "crates/solow-tsa", version = "0.1.1" }
+solow-robust = { path = "crates/solow-robust", version = "0.1.1" }
+solow-nonparametric = { path = "crates/solow-nonparametric", version = "0.1.1" }
+solow-multivariate = { path = "crates/solow-multivariate", version = "0.1.1" }
+solow-duration = { path = "crates/solow-duration", version = "0.1.1" }
+solow-statespace = { path = "crates/solow-statespace", version = "0.1.1" }
+solow-var = { path = "crates/solow-var", version = "0.1.1" }
+solow-mixed = { path = "crates/solow-mixed", version = "0.1.1" }
+solow-gee = { path = "crates/solow-gee", version = "0.1.1" }
+solow-gam = { path = "crates/solow-gam", version = "0.1.1" }
+solow-impute = { path = "crates/solow-impute", version = "0.1.1" }
+solow-graphics = { path = "crates/solow-graphics", version = "0.1.1" }
+solow-regime = { path = "crates/solow-regime", version = "0.1.1" }
+solow-othermod = { path = "crates/solow-othermod", version = "0.1.1" }
+solow-copula = { path = "crates/solow-copula", version = "0.1.1" }
+solow-fit = { path = "crates/solow-fit", version = "0.1.1" }
+solow-bayes = { path = "crates/solow-bayes", version = "0.1.1" }
+solow-emplike = { path = "crates/solow-emplike", version = "0.1.1" }
+solow-formula = { path = "crates/solow-formula", version = "0.1.1" }
+solow-summary = { path = "crates/solow-summary", version = "0.1.1" }
+solow = { path = "crates/solow", version = "0.1.1" }
+solow-viz = { path = "crates/solow-viz", version = "0.1.1" }
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1

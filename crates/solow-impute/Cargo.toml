@@ -1,0 +1,22 @@
+[package]
+name = "solow-impute"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+description = "Multiple imputation by chained equations (MICE) for the Solow statistical library"
+
+[dependencies]
+ndarray.workspace = true
+num-traits.workspace = true
+solow-core.workspace = true
+solow-linalg.workspace = true
+solow-distributions.workspace = true
+solow-regression.workspace = true
+solow-glm.workspace = true
+
+[dev-dependencies]
+approx.workspace = true
+serde_json.workspace = true

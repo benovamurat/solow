@@ -1,0 +1,37 @@
+# Bridge between Polars DataFrames and the Solow statistical stack.
+#
+# This crate has its OWN `[workspace]` table (with an empty `members` list) so
+# that it is NOT pulled into the root workspace as a member. Polars is a heavy
+# dependency; keeping this crate as its own workspace root means the core build
+# stays lean and only people who want the Polars bridge pay the compile cost.
+#
+# Build / test with:
+#
+#   cargo test --manifest-path crates/solow-polars/Cargo.toml
+
+[package]
+name = "solow-polars"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.80"
+license = "BSD-3-Clause"
+authors = ["Murat Ova"]
+description = "Bridge Polars DataFrames into the Solow statistical stack"
+publish = false
+
+# An explicit, empty workspace makes this package its own workspace root,
+# keeping it out of the repository's root workspace and its heavy `polars`
+# dependency out of the core build.
+[workspace]
+members = []
+
+[dependencies]
+# Default features (csv, parquet, fmt, temporal, …) are disabled to keep the
+# build minimal: we only need the in-memory DataFrame/Series core. `dtype-i8`
+# and friends are not required because we cast everything to f64 ourselves.
+polars = { version = "0.54", default-features = false }
+ndarray = "0.16"
+
+solow-core = { path = "../solow-core" }
+solow-regression = { path = "../solow-regression" }
+solow-glm = { path = "../solow-glm" }

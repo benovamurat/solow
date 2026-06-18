@@ -1,0 +1,9 @@
+# Allow Python symbols (Py_*) to be resolved at import time by the host
+# interpreter instead of at link time. PyO3's `extension-module` feature only
+# emits these flags from a build script; we set them here so a plain
+# `cargo build --release` produces an importable extension on macOS.
+[target.x86_64-apple-darwin]
+rustflags = ["-C", "link-arg=-undefined", "-C", "link-arg=dynamic_lookup"]
+
+[target.aarch64-apple-darwin]
+rustflags = ["-C", "link-arg=-undefined", "-C", "link-arg=dynamic_lookup"]

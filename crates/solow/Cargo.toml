@@ -1,0 +1,45 @@
+[package]
+name = "solow"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+description = "A complete statistical modeling, econometrics, and data-visualization toolkit for Rust"
+
+[dependencies]
+solow-core.workspace = true
+solow-linalg.workspace = true
+solow-distributions.workspace = true
+solow-optimize.workspace = true
+solow-regression.workspace = true
+solow-glm.workspace = true
+solow-discrete.workspace = true
+solow-stats.workspace = true
+solow-tsa.workspace = true
+solow-robust.workspace = true
+solow-nonparametric.workspace = true
+solow-multivariate.workspace = true
+solow-duration.workspace = true
+solow-statespace.workspace = true
+solow-var.workspace = true
+solow-mixed.workspace = true
+solow-gee.workspace = true
+solow-gam.workspace = true
+solow-impute.workspace = true
+solow-graphics.workspace = true
+solow-regime.workspace = true
+solow-othermod.workspace = true
+solow-copula.workspace = true
+solow-fit.workspace = true
+solow-bayes.workspace = true
+solow-emplike.workspace = true
+solow-formula.workspace = true
+solow-summary.workspace = true
+solow-viz.workspace = true
+ndarray.workspace = true
+
+[dev-dependencies]
+serde_json.workspace = true
+approx.workspace = true

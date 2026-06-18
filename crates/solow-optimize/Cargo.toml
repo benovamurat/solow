@@ -1,0 +1,17 @@
+[package]
+name = "solow-optimize"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+description = "Unconstrained optimization (Newton, BFGS) and numerical differentiation for the Solow statistical library"
+
+[dependencies]
+ndarray.workspace = true
+solow-core.workspace = true
+solow-linalg.workspace = true
+
+[dev-dependencies]
+approx.workspace = true
