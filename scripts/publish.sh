@@ -122,6 +122,11 @@ publish_one_with_retry() {
         if [[ $status -eq 0 ]]; then
             return 0
         fi
+        # Already published (idempotent resume): treat as success.
+        if echo "$out" | grep -q "already exists on crates.io index"; then
+            echo "     already on crates.io, skipping"
+            return 0
+        fi
         # Detect crates.io "new crate" rate-limit response.
         if echo "$out" | grep -q "Too Many Requests"; then
             local retry_at
