@@ -1,0 +1,32 @@
+[package]
+name = "solow-decomposition"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+documentation.workspace = true
+description = "Rust matrix decomposition for machine learning: PCA, kernel PCA, FastICA, NMF, mini-batch NMF, truncated SVD (LSA), incremental PCA, sparse PCA, dictionary learning, mini-batch dictionary learning, latent Dirichlet allocation, Gaussian and sparse random projection."
+keywords = ["kernel-pca", "ica", "nmf", "decomposition", "machine-learning"]
+categories = ["science", "mathematics"]
+
+[dependencies]
+ndarray.workspace = true
+thiserror.workspace = true
+solow-core.workspace = true
+solow-manifold.workspace = true
+serde = { workspace = true, optional = true }
+
+[features]
+default = []
+serde = ["dep:serde"]
+
+[dev-dependencies]
+approx.workspace = true
+serde_json.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

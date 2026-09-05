@@ -1,0 +1,31 @@
+[package]
+name = "solow-pipeline"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+documentation.workspace = true
+description = "Rust machine-learning pipelines and hyperparameter search: pipeline, feature union, column transformer, transformed-target regressor, grid search CV, randomized search CV, halving grid search, halving random search."
+keywords = ["pipeline", "grid-search", "hyperparameter", "cross-validation", "machine-learning"]
+categories = ["science", "mathematics"]
+
+[dependencies]
+ndarray.workspace = true
+thiserror.workspace = true
+solow-core.workspace = true
+solow-cv.workspace = true
+serde = { workspace = true, optional = true }
+
+[features]
+default = []
+serde = ["dep:serde", "solow-cv/serde"]
+
+[dev-dependencies]
+approx.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

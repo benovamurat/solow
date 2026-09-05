@@ -1,0 +1,30 @@
+[package]
+name = "solow-svm"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+documentation.workspace = true
+description = "Rust support vector machines: linear SVC (Pegasos), linear SVR (epsilon-insensitive), SVC and SVR with linear, RBF, polynomial, and sigmoid kernels via SMO, nu-SVC, nu-SVR, one-class SVM."
+keywords = ["svm", "svc", "linear-svc", "hinge-loss", "machine-learning"]
+categories = ["science", "mathematics"]
+
+[dependencies]
+ndarray.workspace = true
+thiserror.workspace = true
+solow-core.workspace = true
+serde = { workspace = true, optional = true }
+
+[features]
+default = []
+serde = ["dep:serde"]
+
+[dev-dependencies]
+approx.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

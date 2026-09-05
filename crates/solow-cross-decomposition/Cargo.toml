@@ -1,0 +1,31 @@
+[package]
+name = "solow-cross-decomposition"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+documentation.workspace = true
+description = "Rust partial least squares and canonical correlation for machine learning: PLS regression, PLS canonical, PLS SVD, canonical correlation analysis (CCA) with the NIPALS solver."
+keywords = ["pls", "cca", "cross-decomposition", "regression", "multivariate"]
+categories = ["science", "mathematics"]
+
+[dependencies]
+ndarray.workspace = true
+thiserror.workspace = true
+solow-core.workspace = true
+serde = { workspace = true, optional = true }
+
+[features]
+default = []
+serde = ["dep:serde"]
+
+[dev-dependencies]
+approx.workspace = true
+serde_json.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

@@ -1,0 +1,27 @@
+[package]
+name = "solow-robust"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+description = "Rust robust linear regression by M-estimation. Huber, Tukey biweight, Andrew, Hampel, and Ramsay influence functions with iteratively reweighted least squares."
+keywords = ["robust", "rlm", "huber", "solow"]
+categories = ["science", "mathematics"]
+
+[dependencies]
+ndarray.workspace = true
+num-traits.workspace = true
+solow-core.workspace = true
+solow-linalg.workspace = true
+solow-distributions.workspace = true
+solow-regression.workspace = true
+
+[dev-dependencies]
+approx.workspace = true
+serde_json.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

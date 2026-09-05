@@ -1,0 +1,31 @@
+[package]
+name = "solow-ensemble"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+documentation.workspace = true
+description = "Rust ensemble methods for machine learning: random forest classifier and regressor, extra trees classifier and regressor, gradient boosting classifier and regressor, histogram gradient boosting classifier and regressor, bagging classifier and regressor, AdaBoost classifier and regressor, voting classifier and regressor, stacking classifier and regressor, isolation forest."
+keywords = ["random-forest", "gradient-boosting", "adaboost", "ensemble", "machine-learning"]
+categories = ["science", "mathematics"]
+
+[dependencies]
+ndarray.workspace = true
+thiserror.workspace = true
+solow-core.workspace = true
+solow-tree.workspace = true
+serde = { workspace = true, optional = true }
+
+[features]
+default = []
+serde = ["dep:serde", "solow-tree/serde"]
+
+[dev-dependencies]
+approx.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

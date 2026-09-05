@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="150" viewBox="0 0 360 150" fill="none" role="img" aria-label="Solow">
+  <title>Solow</title>
+  <g transform="translate(32,16)">
+    <path d="M8 50 C84 50 102 8 148 8 C194 8 212 50 288 50" stroke="#5C7CFA" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="148" cy="8" r="5.5" fill="#5C7CFA"/>
+  </g>
+  <text x="180" y="138" text-anchor="middle" font-family="'Space Grotesk', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-weight="700" font-size="84" letter-spacing="-3.5" fill="#EEF0F4">solow</text>
+</svg>

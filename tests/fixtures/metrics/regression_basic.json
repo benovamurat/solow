@@ -1,0 +1,26 @@
+{
+  "expected": {
+    "explained_variance_score": 0.9571734475374732,
+    "max_error": 1.0,
+    "mean_absolute_error": 0.5,
+    "mean_absolute_percentage_error": 0.3273809523809524,
+    "mean_squared_error": 0.375,
+    "median_absolute_error": 0.5,
+    "r2_score": 0.9486081370449679,
+    "root_mean_squared_error": 0.6123724356957945
+  },
+  "inputs": {
+    "y_pred": [
+      2.5,
+      0.0,
+      2.0,
+      8.0
+    ],
+    "y_true": [
+      3.0,
+      -0.5,
+      2.0,
+      7.0
+    ]
+  }
+}

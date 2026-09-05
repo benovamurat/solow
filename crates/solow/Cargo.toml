@@ -1,0 +1,78 @@
+[package]
+name = "solow"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+documentation.workspace = true
+readme = "README.md"
+description = "The comprehensive statistics and machine learning stack for Rust. Regression, generalized linear models, discrete choice, time series, state space, survival analysis, mixed effects, Bayesian inference, clustering, tree ensembles, SVM, neural networks, kernel methods, dimensionality reduction, and change point detection. 57 focused crates, memory safe, pure Rust."
+keywords = ["statistics", "econometrics", "machine-learning", "data-science", "regression"]
+categories = ["science", "mathematics"]
+
+[dependencies]
+solow-core.workspace = true
+solow-linalg.workspace = true
+solow-distributions.workspace = true
+solow-optimize.workspace = true
+solow-regression.workspace = true
+solow-glm.workspace = true
+solow-discrete.workspace = true
+solow-stats.workspace = true
+solow-tsa.workspace = true
+solow-robust.workspace = true
+solow-nonparametric.workspace = true
+solow-multivariate.workspace = true
+solow-duration.workspace = true
+solow-statespace.workspace = true
+solow-var.workspace = true
+solow-mixed.workspace = true
+solow-gee.workspace = true
+solow-gam.workspace = true
+solow-impute.workspace = true
+solow-graphics.workspace = true
+solow-regime.workspace = true
+solow-othermod.workspace = true
+solow-copula.workspace = true
+solow-fit.workspace = true
+solow-bayes.workspace = true
+solow-emplike.workspace = true
+solow-formula.workspace = true
+solow-summary.workspace = true
+solow-viz.workspace = true
+solow-metrics.workspace = true
+solow-cv.workspace = true
+solow-preprocessing.workspace = true
+solow-cluster.workspace = true
+solow-neighbors.workspace = true
+solow-tree.workspace = true
+solow-ensemble.workspace = true
+solow-naive-bayes.workspace = true
+solow-discriminant.workspace = true
+solow-feature-selection.workspace = true
+solow-pipeline.workspace = true
+solow-svm.workspace = true
+solow-neural.workspace = true
+solow-manifold.workspace = true
+solow-decomposition.workspace = true
+solow-text.workspace = true
+solow-covariance.workspace = true
+solow-cross-decomposition.workspace = true
+solow-kernel-approx.workspace = true
+solow-gp.workspace = true
+solow-semi-supervised.workspace = true
+solow-multi.workspace = true
+solow-calibration.workspace = true
+solow-datasets.workspace = true
+ndarray.workspace = true
+
+[dev-dependencies]
+serde_json.workspace = true
+approx.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

@@ -1,0 +1,30 @@
+[package]
+name = "solow-datasets"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+documentation.workspace = true
+description = "Rust dataset generators and toy loaders for machine learning: make classification, regression, blobs, moons, circles, Swiss roll, and low-rank matrix. Loads iris, wine, diabetes, breast cancer. Class-weight and sample-weight utilities, resample helpers."
+keywords = ["dataset", "make-classification", "make-regression", "make-blobs", "toy-data"]
+categories = ["science", "mathematics"]
+
+[dependencies]
+ndarray.workspace = true
+thiserror.workspace = true
+solow-core.workspace = true
+serde = { workspace = true, optional = true }
+
+[features]
+default = []
+serde = ["dep:serde"]
+
+[dev-dependencies]
+approx.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

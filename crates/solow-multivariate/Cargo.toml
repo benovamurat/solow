@@ -1,0 +1,26 @@
+[package]
+name = "solow-multivariate"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+description = "Rust multivariate analysis: principal component analysis (PCA), factor analysis with varimax rotation, MANOVA, canonical correlation analysis (CCA)."
+keywords = ["pca", "factor", "manova", "solow"]
+categories = ["science", "mathematics"]
+
+[dependencies]
+ndarray.workspace = true
+num-traits.workspace = true
+solow-core.workspace = true
+solow-linalg.workspace = true
+solow-distributions.workspace = true
+
+[dev-dependencies]
+approx.workspace = true
+serde_json.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

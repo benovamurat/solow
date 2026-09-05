@@ -1,0 +1,26 @@
+[book]
+title = "The Solow Book"
+description = "User guide for Solow, a pure-Rust statistical-modeling, econometrics, and data-visualization toolkit."
+authors = ["Murat Ova"]
+language = "en"
+src = "src"
+
+[output.html]
+default-theme = "rust"
+preferred-dark-theme = "ayu"
+site-url = "/solow/"
+git-repository-url = "https://github.com/benovamurat/solow"
+edit-url-template = "https://github.com/benovamurat/solow/edit/main/docs/book/{path}"
+mathjax-support = true
+
+[output.html.fold]
+enable = true
+level = 1
+
+[output.html.playground]
+editable = false
+copyable = true
+
+[build]
+build-dir = "book"
+create-missing = false

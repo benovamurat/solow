@@ -1,0 +1,36 @@
+{
+  "expected": {
+    "accuracy": 0.8,
+    "average_precision": 1.0,
+    "brier": 0.062,
+    "f1": 0.8571428571428571,
+    "log_loss": 0.26027303006691704,
+    "matthews_corrcoef": 0.6123724356957946,
+    "precision": 0.75,
+    "recall": 1.0,
+    "roc_auc": 1.0
+  },
+  "inputs": {
+    "y_pred": [
+      1,
+      1,
+      1,
+      1,
+      0
+    ],
+    "y_prob": [
+      0.1,
+      0.9,
+      0.8,
+      0.6,
+      0.3
+    ],
+    "y_true": [
+      0,
+      1,
+      1,
+      1,
+      0
+    ]
+  }
+}

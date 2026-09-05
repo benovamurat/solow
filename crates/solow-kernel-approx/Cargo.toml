@@ -1,0 +1,30 @@
+[package]
+name = "solow-kernel-approx"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+documentation.workspace = true
+description = "Rust kernel approximation via random features: RBF sampler (random Fourier features), Nystroem, additive chi-squared sampler, skewed chi-squared sampler, polynomial count sketch."
+keywords = ["kernel", "random-features", "nystroem", "rbf", "machine-learning"]
+categories = ["science", "mathematics"]
+
+[dependencies]
+ndarray.workspace = true
+thiserror.workspace = true
+solow-core.workspace = true
+serde = { workspace = true, optional = true }
+
+[features]
+default = []
+serde = ["dep:serde"]
+
+[dev-dependencies]
+approx.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

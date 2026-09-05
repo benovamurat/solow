@@ -1,0 +1,23 @@
+[package]
+name = "solow-formula"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+description = "Rust formula parser and design-matrix builder for statistical models. Intercept, interactions, treatment contrasts, categorical encoding. R and patsy syntax compatible."
+keywords = ["formula", "regression", "solow"]
+categories = ["science", "mathematics"]
+
+[dependencies]
+ndarray.workspace = true
+solow-core.workspace = true
+
+[dev-dependencies]
+approx.workspace = true
+serde_json.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

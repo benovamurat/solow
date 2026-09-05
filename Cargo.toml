@@ -1,0 +1,144 @@
+[workspace]
+resolver = "2"
+exclude = ["crates/solow-py"]
+members = [
+    "crates/solow-core",
+    "crates/solow-linalg",
+    "crates/solow-distributions",
+    "crates/solow-optimize",
+    "crates/solow-regression",
+    "crates/solow-glm",
+    "crates/solow-discrete",
+    "crates/solow-stats",
+    "crates/solow-tsa",
+    "crates/solow-robust",
+    "crates/solow-nonparametric",
+    "crates/solow-multivariate",
+    "crates/solow-duration",
+    "crates/solow-statespace",
+    "crates/solow-var",
+    "crates/solow-mixed",
+    "crates/solow-gee",
+    "crates/solow-gam",
+    "crates/solow-impute",
+    "crates/solow-graphics",
+    "crates/solow-regime",
+    "crates/solow-othermod",
+    "crates/solow-copula",
+    "crates/solow-fit",
+    "crates/solow-bayes",
+    "crates/solow-emplike",
+    "crates/solow-formula",
+    "crates/solow-summary",
+    "crates/solow-bench",
+    "crates/solow-viz",
+    "crates/solow-metrics",
+    "crates/solow-cv",
+    "crates/solow-preprocessing",
+    "crates/solow-cluster",
+    "crates/solow-neighbors",
+    "crates/solow-tree",
+    "crates/solow-ensemble",
+    "crates/solow-naive-bayes",
+    "crates/solow-discriminant",
+    "crates/solow-feature-selection",
+    "crates/solow-pipeline",
+    "crates/solow-svm",
+    "crates/solow-neural",
+    "crates/solow-manifold",
+    "crates/solow-decomposition",
+    "crates/solow-text",
+    "crates/solow-covariance",
+    "crates/solow-cross-decomposition",
+    "crates/solow-kernel-approx",
+    "crates/solow-gp",
+    "crates/solow-semi-supervised",
+    "crates/solow-multi",
+    "crates/solow-calibration",
+    "crates/solow-datasets",
+    "crates/solow",
+]
+
+[workspace.package]
+version = "0.7.3"
+edition = "2021"
+rust-version = "1.80"
+license = "BSD-3-Clause"
+authors = ["Murat Ova"]
+description = "The comprehensive statistics and machine learning stack for Rust. Regression, generalized linear models, discrete choice, time series, state space, survival analysis, mixed effects, Bayesian inference, clustering, tree ensembles, SVM, neural networks, kernel methods, dimensionality reduction, and change point detection. 57 focused crates, memory safe, pure Rust."
+repository = "https://github.com/benovamurat/solow"
+homepage = "https://stochasticminds.com"
+documentation = "https://docs.rs/solow"
+keywords = ["statistics", "econometrics", "regression", "time-series", "data-science"]
+categories = ["science", "mathematics"]
+readme = "README.md"
+
+[workspace.dependencies]
+ndarray = "0.16"
+num-traits = "0.2"
+num-complex = "0.4"
+thiserror = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+approx = "0.5"
+criterion = "0.5"
+
+solow-core = { path = "crates/solow-core", version = "0.7.3" }
+solow-linalg = { path = "crates/solow-linalg", version = "0.7.3" }
+solow-distributions = { path = "crates/solow-distributions", version = "0.7.3" }
+solow-optimize = { path = "crates/solow-optimize", version = "0.7.3" }
+solow-regression = { path = "crates/solow-regression", version = "0.7.3" }
+solow-glm = { path = "crates/solow-glm", version = "0.7.3" }
+solow-discrete = { path = "crates/solow-discrete", version = "0.7.3" }
+solow-stats = { path = "crates/solow-stats", version = "0.7.3" }
+solow-tsa = { path = "crates/solow-tsa", version = "0.7.3" }
+solow-robust = { path = "crates/solow-robust", version = "0.7.3" }
+solow-nonparametric = { path = "crates/solow-nonparametric", version = "0.7.3" }
+solow-multivariate = { path = "crates/solow-multivariate", version = "0.7.3" }
+solow-duration = { path = "crates/solow-duration", version = "0.7.3" }
+solow-statespace = { path = "crates/solow-statespace", version = "0.7.3" }
+solow-var = { path = "crates/solow-var", version = "0.7.3" }
+solow-mixed = { path = "crates/solow-mixed", version = "0.7.3" }
+solow-gee = { path = "crates/solow-gee", version = "0.7.3" }
+solow-gam = { path = "crates/solow-gam", version = "0.7.3" }
+solow-impute = { path = "crates/solow-impute", version = "0.7.3" }
+solow-graphics = { path = "crates/solow-graphics", version = "0.7.3" }
+solow-regime = { path = "crates/solow-regime", version = "0.7.3" }
+solow-othermod = { path = "crates/solow-othermod", version = "0.7.3" }
+solow-copula = { path = "crates/solow-copula", version = "0.7.3" }
+solow-fit = { path = "crates/solow-fit", version = "0.7.3" }
+solow-bayes = { path = "crates/solow-bayes", version = "0.7.3" }
+solow-emplike = { path = "crates/solow-emplike", version = "0.7.3" }
+solow-formula = { path = "crates/solow-formula", version = "0.7.3" }
+solow-summary = { path = "crates/solow-summary", version = "0.7.3" }
+solow = { path = "crates/solow", version = "0.7.3" }
+solow-viz = { path = "crates/solow-viz", version = "0.7.3" }
+solow-metrics = { path = "crates/solow-metrics", version = "0.7.3" }
+solow-cv = { path = "crates/solow-cv", version = "0.7.3" }
+solow-preprocessing = { path = "crates/solow-preprocessing", version = "0.7.3" }
+solow-cluster = { path = "crates/solow-cluster", version = "0.7.3" }
+solow-neighbors = { path = "crates/solow-neighbors", version = "0.7.3" }
+solow-tree = { path = "crates/solow-tree", version = "0.7.3" }
+solow-ensemble = { path = "crates/solow-ensemble", version = "0.7.3" }
+solow-naive-bayes = { path = "crates/solow-naive-bayes", version = "0.7.3" }
+solow-discriminant = { path = "crates/solow-discriminant", version = "0.7.3" }
+solow-feature-selection = { path = "crates/solow-feature-selection", version = "0.7.3" }
+solow-pipeline = { path = "crates/solow-pipeline", version = "0.7.3" }
+solow-svm = { path = "crates/solow-svm", version = "0.7.3" }
+solow-neural = { path = "crates/solow-neural", version = "0.7.3" }
+solow-manifold = { path = "crates/solow-manifold", version = "0.7.3" }
+solow-decomposition = { path = "crates/solow-decomposition", version = "0.7.3" }
+solow-text = { path = "crates/solow-text", version = "0.7.3" }
+solow-covariance = { path = "crates/solow-covariance", version = "0.7.3" }
+solow-cross-decomposition = { path = "crates/solow-cross-decomposition", version = "0.7.3" }
+solow-kernel-approx = { path = "crates/solow-kernel-approx", version = "0.7.3" }
+solow-gp = { path = "crates/solow-gp", version = "0.7.3" }
+solow-semi-supervised = { path = "crates/solow-semi-supervised", version = "0.7.3" }
+solow-multi = { path = "crates/solow-multi", version = "0.7.3" }
+solow-calibration = { path = "crates/solow-calibration", version = "0.7.3" }
+solow-datasets = { path = "crates/solow-datasets", version = "0.7.3" }
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1

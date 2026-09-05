@@ -1,0 +1,30 @@
+[package]
+name = "solow-gp"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+documentation.workspace = true
+description = "Rust Gaussian process regression and classification: Gaussian process regressor and classifier with RBF, Matern, rational quadratic, dot product, constant, and white kernels and sum, product, exponentiation kernel composition."
+keywords = ["gaussian-process", "kriging", "regression", "kernel", "bayesian"]
+categories = ["science", "mathematics"]
+
+[dependencies]
+ndarray.workspace = true
+thiserror.workspace = true
+solow-core.workspace = true
+serde = { workspace = true, optional = true }
+
+[features]
+default = []
+serde = ["dep:serde"]
+
+[dev-dependencies]
+approx.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

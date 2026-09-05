@@ -1,0 +1,33 @@
+[package]
+name = "solow-tsa"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+description = "Rust time series analysis: ACF, PACF, ADF, KPSS, cointegration, Granger causality, AutoReg, ARMA, STL, seasonal decomposition, Holt-Winters, HP, BK, CF filters, Zivot-Andrews, GARCH(1,1), CUSUM, PELT change-point detection, EWMA control chart."
+keywords = ["timeseries", "arima", "kpss", "adf", "solow"]
+categories = ["science", "mathematics"]
+
+[dependencies]
+ndarray.workspace = true
+num-traits.workspace = true
+solow-core.workspace = true
+solow-linalg.workspace = true
+solow-distributions.workspace = true
+solow-regression.workspace = true
+solow-optimize.workspace = true
+serde = { workspace = true, optional = true }
+
+[features]
+default = []
+serde = ["dep:serde"]
+
+[dev-dependencies]
+approx.workspace = true
+serde_json.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
