@@ -904,7 +904,7 @@ checksum = "8ed6a63f02c8539c91a8685a86f4099661ba3da017932f6ebbea6de3f0fa7c90"
 
 [[package]]
 name = "solow"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -966,7 +966,7 @@ dependencies = [
 
 [[package]]
 name = "solow-bayes"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -981,7 +981,7 @@ dependencies = [
 
 [[package]]
 name = "solow-bench"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "criterion",
  "ndarray",
@@ -990,7 +990,7 @@ dependencies = [
 
 [[package]]
 name = "solow-calibration"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1001,7 +1001,7 @@ dependencies = [
 
 [[package]]
 name = "solow-cluster"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1013,7 +1013,7 @@ dependencies = [
 
 [[package]]
 name = "solow-copula"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1026,7 +1026,7 @@ dependencies = [
 
 [[package]]
 name = "solow-core"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1036,7 +1036,7 @@ dependencies = [
 
 [[package]]
 name = "solow-covariance"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1048,7 +1048,7 @@ dependencies = [
 
 [[package]]
 name = "solow-cross-decomposition"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1060,7 +1060,7 @@ dependencies = [
 
 [[package]]
 name = "solow-cv"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1073,7 +1073,7 @@ dependencies = [
 
 [[package]]
 name = "solow-datasets"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1084,7 +1084,7 @@ dependencies = [
 
 [[package]]
 name = "solow-decomposition"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1097,7 +1097,7 @@ dependencies = [
 
 [[package]]
 name = "solow-discrete"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1111,7 +1111,7 @@ dependencies = [
 
 [[package]]
 name = "solow-discriminant"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1123,7 +1123,7 @@ dependencies = [
 
 [[package]]
 name = "solow-distributions"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "num-traits",
@@ -1135,7 +1135,7 @@ dependencies = [
 
 [[package]]
 name = "solow-duration"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1149,7 +1149,7 @@ dependencies = [
 
 [[package]]
 name = "solow-emplike"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1163,7 +1163,7 @@ dependencies = [
 
 [[package]]
 name = "solow-ensemble"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1175,7 +1175,7 @@ dependencies = [
 
 [[package]]
 name = "solow-feature-selection"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1186,7 +1186,7 @@ dependencies = [
 
 [[package]]
 name = "solow-fit"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1201,7 +1201,7 @@ dependencies = [
 
 [[package]]
 name = "solow-formula"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1211,7 +1211,7 @@ dependencies = [
 
 [[package]]
 name = "solow-gam"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1226,7 +1226,7 @@ dependencies = [
 
 [[package]]
 name = "solow-gee"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1240,7 +1240,7 @@ dependencies = [
 
 [[package]]
 name = "solow-glm"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1253,7 +1253,7 @@ dependencies = [
 
 [[package]]
 name = "solow-gp"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1264,7 +1264,7 @@ dependencies = [
 
 [[package]]
 name = "solow-graphics"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1278,7 +1278,7 @@ dependencies = [
 
 [[package]]
 name = "solow-impute"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1294,7 +1294,7 @@ dependencies = [
 
 [[package]]
 name = "solow-kernel-approx"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1305,7 +1305,7 @@ dependencies = [
 
 [[package]]
 name = "solow-linalg"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1316,7 +1316,7 @@ dependencies = [
 
 [[package]]
 name = "solow-manifold"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1328,7 +1328,7 @@ dependencies = [
 
 [[package]]
 name = "solow-metrics"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1341,7 +1341,7 @@ dependencies = [
 
 [[package]]
 name = "solow-mixed"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1355,7 +1355,7 @@ dependencies = [
 
 [[package]]
 name = "solow-multi"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1366,7 +1366,7 @@ dependencies = [
 
 [[package]]
 name = "solow-multivariate"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1379,7 +1379,7 @@ dependencies = [
 
 [[package]]
 name = "solow-naive-bayes"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1391,7 +1391,7 @@ dependencies = [
 
 [[package]]
 name = "solow-neighbors"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1403,7 +1403,7 @@ dependencies = [
 
 [[package]]
 name = "solow-neural"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1414,7 +1414,7 @@ dependencies = [
 
 [[package]]
 name = "solow-nonparametric"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1427,7 +1427,7 @@ dependencies = [
 
 [[package]]
 name = "solow-optimize"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1437,7 +1437,7 @@ dependencies = [
 
 [[package]]
 name = "solow-othermod"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1451,7 +1451,7 @@ dependencies = [
 
 [[package]]
 name = "solow-pipeline"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1463,7 +1463,7 @@ dependencies = [
 
 [[package]]
 name = "solow-preprocessing"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1475,7 +1475,7 @@ dependencies = [
 
 [[package]]
 name = "solow-regime"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1489,7 +1489,7 @@ dependencies = [
 
 [[package]]
 name = "solow-regression"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1504,7 +1504,7 @@ dependencies = [
 
 [[package]]
 name = "solow-robust"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1518,7 +1518,7 @@ dependencies = [
 
 [[package]]
 name = "solow-semi-supervised"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1529,7 +1529,7 @@ dependencies = [
 
 [[package]]
 name = "solow-statespace"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1543,7 +1543,7 @@ dependencies = [
 
 [[package]]
 name = "solow-stats"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1558,7 +1558,7 @@ dependencies = [
 
 [[package]]
 name = "solow-summary"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1569,7 +1569,7 @@ dependencies = [
 
 [[package]]
 name = "solow-svm"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1580,7 +1580,7 @@ dependencies = [
 
 [[package]]
 name = "solow-text"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1591,7 +1591,7 @@ dependencies = [
 
 [[package]]
 name = "solow-tree"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1602,7 +1602,7 @@ dependencies = [
 
 [[package]]
 name = "solow-tsa"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1618,7 +1618,7 @@ dependencies = [
 
 [[package]]
 name = "solow-var"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",
@@ -1632,7 +1632,7 @@ dependencies = [
 
 [[package]]
 name = "solow-viz"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "approx",
  "ndarray",

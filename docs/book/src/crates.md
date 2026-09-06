@@ -1,6 +1,6 @@
 # Crate reference
 
-Solow is a Cargo workspace of **57 focused crates**. Depend on the ones you
+Solow is a Cargo workspace of **54 focused crates**. Depend on the ones you
 need, or pull in the umbrella `solow` crate to re-export the full public API.
 This page lists the workspace.
 

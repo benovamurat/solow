@@ -9,7 +9,7 @@ repository.workspace = true
 homepage.workspace = true
 documentation.workspace = true
 readme = "README.md"
-description = "The comprehensive statistics and machine learning stack for Rust. Regression, generalized linear models, discrete choice, time series, state space, survival analysis, mixed effects, Bayesian inference, clustering, tree ensembles, SVM, neural networks, kernel methods, dimensionality reduction, and change point detection. 57 focused crates, memory safe, pure Rust."
+description = "The comprehensive statistics and machine learning stack for Rust. Regression, generalized linear models, discrete choice, time series, state space, survival analysis, mixed effects, Bayesian inference, clustering, tree ensembles, SVM, neural networks, kernel methods, dimensionality reduction, and change point detection. 54 focused crates, memory safe, pure Rust."
 keywords = ["statistics", "econometrics", "machine-learning", "data-science", "regression"]
 categories = ["science", "mathematics"]
 

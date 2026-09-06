@@ -9,7 +9,7 @@ adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Documentation refresh. Product-first descriptions across every crate on
 crates.io. No API changes. Every crate lives under `#![forbid(unsafe_code)]`.
 
-The workspace ships 57 focused crates covering regression, generalized
+The workspace ships 54 focused crates covering regression, generalized
 linear models, discrete choice, robust regression, time series and
 state-space models, survival analysis, mixed effects, Bayesian inference,
 clustering, tree ensembles, support vector machines, neural networks,
