@@ -20,7 +20,9 @@ use solow_core::{Error, Result};
 pub fn adjusted_rand_score(labels_true: &[i64], labels_pred: &[i64]) -> Result<f64> {
     let n = labels_true.len();
     if labels_pred.len() != n {
-        return Err(Error::Shape("adjusted_rand_score: label vectors differ in length".into()));
+        return Err(Error::Shape(
+            "adjusted_rand_score: label vectors differ in length".into(),
+        ));
     }
     if n < 2 {
         return Ok(0.0);
@@ -164,7 +166,9 @@ pub fn fowlkes_mallows_score(labels_true: &[i64], labels_pred: &[i64]) -> Result
 pub fn silhouette_score(x: ArrayView2<'_, f64>, labels: &[i64]) -> Result<f64> {
     let n = x.nrows();
     if labels.len() != n {
-        return Err(Error::Shape("silhouette_score: labels length mismatch".into()));
+        return Err(Error::Shape(
+            "silhouette_score: labels length mismatch".into(),
+        ));
     }
     if n < 2 {
         return Err(Error::Value("silhouette_score: need ≥ 2 samples".into()));
@@ -201,7 +205,11 @@ pub fn silhouette_score(x: ArrayView2<'_, f64>, labels: &[i64]) -> Result<f64> {
                 e.1 += 1;
             }
         }
-        let a = if a_count > 0 { a_sum / a_count as f64 } else { 0.0 };
+        let a = if a_count > 0 {
+            a_sum / a_count as f64
+        } else {
+            0.0
+        };
         let b = cluster_sums
             .values()
             .filter(|(_, n)| *n > 0)
@@ -221,7 +229,9 @@ pub fn silhouette_score(x: ArrayView2<'_, f64>, labels: &[i64]) -> Result<f64> {
 pub fn calinski_harabasz_score(x: ArrayView2<'_, f64>, labels: &[i64]) -> Result<f64> {
     let n = x.nrows();
     if labels.len() != n {
-        return Err(Error::Shape("calinski_harabasz: labels length mismatch".into()));
+        return Err(Error::Shape(
+            "calinski_harabasz: labels length mismatch".into(),
+        ));
     }
     let d = x.ncols();
     let mut classes: Vec<i64> = labels.to_vec();
@@ -274,7 +284,9 @@ pub fn calinski_harabasz_score(x: ArrayView2<'_, f64>, labels: &[i64]) -> Result
 pub fn davies_bouldin_score(x: ArrayView2<'_, f64>, labels: &[i64]) -> Result<f64> {
     let n = x.nrows();
     if labels.len() != n {
-        return Err(Error::Shape("davies_bouldin: labels length mismatch".into()));
+        return Err(Error::Shape(
+            "davies_bouldin: labels length mismatch".into(),
+        ));
     }
     let d = x.ncols();
     let mut cluster_means: std::collections::BTreeMap<i64, (Vec<f64>, usize)> = Default::default();
@@ -295,10 +307,7 @@ pub fn davies_bouldin_score(x: ArrayView2<'_, f64>, labels: &[i64]) -> Result<f6
     // Within-cluster scatter s_i.
     let mut si = vec![0.0_f64; means.len()];
     for i in 0..n {
-        let (_, mean) = means
-            .iter()
-            .find(|(c, _)| *c == labels[i])
-            .unwrap();
+        let (_, mean) = means.iter().find(|(c, _)| *c == labels[i]).unwrap();
         let mut dist = 0.0_f64;
         for j in 0..d {
             let e = x[[i, j]] - mean[j];
@@ -347,10 +356,7 @@ pub enum MiAverage {
     Max,
 }
 
-fn contingency_table(
-    a: &[i64],
-    b: &[i64],
-) -> (Vec<i64>, Vec<i64>, Array2<f64>) {
+fn contingency_table(a: &[i64], b: &[i64]) -> (Vec<i64>, Vec<i64>, Array2<f64>) {
     let mut rows: Vec<i64> = a.to_vec();
     rows.sort();
     rows.dedup();
@@ -390,8 +396,16 @@ fn mutual_info_and_entropies(a: &[i64], b: &[i64]) -> Result<(f64, f64, f64)> {
             }
         }
     }
-    let h_a: f64 = row_sum.iter().filter(|&&v| v > 0.0).map(|&v| -(v / n_f) * (v / n_f).ln()).sum();
-    let h_b: f64 = col_sum.iter().filter(|&&v| v > 0.0).map(|&v| -(v / n_f) * (v / n_f).ln()).sum();
+    let h_a: f64 = row_sum
+        .iter()
+        .filter(|&&v| v > 0.0)
+        .map(|&v| -(v / n_f) * (v / n_f).ln())
+        .sum();
+    let h_b: f64 = col_sum
+        .iter()
+        .filter(|&&v| v > 0.0)
+        .map(|&v| -(v / n_f) * (v / n_f).ln())
+        .sum();
     Ok((mi, h_a, h_b))
 }
 
@@ -399,7 +413,9 @@ fn ln_choose(n: usize, k: usize) -> f64 {
     if k > n {
         return f64::NEG_INFINITY;
     }
-    (1..=k).map(|i| ((n - i + 1) as f64).ln() - (i as f64).ln()).sum()
+    (1..=k)
+        .map(|i| ((n - i + 1) as f64).ln() - (i as f64).ln())
+        .sum()
 }
 
 #[cfg(test)]
@@ -425,8 +441,12 @@ mod tests {
     #[test]
     fn silhouette_score_is_high_on_well_separated_clusters() {
         let x = array![
-            [0.0_f64, 0.0], [0.1, 0.1], [0.2, 0.2],
-            [10.0, 10.0], [10.1, 10.1], [10.2, 10.2]
+            [0.0_f64, 0.0],
+            [0.1, 0.1],
+            [0.2, 0.2],
+            [10.0, 10.0],
+            [10.1, 10.1],
+            [10.2, 10.2]
         ];
         let labels = vec![0_i64, 0, 0, 1, 1, 1];
         let s = silhouette_score(x.view(), &labels).unwrap();
@@ -435,9 +455,7 @@ mod tests {
 
     #[test]
     fn calinski_harabasz_is_positive_on_separated_clusters() {
-        let x = array![
-            [0.0_f64, 0.0], [0.1, 0.1], [10.0, 10.0], [10.1, 10.1]
-        ];
+        let x = array![[0.0_f64, 0.0], [0.1, 0.1], [10.0, 10.0], [10.1, 10.1]];
         let labels = vec![0_i64, 0, 1, 1];
         let s = calinski_harabasz_score(x.view(), &labels).unwrap();
         assert!(s > 0.0);
@@ -445,9 +463,7 @@ mod tests {
 
     #[test]
     fn davies_bouldin_is_low_on_separated_clusters() {
-        let x = array![
-            [0.0_f64, 0.0], [0.1, 0.1], [10.0, 10.0], [10.1, 10.1]
-        ];
+        let x = array![[0.0_f64, 0.0], [0.1, 0.1], [10.0, 10.0], [10.1, 10.1]];
         let labels = vec![0_i64, 0, 1, 1];
         let s = davies_bouldin_score(x.view(), &labels).unwrap();
         assert!(s < 1.0);

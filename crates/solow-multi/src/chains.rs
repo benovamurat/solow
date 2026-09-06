@@ -19,11 +19,7 @@ pub struct ClassifierChain<C: MultiClassifier, F: FnMut() -> C> {
 
 impl<C: MultiClassifier, F: FnMut() -> C> ClassifierChain<C, F> {
     /// Fit in the natural column order.
-    pub fn fit(
-        mut factory: F,
-        x: ArrayView2<'_, f64>,
-        y: &[Vec<i64>],
-    ) -> Result<Self> {
+    pub fn fit(mut factory: F, x: ArrayView2<'_, f64>, y: &[Vec<i64>]) -> Result<Self> {
         let n = x.nrows();
         if y.len() != n {
             return Err(Error::Shape("ClassifierChain: y/x length mismatch".into()));
@@ -91,11 +87,7 @@ pub struct RegressorChain<R: Regressor, F: FnMut() -> R> {
 
 impl<R: Regressor, F: FnMut() -> R> RegressorChain<R, F> {
     /// Fit.
-    pub fn fit(
-        mut factory: F,
-        x: ArrayView2<'_, f64>,
-        y: ArrayView2<'_, f64>,
-    ) -> Result<Self> {
+    pub fn fit(mut factory: F, x: ArrayView2<'_, f64>, y: ArrayView2<'_, f64>) -> Result<Self> {
         let n = x.nrows();
         if y.nrows() != n {
             return Err(Error::Shape("RegressorChain: row counts differ".into()));

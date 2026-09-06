@@ -40,10 +40,14 @@ impl MiniBatchDictionaryLearning {
         let n = x.nrows();
         let d = x.ncols();
         if n_components == 0 {
-            return Err(Error::Value("MiniBatchDictionaryLearning: n_components must be ≥ 1".into()));
+            return Err(Error::Value(
+                "MiniBatchDictionaryLearning: n_components must be ≥ 1".into(),
+            ));
         }
         if alpha < 0.0 {
-            return Err(Error::Value("MiniBatchDictionaryLearning: alpha must be ≥ 0".into()));
+            return Err(Error::Value(
+                "MiniBatchDictionaryLearning: alpha must be ≥ 0".into(),
+            ));
         }
         // Init from the first `n_components` rows, normalised.
         let mut dict = Array2::<f64>::zeros((n_components, d));
@@ -51,7 +55,11 @@ impl MiniBatchDictionaryLearning {
             for j in 0..d {
                 dict[[k, j]] = x[[k, j]];
             }
-            let nrm = (0..d).map(|j| dict[[k, j]] * dict[[k, j]]).sum::<f64>().sqrt().max(1e-30);
+            let nrm = (0..d)
+                .map(|j| dict[[k, j]] * dict[[k, j]])
+                .sum::<f64>()
+                .sqrt()
+                .max(1e-30);
             for j in 0..d {
                 dict[[k, j]] /= nrm;
             }
@@ -186,8 +194,11 @@ mod tests {
     #[test]
     fn minibatch_dict_learning_returns_dict_of_the_right_shape() {
         let x = array![
-            [1.0_f64, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0],
-            [1.0, 1.0, 0.0], [0.0, 1.0, 1.0]
+            [1.0_f64, 0.0, 0.0],
+            [0.0, 1.0, 0.0],
+            [0.0, 0.0, 1.0],
+            [1.0, 1.0, 0.0],
+            [0.0, 1.0, 1.0]
         ];
         let m = MiniBatchDictionaryLearning::fit_with(x.view(), 3, 0.1, 3, 20, 1e-4, 42).unwrap();
         assert_eq!(m.components.shape(), &[3, 3]);

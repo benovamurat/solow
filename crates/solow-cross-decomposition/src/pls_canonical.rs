@@ -64,7 +64,9 @@ impl PLSCanonical {
         let p = x.ncols();
         let q = y.ncols();
         if n_components == 0 || n_components > p.min(q).min(n - 1) {
-            return Err(Error::Value("PLSCanonical: n_components out of range".into()));
+            return Err(Error::Value(
+                "PLSCanonical: n_components out of range".into(),
+            ));
         }
         let (x_mean, x_std) = center_scale(x, scale);
         let (y_mean, y_std) = center_scale(y, scale);
@@ -145,12 +147,13 @@ mod tests {
     #[test]
     fn pls_canonical_returns_the_requested_rank() {
         let x = array![
-            [1.0, 2.0, 3.0], [2.0, 4.0, 6.0], [3.0, 1.0, 2.0],
-            [4.0, 2.0, 3.0], [5.0, 3.0, 4.0]
+            [1.0, 2.0, 3.0],
+            [2.0, 4.0, 6.0],
+            [3.0, 1.0, 2.0],
+            [4.0, 2.0, 3.0],
+            [5.0, 3.0, 4.0]
         ];
-        let y = array![
-            [1.0, 2.0], [2.0, 4.0], [3.0, 1.0], [4.0, 2.0], [5.0, 3.0]
-        ];
+        let y = array![[1.0, 2.0], [2.0, 4.0], [3.0, 1.0], [4.0, 2.0], [5.0, 3.0]];
         let m = PLSCanonical::fit(x.view(), y.view(), 2).unwrap();
         assert_eq!(m.x_weights.ncols(), 2);
         assert_eq!(m.y_weights.ncols(), 2);

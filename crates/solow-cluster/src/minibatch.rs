@@ -45,7 +45,10 @@ impl MiniBatchKMeans {
         }
         let batch = batch_size.min(n).max(1);
         // k-means++ init from a full-batch k-means with a small max_iter.
-        let seed_km = KMeans::new(n_clusters, seed).init(KMeansInit::KMeansPlusPlus).max_iter(1).n_init(1);
+        let seed_km = KMeans::new(n_clusters, seed)
+            .init(KMeansInit::KMeansPlusPlus)
+            .max_iter(1)
+            .n_init(1);
         let init = seed_km.fit(x)?;
         let mut centroids = init.centroids.clone();
         let mut counts = vec![0_u64; n_clusters];
@@ -140,14 +143,12 @@ impl BisectingKMeans {
     }
 
     /// Full-configuration fit.
-    pub fn fit_with(
-        x: ArrayView2<'_, f64>,
-        n_clusters: usize,
-        seed: u64,
-    ) -> Result<Self> {
+    pub fn fit_with(x: ArrayView2<'_, f64>, n_clusters: usize, seed: u64) -> Result<Self> {
         let n = x.nrows();
         if n_clusters == 0 || n_clusters > n {
-            return Err(Error::Value("BisectingKMeans: n_clusters out of range".into()));
+            return Err(Error::Value(
+                "BisectingKMeans: n_clusters out of range".into(),
+            ));
         }
         let mut clusters: Vec<Vec<usize>> = vec![(0..n).collect()];
         while clusters.len() < n_clusters {
@@ -163,7 +164,9 @@ impl BisectingKMeans {
                 break;
             }
             let sub = row_subset(x, &members);
-            let km = KMeans::new(2, seed + clusters.len() as u64).n_init(3).fit(sub.view())?;
+            let km = KMeans::new(2, seed + clusters.len() as u64)
+                .n_init(3)
+                .fit(sub.view())?;
             let mut left: Vec<usize> = Vec::new();
             let mut right: Vec<usize> = Vec::new();
             for (r, &m) in members.iter().enumerate() {
@@ -228,8 +231,12 @@ mod tests {
     #[test]
     fn mini_batch_kmeans_splits_two_dense_clumps() {
         let x = array![
-            [0.0_f64, 0.0], [0.1, 0.1], [0.2, 0.2],
-            [5.0, 5.0], [5.1, 5.1], [5.2, 5.2]
+            [0.0_f64, 0.0],
+            [0.1, 0.1],
+            [0.2, 0.2],
+            [5.0, 5.0],
+            [5.1, 5.1],
+            [5.2, 5.2]
         ];
         let m = MiniBatchKMeans::fit_with(x.view(), 2, 6, 30, 42).unwrap();
         assert_ne!(m.labels[0], m.labels[3]);
@@ -238,8 +245,12 @@ mod tests {
     #[test]
     fn bisecting_kmeans_splits_two_dense_clumps() {
         let x = array![
-            [0.0_f64, 0.0], [0.1, 0.1], [0.2, 0.2],
-            [5.0, 5.0], [5.1, 5.1], [5.2, 5.2]
+            [0.0_f64, 0.0],
+            [0.1, 0.1],
+            [0.2, 0.2],
+            [5.0, 5.0],
+            [5.1, 5.1],
+            [5.2, 5.2]
         ];
         let m = BisectingKMeans::fit(x.view(), 2).unwrap();
         assert_ne!(m.labels[0], m.labels[3]);

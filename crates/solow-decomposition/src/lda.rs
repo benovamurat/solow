@@ -48,7 +48,9 @@ impl LatentDirichletAllocation {
             return Err(Error::Value("LDA: n_topics must be ≥ 1".into()));
         }
         if x.iter().any(|&v| v < 0.0) {
-            return Err(Error::Value("LDA: inputs must be non-negative counts".into()));
+            return Err(Error::Value(
+                "LDA: inputs must be non-negative counts".into(),
+            ));
         }
         // Initialise β uniformly + Dirichlet fudge from a fixed seed.
         let mut beta = Array2::<f64>::from_elem((n_topics, d), 1.0 / d as f64);

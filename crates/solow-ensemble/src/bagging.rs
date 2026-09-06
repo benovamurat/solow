@@ -33,7 +33,9 @@ impl BaggingClassifier {
     ) -> Result<Self> {
         let n = x.nrows();
         if n_estimators == 0 {
-            return Err(Error::Value("BaggingClassifier: n_estimators must be ≥ 1".into()));
+            return Err(Error::Value(
+                "BaggingClassifier: n_estimators must be ≥ 1".into(),
+            ));
         }
         if !(0.0..=1.0).contains(&max_samples) || max_samples == 0.0 {
             return Err(Error::Value(format!(
@@ -53,9 +55,18 @@ impl BaggingClassifier {
             let sub_y = row_subset_y_usize(y, &rows);
             let mut p = params;
             p.seed = seed.wrapping_add(t as u64);
-            trees.push(DecisionTreeClassifier::fit(sub_x.view(), sub_y.view(), criterion, p)?);
+            trees.push(DecisionTreeClassifier::fit(
+                sub_x.view(),
+                sub_y.view(),
+                criterion,
+                p,
+            )?);
         }
-        Ok(Self { trees, n_classes, n_estimators })
+        Ok(Self {
+            trees,
+            n_classes,
+            n_estimators,
+        })
     }
 
     /// Predict labels.
@@ -116,7 +127,9 @@ impl BaggingRegressor {
     ) -> Result<Self> {
         let n = x.nrows();
         if n_estimators == 0 {
-            return Err(Error::Value("BaggingRegressor: n_estimators must be ≥ 1".into()));
+            return Err(Error::Value(
+                "BaggingRegressor: n_estimators must be ≥ 1".into(),
+            ));
         }
         if !(0.0..=1.0).contains(&max_samples) || max_samples == 0.0 {
             return Err(Error::Value(format!(
@@ -136,9 +149,17 @@ impl BaggingRegressor {
             let mut p = params;
             p.seed = seed.wrapping_add(t as u64);
             let _ = lcg_next(&mut state);
-            trees.push(DecisionTreeRegressor::fit(sub_x.view(), sub_y.view(), criterion, p)?);
+            trees.push(DecisionTreeRegressor::fit(
+                sub_x.view(),
+                sub_y.view(),
+                criterion,
+                p,
+            )?);
         }
-        Ok(Self { trees, n_estimators })
+        Ok(Self {
+            trees,
+            n_estimators,
+        })
     }
 
     /// Predict.
@@ -193,17 +214,30 @@ mod tests {
     #[test]
     fn bagging_classifier_learns_two_clusters() {
         let x = array![
-            [0.0_f64, 0.0], [0.1, 0.1], [0.2, 0.2],
-            [5.0, 5.0], [5.1, 5.1], [5.2, 5.2]
+            [0.0_f64, 0.0],
+            [0.1, 0.1],
+            [0.2, 0.2],
+            [5.0, 5.0],
+            [5.1, 5.1],
+            [5.2, 5.2]
         ];
         let y = array![0_usize, 0, 0, 1, 1, 1];
         let m = BaggingClassifier::fit(
-            x.view(), y.view(), 10, 0.7,
+            x.view(),
+            y.view(),
+            10,
+            0.7,
             ClassificationCriterion::Gini,
-            TreeParams::default(), 42,
-        ).unwrap();
+            TreeParams::default(),
+            42,
+        )
+        .unwrap();
         let p = m.predict(x.view()).unwrap();
-        for i in 0..3 { assert_eq!(p[i], 0); }
-        for i in 3..6 { assert_eq!(p[i], 1); }
+        for i in 0..3 {
+            assert_eq!(p[i], 0);
+        }
+        for i in 3..6 {
+            assert_eq!(p[i], 1);
+        }
     }
 }

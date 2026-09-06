@@ -26,11 +26,7 @@ impl SpectralEmbedding {
     }
 
     /// Full-configuration fit.
-    pub fn fit_with(
-        x: ArrayView2<'_, f64>,
-        n_components: usize,
-        gamma: f64,
-    ) -> Result<Self> {
+    pub fn fit_with(x: ArrayView2<'_, f64>, n_components: usize, gamma: f64) -> Result<Self> {
         let n = x.nrows();
         let d = x.ncols();
         if n_components == 0 || n_components + 1 > n {
@@ -148,9 +144,7 @@ mod tests {
 
     #[test]
     fn spectral_embedding_gives_the_requested_dimension() {
-        let x = array![
-            [0.0_f64, 0.0], [1.0, 0.0], [0.0, 1.0], [1.0, 1.0]
-        ];
+        let x = array![[0.0_f64, 0.0], [1.0, 0.0], [0.0, 1.0], [1.0, 1.0]];
         let m = SpectralEmbedding::fit(x.view(), 2).unwrap();
         assert_eq!(m.embedding.shape(), &[4, 2]);
     }

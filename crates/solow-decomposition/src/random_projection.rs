@@ -28,7 +28,9 @@ impl GaussianRandomProjection {
     pub fn fit(x: ArrayView2<'_, f64>, n_components: usize, seed: u64) -> Result<Self> {
         let d = x.ncols();
         if n_components == 0 {
-            return Err(Error::Value("GaussianRandomProjection: n_components must be ≥ 1".into()));
+            return Err(Error::Value(
+                "GaussianRandomProjection: n_components must be ≥ 1".into(),
+            ));
         }
         let mut state = seed.wrapping_add(0xF00D_C0DE);
         let mut r = Array2::<f64>::zeros((n_components, d));
@@ -49,7 +51,9 @@ impl GaussianRandomProjection {
     /// Transform.
     pub fn transform(&self, x: ArrayView2<'_, f64>) -> Result<Array2<f64>> {
         if x.ncols() != self.n_features_in {
-            return Err(Error::Shape("GaussianRandomProjection::transform: shape mismatch".into()));
+            return Err(Error::Shape(
+                "GaussianRandomProjection::transform: shape mismatch".into(),
+            ));
         }
         let n = x.nrows();
         let k = self.n_components;
@@ -102,7 +106,9 @@ impl SparseRandomProjection {
     ) -> Result<Self> {
         let d = x.ncols();
         if n_components == 0 {
-            return Err(Error::Value("SparseRandomProjection: n_components must be ≥ 1".into()));
+            return Err(Error::Value(
+                "SparseRandomProjection: n_components must be ≥ 1".into(),
+            ));
         }
         if !(0.0..=1.0).contains(&density) || density == 0.0 {
             return Err(Error::Value(format!(
@@ -137,7 +143,9 @@ impl SparseRandomProjection {
     /// Transform.
     pub fn transform(&self, x: ArrayView2<'_, f64>) -> Result<Array2<f64>> {
         if x.ncols() != self.n_features_in {
-            return Err(Error::Shape("SparseRandomProjection::transform: shape mismatch".into()));
+            return Err(Error::Shape(
+                "SparseRandomProjection::transform: shape mismatch".into(),
+            ));
         }
         let n = x.nrows();
         let k = self.n_components;
@@ -200,7 +208,9 @@ mod tests {
     #[test]
     fn sparse_random_projection_produces_a_projection_with_the_expected_shape() {
         let x = array![
-            [1.0_f64, 2.0, 3.0, 4.0], [5.0, 6.0, 7.0, 8.0], [9.0, 10.0, 11.0, 12.0]
+            [1.0_f64, 2.0, 3.0, 4.0],
+            [5.0, 6.0, 7.0, 8.0],
+            [9.0, 10.0, 11.0, 12.0]
         ];
         let m = SparseRandomProjection::fit(x.view(), 3, 7).unwrap();
         let z = m.transform(x.view()).unwrap();

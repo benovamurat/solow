@@ -72,7 +72,7 @@ pub fn meta_fixed_effect(studies: &[Study]) -> Result<MetaResult> {
 /// DerSimonian-Laird random-effects meta-analysis.
 pub fn meta_random_effects(studies: &[Study]) -> Result<MetaResult> {
     validate(studies)?;
-    let (q, weights_fe, pooled_fe, _) = fixed_effect_stats(studies);
+    let (q, weights_fe, _pooled_fe, _) = fixed_effect_stats(studies);
     let df = studies.len().saturating_sub(1) as f64;
     // τ² = max(0, (Q − df) / (Σw − Σw² / Σw))
     let sum_w: f64 = weights_fe.iter().sum();
@@ -117,7 +117,9 @@ fn validate(studies: &[Study]) -> Result<()> {
     }
     for s in studies {
         if !(s.se > 0.0 && s.se.is_finite()) {
-            return Err(Error::Value("meta_analysis: SEs must be finite and > 0".into()));
+            return Err(Error::Value(
+                "meta_analysis: SEs must be finite and > 0".into(),
+            ));
         }
     }
     Ok(())
@@ -144,7 +146,10 @@ fn fixed_effect_stats(studies: &[Study]) -> (f64, Vec<f64>, f64, f64) {
 }
 
 fn ci_95(estimate: f64, se: f64) -> (f64, f64) {
-    (estimate - 1.959963984540054 * se, estimate + 1.959963984540054 * se)
+    (
+        estimate - 1.959963984540054 * se,
+        estimate + 1.959963984540054 * se,
+    )
 }
 
 fn i_squared(q: f64, df: f64) -> f64 {
@@ -244,9 +249,18 @@ mod tests {
     #[test]
     fn fixed_effect_returns_the_weighted_average() {
         let studies = vec![
-            Study { estimate: 0.5, se: 0.1 },
-            Study { estimate: 0.6, se: 0.1 },
-            Study { estimate: 0.55, se: 0.15 },
+            Study {
+                estimate: 0.5,
+                se: 0.1,
+            },
+            Study {
+                estimate: 0.6,
+                se: 0.1,
+            },
+            Study {
+                estimate: 0.55,
+                se: 0.15,
+            },
         ];
         let r = meta_fixed_effect(&studies).unwrap();
         assert!(r.estimate > 0.5 && r.estimate < 0.6);
@@ -257,9 +271,18 @@ mod tests {
     #[test]
     fn random_effects_widens_ci_versus_fixed_effect_under_heterogeneity() {
         let studies = vec![
-            Study { estimate: 0.5, se: 0.05 },
-            Study { estimate: 1.5, se: 0.05 },
-            Study { estimate: -0.2, se: 0.05 },
+            Study {
+                estimate: 0.5,
+                se: 0.05,
+            },
+            Study {
+                estimate: 1.5,
+                se: 0.05,
+            },
+            Study {
+                estimate: -0.2,
+                se: 0.05,
+            },
         ];
         let fe = meta_fixed_effect(&studies).unwrap();
         let re = meta_random_effects(&studies).unwrap();

@@ -160,7 +160,11 @@ fn eval_kernel(kernel: &NystroemKernel, a: &[f64], b: &[f64]) -> f64 {
             }
             (-gamma * s).exp()
         }
-        NystroemKernel::Polynomial { gamma, coef0, degree } => {
+        NystroemKernel::Polynomial {
+            gamma,
+            coef0,
+            degree,
+        } => {
             let mut s = 0.0_f64;
             for i in 0..a.len() {
                 s += a[i] * b[i];
@@ -258,15 +262,14 @@ mod tests {
     #[test]
     fn nystroem_reproduces_the_rbf_kernel_at_landmark_rows() {
         let x = array![
-            [0.0, 0.0], [1.0, 0.0], [0.0, 1.0], [1.0, 1.0],
-            [2.0, 0.0], [0.0, 2.0]
+            [0.0, 0.0],
+            [1.0, 0.0],
+            [0.0, 1.0],
+            [1.0, 1.0],
+            [2.0, 0.0],
+            [0.0, 2.0]
         ];
-        let m = Nystroem::fit_with(
-            x.view(),
-            NystroemKernel::Rbf { gamma: 0.5 },
-            4,
-            7,
-        ).unwrap();
+        let m = Nystroem::fit_with(x.view(), NystroemKernel::Rbf { gamma: 0.5 }, 4, 7).unwrap();
         let z = m.transform(x.view()).unwrap();
         // The inner product ZZᵀ should be close to the true K on the training set.
         let mut ok = 0;

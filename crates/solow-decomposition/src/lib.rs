@@ -1,6 +1,6 @@
 //! # solow-decomposition
 //!
-//! Matrix-decomposition estimators complementing [`solow-multivariate`]'s
+//! Matrix-decomposition estimators complementing [`solow-multivariate`](https://docs.rs/solow-multivariate)'s
 //! classical PCA / factor / rotation surface.
 //!
 //! * [`KernelPca`] — Schölkopf-Smola-Müller (1998) kernel PCA with

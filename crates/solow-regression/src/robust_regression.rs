@@ -112,7 +112,9 @@ impl RansacRegressor {
         let n = x.nrows();
         let d = x.ncols();
         if self.coef.len() != d + 1 {
-            return Err(Error::Shape("RansacRegressor::predict: shape mismatch".into()));
+            return Err(Error::Shape(
+                "RansacRegressor::predict: shape mismatch".into(),
+            ));
         }
         let mut out = Array1::<f64>::zeros(n);
         for i in 0..n {
@@ -157,7 +159,8 @@ impl TheilSenRegressor {
         let min_samples = d + 1;
         if n < min_samples {
             return Err(Error::Value(format!(
-                "TheilSenRegressor: need ≥ {} samples", min_samples
+                "TheilSenRegressor: need ≥ {} samples",
+                min_samples
             )));
         }
         let mut state = seed.wrapping_add(0xC0DE_F00D);
@@ -192,7 +195,9 @@ impl TheilSenRegressor {
         let n = x.nrows();
         let d = x.ncols();
         if self.coef.len() != d + 1 {
-            return Err(Error::Shape("TheilSenRegressor::predict: shape mismatch".into()));
+            return Err(Error::Shape(
+                "TheilSenRegressor::predict: shape mismatch".into(),
+            ));
         }
         let mut out = Array1::<f64>::zeros(n);
         for i in 0..n {

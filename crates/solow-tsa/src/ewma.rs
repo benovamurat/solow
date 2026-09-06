@@ -64,19 +64,33 @@ pub fn ewma(
         z[i] = zi;
         // Time-varying limit — narrows to lambda / (2 - lambda) as i → ∞.
         let one_minus_lambda = 1.0 - lambda;
-        let factor = (lambda / (2.0 - lambda))
-            * (1.0 - one_minus_lambda.powi(2 * (i + 1) as i32));
+        let factor = (lambda / (2.0 - lambda)) * (1.0 - one_minus_lambda.powi(2 * (i + 1) as i32));
         let half_width = l * sigma * factor.sqrt();
         upper[i] = target + half_width;
         lower[i] = target - half_width;
         if zi > upper[i] {
-            alarms.push(EwmaAlarm { index: i, statistic: zi, direction: 1 });
+            alarms.push(EwmaAlarm {
+                index: i,
+                statistic: zi,
+                direction: 1,
+            });
         } else if zi < lower[i] {
-            alarms.push(EwmaAlarm { index: i, statistic: zi, direction: -1 });
+            alarms.push(EwmaAlarm {
+                index: i,
+                statistic: zi,
+                direction: -1,
+            });
         }
         prev = zi;
     }
-    Ok(EwmaResult { ewma: z, upper, lower, alarms, lambda, l })
+    Ok(EwmaResult {
+        ewma: z,
+        upper,
+        lower,
+        alarms,
+        lambda,
+        l,
+    })
 }
 
 #[cfg(test)]

@@ -82,8 +82,12 @@ mod tests {
     #[test]
     fn extra_tree_classifier_learns_two_classes() {
         let x = array![
-            [0.0_f64, 0.0], [0.1, 0.1], [0.2, 0.2],
-            [5.0, 5.0], [5.1, 5.1], [5.2, 5.2]
+            [0.0_f64, 0.0],
+            [0.1, 0.1],
+            [0.2, 0.2],
+            [5.0, 5.0],
+            [5.1, 5.1],
+            [5.2, 5.2]
         ];
         let y = array![0_usize, 0, 0, 1, 1, 1];
         let m = ExtraTreeClassifier::fit(
@@ -92,7 +96,8 @@ mod tests {
             ClassificationCriterion::Gini,
             TreeParams::default(),
             42,
-        ).unwrap();
+        )
+        .unwrap();
         let p = m.predict(x.view()).unwrap();
         for i in 0..3 {
             assert_eq!(p[i], 0);

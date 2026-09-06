@@ -43,10 +43,14 @@ impl GradientBoostingClassifier {
         params: TreeParams,
     ) -> Result<Self> {
         if x.nrows() != y.len() {
-            return Err(Error::Shape("GradientBoostingClassifier: y/x length mismatch".into()));
+            return Err(Error::Shape(
+                "GradientBoostingClassifier: y/x length mismatch".into(),
+            ));
         }
         if n_estimators == 0 {
-            return Err(Error::Value("GradientBoostingClassifier: n_estimators must be ≥ 1".into()));
+            return Err(Error::Value(
+                "GradientBoostingClassifier: n_estimators must be ≥ 1".into(),
+            ));
         }
         let n = x.nrows();
         // Baseline log-odds from the empirical positive rate.
@@ -61,14 +65,21 @@ impl GradientBoostingClassifier {
                 let p = sigmoid(f[i]);
                 residual[i] = y[i] as f64 - p;
             }
-            let tree = DecisionTreeRegressor::fit(x, residual.view(), RegressionCriterion::Mse, params)?;
+            let tree =
+                DecisionTreeRegressor::fit(x, residual.view(), RegressionCriterion::Mse, params)?;
             let pred = tree.predict(x)?;
             for i in 0..n {
                 f[i] += learning_rate * pred[i];
             }
             estimators.push(tree);
         }
-        Ok(Self { baseline, estimators, learning_rate, n_estimators, params })
+        Ok(Self {
+            baseline,
+            estimators,
+            learning_rate,
+            n_estimators,
+            params,
+        })
     }
 
     /// Predicted probability of class 1.
@@ -92,7 +103,9 @@ impl GradientBoostingClassifier {
 
     /// Predicted labels.
     pub fn predict(&self, x: ArrayView2<'_, f64>) -> Result<Array1<u8>> {
-        Ok(self.predict_proba1(x)?.map(|p| if *p >= 0.5 { 1 } else { 0 }))
+        Ok(self
+            .predict_proba1(x)?
+            .map(|p| if *p >= 0.5 { 1 } else { 0 }))
     }
 }
 
@@ -119,8 +132,14 @@ mod tests {
     #[test]
     fn gradient_boosting_classifier_separates_two_clusters() {
         let x = array![
-            [0.0_f64, 0.0], [0.1, 0.1], [0.2, 0.2], [0.3, 0.3],
-            [5.0, 5.0], [5.1, 5.1], [5.2, 5.2], [5.3, 5.3]
+            [0.0_f64, 0.0],
+            [0.1, 0.1],
+            [0.2, 0.2],
+            [0.3, 0.3],
+            [5.0, 5.0],
+            [5.1, 5.1],
+            [5.2, 5.2],
+            [5.3, 5.3]
         ];
         let y = array![0_u8, 0, 0, 0, 1, 1, 1, 1];
         let m = GradientBoostingClassifier::fit(x.view(), y.view()).unwrap();

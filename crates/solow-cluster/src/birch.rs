@@ -121,8 +121,12 @@ mod tests {
     #[test]
     fn birch_forms_two_subclusters_for_two_clumps() {
         let x = array![
-            [0.0_f64, 0.0], [0.1, 0.1], [0.05, 0.15],
-            [5.0, 5.0], [5.1, 5.1], [5.05, 5.15]
+            [0.0_f64, 0.0],
+            [0.1, 0.1],
+            [0.05, 0.15],
+            [5.0, 5.0],
+            [5.1, 5.1],
+            [5.05, 5.15]
         ];
         let b = Birch::fit_with(x.view(), 0.5, Some(2)).unwrap();
         assert_ne!(b.labels[0], b.labels[3]);

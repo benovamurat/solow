@@ -31,15 +31,12 @@ impl LogisticRegressionCV {
     }
 
     /// Full-configuration fit.
-    pub fn fit_with(
-        x: ArrayView2<'_, f64>,
-        y: &[u8],
-        cs: Vec<f64>,
-        cv: usize,
-    ) -> Result<Self> {
+    pub fn fit_with(x: ArrayView2<'_, f64>, y: &[u8], cs: Vec<f64>, cv: usize) -> Result<Self> {
         let n = x.nrows();
         if y.len() != n {
-            return Err(Error::Shape("LogisticRegressionCV: y/x row mismatch".into()));
+            return Err(Error::Shape(
+                "LogisticRegressionCV: y/x row mismatch".into(),
+            ));
         }
         if cs.is_empty() {
             return Err(Error::Value("LogisticRegressionCV: empty Cs grid".into()));
@@ -121,7 +118,9 @@ impl LogisticRegressionCV {
 
     /// Predict labels.
     pub fn predict(&self, x: ArrayView2<'_, f64>) -> Result<Array1<u8>> {
-        Ok(self.predict_proba1(x)?.map(|p| if *p >= 0.5 { 1 } else { 0 }))
+        Ok(self
+            .predict_proba1(x)?
+            .map(|p| if *p >= 0.5 { 1 } else { 0 }))
     }
 }
 
@@ -190,8 +189,14 @@ mod tests {
     fn logistic_regression_cv_selects_a_c_and_returns_a_reasonable_fit() {
         // Not perfectly separable to avoid the Logit MLE diverging.
         let x = array![
-            [0.0_f64, 0.5], [1.2, -0.3], [0.6, 0.9], [1.5, 0.1],
-            [3.0, 3.5], [4.2, 2.7], [3.6, 3.9], [4.5, 3.1]
+            [0.0_f64, 0.5],
+            [1.2, -0.3],
+            [0.6, 0.9],
+            [1.5, 0.1],
+            [3.0, 3.5],
+            [4.2, 2.7],
+            [3.6, 3.9],
+            [4.5, 3.1]
         ];
         let y = vec![0_u8, 0, 0, 0, 1, 1, 1, 1];
         let m = LogisticRegressionCV::fit_with(x.view(), &y, vec![1.0, 10.0], 2).unwrap();

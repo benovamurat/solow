@@ -59,11 +59,7 @@ impl ClassificationReport {
         let total = self.rows.iter().map(|r| r.support).sum::<usize>();
         out.push_str(&format!(
             "{:>15} {:>10.4} {:>10.4} {:>10.4} {:>10}\n",
-            "macro avg",
-            self.macro_avg.precision,
-            self.macro_avg.recall,
-            self.macro_avg.f1,
-            total
+            "macro avg", self.macro_avg.precision, self.macro_avg.recall, self.macro_avg.f1, total
         ));
         out.push_str(&format!(
             "{:>15} {:>10.4} {:>10.4} {:>10.4} {:>10}\n",
@@ -88,7 +84,9 @@ pub fn classification_report(
 ) -> Result<ClassificationReport> {
     let n = y_true.len();
     if y_pred.len() != n {
-        return Err(Error::Shape("classification_report: length mismatch".into()));
+        return Err(Error::Shape(
+            "classification_report: length mismatch".into(),
+        ));
     }
     if n == 0 {
         return Err(Error::Value("classification_report: empty inputs".into()));

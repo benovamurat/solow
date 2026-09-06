@@ -55,11 +55,19 @@ pub fn cusum(
         sh = (sh + dev - ks).max(0.0);
         sl = (sl - dev - ks).max(0.0);
         if sh > hs {
-            alarms.push(CusumAlarm { index: i, direction: 1, statistic: sh });
+            alarms.push(CusumAlarm {
+                index: i,
+                direction: 1,
+                statistic: sh,
+            });
             sh = 0.0;
         }
         if sl > hs {
-            alarms.push(CusumAlarm { index: i, direction: -1, statistic: sl });
+            alarms.push(CusumAlarm {
+                index: i,
+                direction: -1,
+                statistic: sl,
+            });
             sl = 0.0;
         }
     }

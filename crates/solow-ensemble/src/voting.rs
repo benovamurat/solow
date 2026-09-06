@@ -155,7 +155,10 @@ impl VotingRegressor {
                 ));
             }
         }
-        Ok(Self { weights, predict_fns })
+        Ok(Self {
+            weights,
+            predict_fns,
+        })
     }
 
     /// Predict.

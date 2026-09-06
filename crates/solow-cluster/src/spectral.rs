@@ -96,7 +96,9 @@ impl SpectralClustering {
             }
         }
         // KMeans on the spectral embedding.
-        let km = KMeans::new(k, seed).init(KMeansInit::KMeansPlusPlus).fit(embed.view())?;
+        let km = KMeans::new(k, seed)
+            .init(KMeansInit::KMeansPlusPlus)
+            .fit(embed.view())?;
         Ok(Self {
             labels: km.labels.iter().map(|&x| x as i64).collect(),
             n_clusters,
@@ -166,8 +168,12 @@ mod tests {
     #[test]
     fn spectral_clustering_splits_two_ring_bumps() {
         let x = array![
-            [0.0_f64, 0.0], [0.1, 0.1], [0.05, 0.15],
-            [5.0, 5.0], [5.1, 5.1], [5.05, 5.15]
+            [0.0_f64, 0.0],
+            [0.1, 0.1],
+            [0.05, 0.15],
+            [5.0, 5.0],
+            [5.1, 5.1],
+            [5.05, 5.15]
         ];
         let sc = SpectralClustering::fit_with(x.view(), 2, 0.5, 42).unwrap();
         let a = sc.labels[0];

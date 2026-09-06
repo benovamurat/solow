@@ -10,11 +10,7 @@ use solow_core::{Error, Result};
 
 /// Moving-block bootstrap indices — a resample of length `n` built
 /// from `⌈n / block_len⌉` overlapping blocks of length `block_len`.
-pub fn moving_block_bootstrap_indices(
-    n: usize,
-    block_len: usize,
-    seed: u64,
-) -> Result<Vec<usize>> {
+pub fn moving_block_bootstrap_indices(n: usize, block_len: usize, seed: u64) -> Result<Vec<usize>> {
     if n == 0 || block_len == 0 || block_len > n {
         return Err(Error::Value(
             "moving_block_bootstrap_indices: 0 < block_len ≤ n required".into(),
@@ -66,7 +62,9 @@ pub fn stationary_bootstrap_indices(
     seed: u64,
 ) -> Result<Vec<usize>> {
     if n == 0 {
-        return Err(Error::Value("stationary_bootstrap_indices: n must be > 0".into()));
+        return Err(Error::Value(
+            "stationary_bootstrap_indices: n must be > 0".into(),
+        ));
     }
     if expected_block_len < 1.0 {
         return Err(Error::Value(

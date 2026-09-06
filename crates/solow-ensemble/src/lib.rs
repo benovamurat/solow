@@ -53,9 +53,7 @@ pub use bagging::{BaggingClassifier, BaggingRegressor};
 pub use extra_trees::{ExtraTreesClassifier, ExtraTreesRegressor};
 pub use gradient_boosting::GradientBoostingRegressor;
 pub use gradient_boosting_classifier::GradientBoostingClassifier;
-pub use hist_gradient_boosting::{
-    HistGradientBoostingClassifier, HistGradientBoostingRegressor,
-};
+pub use hist_gradient_boosting::{HistGradientBoostingClassifier, HistGradientBoostingRegressor};
 pub use isolation_forest::IsolationForest;
 pub use random_forest::{RandomForestClassifier, RandomForestRegressor};
 pub use stacking::{StackingClassifier, StackingRegressor};

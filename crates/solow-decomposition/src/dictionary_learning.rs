@@ -40,7 +40,9 @@ impl DictionaryLearning {
         let n = x.nrows();
         let d = x.ncols();
         if n_components == 0 {
-            return Err(Error::Value("DictionaryLearning: n_components must be ≥ 1".into()));
+            return Err(Error::Value(
+                "DictionaryLearning: n_components must be ≥ 1".into(),
+            ));
         }
         if alpha < 0.0 {
             return Err(Error::Value("DictionaryLearning: alpha must be ≥ 0".into()));
@@ -110,7 +112,8 @@ impl DictionaryLearning {
                         for kk in 0..n_components {
                             recon += codes[[i, kk]] * dict[[kk, j]];
                         }
-                        num[j] += codes[[i, k]] * (x[[i, j]] - recon + codes[[i, k]] * dict[[k, j]]);
+                        num[j] +=
+                            codes[[i, k]] * (x[[i, j]] - recon + codes[[i, k]] * dict[[k, j]]);
                     }
                 }
                 if denom > 1e-30 {
@@ -169,8 +172,11 @@ mod tests {
     #[test]
     fn dict_learning_returns_dict_of_the_right_shape() {
         let x = array![
-            [1.0_f64, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0],
-            [1.0, 1.0, 0.0], [0.0, 1.0, 1.0]
+            [1.0_f64, 0.0, 0.0],
+            [0.0, 1.0, 0.0],
+            [0.0, 0.0, 1.0],
+            [1.0, 1.0, 0.0],
+            [0.0, 1.0, 1.0]
         ];
         let m = DictionaryLearning::fit_with(x.view(), 3, 0.1, 20, 1e-4).unwrap();
         assert_eq!(m.components.shape(), &[3, 3]);

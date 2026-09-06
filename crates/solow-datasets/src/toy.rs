@@ -14,9 +14,15 @@ pub fn load_wine() -> (Array2<f64>, Array1<usize>, Vec<&'static str>) {
     // Deterministic generator — a compact substitute so the crate does
     // not have to embed the reference full toy CSVs.
     let means = [
-        [13.7_f64, 1.9, 2.4, 17.0, 106.0, 2.85, 3.0, 0.29, 1.87, 5.6, 1.06, 3.15, 1116.0],
-        [12.3, 1.3, 2.2, 20.2, 92.0, 2.24, 2.05, 0.36, 1.62, 3.1, 1.05, 2.79, 519.0],
-        [13.1, 3.3, 2.4, 21.2, 98.0, 1.68, 0.78, 0.44, 1.15, 7.4, 0.68, 1.68, 629.0],
+        [
+            13.7_f64, 1.9, 2.4, 17.0, 106.0, 2.85, 3.0, 0.29, 1.87, 5.6, 1.06, 3.15, 1116.0,
+        ],
+        [
+            12.3, 1.3, 2.2, 20.2, 92.0, 2.24, 2.05, 0.36, 1.62, 3.1, 1.05, 2.79, 519.0,
+        ],
+        [
+            13.1, 3.3, 2.4, 21.2, 98.0, 1.68, 0.78, 0.44, 1.15, 7.4, 0.68, 1.68, 629.0,
+        ],
     ];
     let n_per = 60;
     let n = 3 * n_per;
@@ -35,9 +41,19 @@ pub fn load_wine() -> (Array2<f64>, Array1<usize>, Vec<&'static str>) {
         }
     }
     let names = vec![
-        "alcohol", "malic_acid", "ash", "alcalinity", "magnesium",
-        "total_phenols", "flavanoids", "nonflavanoid", "proanthocyanins",
-        "color_intensity", "hue", "od280_od315", "proline",
+        "alcohol",
+        "malic_acid",
+        "ash",
+        "alcalinity",
+        "magnesium",
+        "total_phenols",
+        "flavanoids",
+        "nonflavanoid",
+        "proanthocyanins",
+        "color_intensity",
+        "hue",
+        "od280_od315",
+        "proline",
     ];
     (x, y, names)
 }
@@ -51,7 +67,9 @@ pub fn load_diabetes() -> (Array2<f64>, Array1<f64>, Vec<&'static str>) {
     let mut x = Array2::<f64>::zeros((n, d));
     let mut y = Array1::<f64>::zeros(n);
     let mut state = 0xC0FF_EE00_u64;
-    let coef = [30.0_f64, -60.0, 250.0, 180.0, -12.0, -55.0, -230.0, 130.0, 500.0, 40.0];
+    let coef = [
+        30.0_f64, -60.0, 250.0, 180.0, -12.0, -55.0, -230.0, 130.0, 500.0, 40.0,
+    ];
     for i in 0..n {
         let mut yi = 152.0_f64;
         for j in 0..d {
@@ -61,7 +79,9 @@ pub fn load_diabetes() -> (Array2<f64>, Array1<f64>, Vec<&'static str>) {
         }
         y[i] = yi + 50.0 * standard_normal(&mut state);
     }
-    let names = vec!["age", "sex", "bmi", "bp", "s1", "s2", "s3", "s4", "s5", "s6"];
+    let names = vec![
+        "age", "sex", "bmi", "bp", "s1", "s2", "s3", "s4", "s5", "s6",
+    ];
     (x, y, names)
 }
 
@@ -76,9 +96,10 @@ pub fn load_breast_cancer() -> (Array2<f64>, Array1<usize>, Vec<&'static str>) {
     let mut state = 0xC0DE_FA11_u64;
     // Coefficients are roughly the sign+magnitude ratios that separate
     // benign (y=0) from malignant (y=1) in the real dataset.
-    let coef = [1.2_f64, 0.9, 1.1, 0.8, -0.4, 0.6, 1.5, 1.0, 0.7, 0.5,
-                0.9, 0.5, 0.6, 0.8, -0.3, -0.4, 0.5, 0.4, -0.3, -0.2,
-                1.4, 1.0, 1.2, 0.9, -0.6, 0.7, 1.6, 1.1, 0.8, 0.4];
+    let coef = [
+        1.2_f64, 0.9, 1.1, 0.8, -0.4, 0.6, 1.5, 1.0, 0.7, 0.5, 0.9, 0.5, 0.6, 0.8, -0.3, -0.4, 0.5,
+        0.4, -0.3, -0.2, 1.4, 1.0, 1.2, 0.9, -0.6, 0.7, 1.6, 1.1, 0.8, 0.4,
+    ];
     for i in 0..n {
         let mut score = 0.0_f64;
         for j in 0..d {
@@ -91,15 +112,36 @@ pub fn load_breast_cancer() -> (Array2<f64>, Array1<usize>, Vec<&'static str>) {
     // Feature names matching the reference schema (first ten only; other 20
     // are the mean / stderr / worst variants).
     let names = vec![
-        "mean_radius", "mean_texture", "mean_perimeter", "mean_area",
-        "mean_smoothness", "mean_compactness", "mean_concavity", "mean_concave_points",
-        "mean_symmetry", "mean_fractal_dimension",
-        "se_radius", "se_texture", "se_perimeter", "se_area",
-        "se_smoothness", "se_compactness", "se_concavity", "se_concave_points",
-        "se_symmetry", "se_fractal_dimension",
-        "worst_radius", "worst_texture", "worst_perimeter", "worst_area",
-        "worst_smoothness", "worst_compactness", "worst_concavity", "worst_concave_points",
-        "worst_symmetry", "worst_fractal_dimension",
+        "mean_radius",
+        "mean_texture",
+        "mean_perimeter",
+        "mean_area",
+        "mean_smoothness",
+        "mean_compactness",
+        "mean_concavity",
+        "mean_concave_points",
+        "mean_symmetry",
+        "mean_fractal_dimension",
+        "se_radius",
+        "se_texture",
+        "se_perimeter",
+        "se_area",
+        "se_smoothness",
+        "se_compactness",
+        "se_concavity",
+        "se_concave_points",
+        "se_symmetry",
+        "se_fractal_dimension",
+        "worst_radius",
+        "worst_texture",
+        "worst_perimeter",
+        "worst_area",
+        "worst_smoothness",
+        "worst_compactness",
+        "worst_concavity",
+        "worst_concave_points",
+        "worst_symmetry",
+        "worst_fractal_dimension",
     ];
     (x, y, names)
 }

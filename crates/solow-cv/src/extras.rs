@@ -27,9 +27,7 @@ impl LeavePOut {
 impl Splitter for LeavePOut {
     fn n_splits(&self, n: usize) -> Result<usize> {
         if self.p > n {
-            return Err(Error::Value(format!(
-                "LeavePOut: p={} > n={n}", self.p
-            )));
+            return Err(Error::Value(format!("LeavePOut: p={} > n={n}", self.p)));
         }
         // C(n, p) closed-form.
         let mut num = 1_u128;
@@ -43,9 +41,7 @@ impl Splitter for LeavePOut {
 
     fn split(&self, n: usize) -> Result<Vec<Split>> {
         if self.p > n {
-            return Err(Error::Value(format!(
-                "LeavePOut: p={} > n={n}", self.p
-            )));
+            return Err(Error::Value(format!("LeavePOut: p={} > n={n}", self.p)));
         }
         let mut out = Vec::new();
         let mut combo = (0..self.p).collect::<Vec<usize>>();
@@ -91,7 +87,11 @@ impl RepeatedKFold {
                 "RepeatedKFold: need n_splits ≥ 2 and n_repeats ≥ 1".into(),
             ));
         }
-        Ok(Self { n_splits, n_repeats, seed })
+        Ok(Self {
+            n_splits,
+            n_repeats,
+            seed,
+        })
     }
 }
 
@@ -130,7 +130,11 @@ impl RepeatedStratifiedKFold {
                 "RepeatedStratifiedKFold: need n_splits ≥ 2 and n_repeats ≥ 1".into(),
             ));
         }
-        Ok(Self { n_splits, n_repeats, seed })
+        Ok(Self {
+            n_splits,
+            n_repeats,
+            seed,
+        })
     }
 
     /// Split with class labels.
@@ -215,7 +219,9 @@ where
     F: FnMut(&[usize], &[usize], &[usize]) -> Result<f64>,
 {
     if n_permutations == 0 {
-        return Err(Error::Value("permutation_test_score: n_permutations must be ≥ 1".into()));
+        return Err(Error::Value(
+            "permutation_test_score: n_permutations must be ≥ 1".into(),
+        ));
     }
     let n = y.len();
     let kf = KFold::new(n_splits)?.shuffle(true).seed(seed);

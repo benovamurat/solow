@@ -41,7 +41,10 @@ impl SimpleImputer {
         }
         let mut stats = Array1::<f64>::zeros(d);
         for j in 0..d {
-            let observed: Vec<f64> = (0..n).map(|i| x[[i, j]]).filter(|v| v.is_finite()).collect();
+            let observed: Vec<f64> = (0..n)
+                .map(|i| x[[i, j]])
+                .filter(|v| v.is_finite())
+                .collect();
             stats[j] = match strategy {
                 SimpleStrategy::Mean => {
                     if observed.is_empty() {
@@ -91,7 +94,9 @@ impl SimpleImputer {
     /// Transform: replace `NaN`s with the fitted statistics.
     pub fn transform(&self, x: ArrayView2<'_, f64>) -> Result<Array2<f64>> {
         if x.ncols() != self.n_features_in {
-            return Err(Error::Shape("SimpleImputer::transform: column count mismatch".into()));
+            return Err(Error::Shape(
+                "SimpleImputer::transform: column count mismatch".into(),
+            ));
         }
         let n = x.nrows();
         let d = x.ncols();

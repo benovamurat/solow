@@ -50,10 +50,14 @@ impl AdaBoostRegressor {
     ) -> Result<Self> {
         let n = x.nrows();
         if y.len() != n {
-            return Err(Error::Shape("AdaBoostRegressor: y/x length mismatch".into()));
+            return Err(Error::Shape(
+                "AdaBoostRegressor: y/x length mismatch".into(),
+            ));
         }
         if n_estimators == 0 {
-            return Err(Error::Value("AdaBoostRegressor: n_estimators must be ≥ 1".into()));
+            return Err(Error::Value(
+                "AdaBoostRegressor: n_estimators must be ≥ 1".into(),
+            ));
         }
         let mut weights = vec![1.0_f64 / n as f64; n];
         let mut rounds: Vec<Round> = Vec::new();
@@ -83,7 +87,8 @@ impl AdaBoostRegressor {
                 sub_rows.push(lo);
             }
             let (sx, sy) = row_subset(x, y, &sub_rows);
-            let tree = DecisionTreeRegressor::fit(sx.view(), sy.view(), RegressionCriterion::Mse, params)?;
+            let tree =
+                DecisionTreeRegressor::fit(sx.view(), sy.view(), RegressionCriterion::Mse, params)?;
             let pred = tree.predict(x)?;
             let mut abs_err = vec![0.0_f64; n];
             let mut max_err = 0.0_f64;
@@ -139,7 +144,9 @@ impl AdaBoostRegressor {
         let n = x.nrows();
         let m = self.rounds.len();
         if m == 0 {
-            return Err(Error::Value("AdaBoostRegressor::predict: model has no rounds".into()));
+            return Err(Error::Value(
+                "AdaBoostRegressor::predict: model has no rounds".into(),
+            ));
         }
         // Per-round predictions and log(1/β) weights.
         let mut per_round_pred = Vec::with_capacity(m);
@@ -205,7 +212,16 @@ mod tests {
     #[test]
     fn adaboost_regressor_recovers_a_linear_signal() {
         let x = array![
-            [1.0_f64], [2.0], [3.0], [4.0], [5.0], [6.0], [7.0], [8.0], [9.0], [10.0]
+            [1.0_f64],
+            [2.0],
+            [3.0],
+            [4.0],
+            [5.0],
+            [6.0],
+            [7.0],
+            [8.0],
+            [9.0],
+            [10.0]
         ];
         let y = array![2.0_f64, 4.0, 6.0, 8.0, 10.0, 12.0, 14.0, 16.0, 18.0, 20.0];
         let m = AdaBoostRegressor::fit(x.view(), y.view(), 42).unwrap();

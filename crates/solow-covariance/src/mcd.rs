@@ -70,7 +70,8 @@ impl MinCovDet {
         let h = ((n as f64) * support_fraction).ceil() as usize;
         if h < d + 1 {
             return Err(Error::Value(format!(
-                "MinCovDet::fit_with: support size h={h} must be ≥ d+1={}", d + 1
+                "MinCovDet::fit_with: support size h={h} must be ≥ d+1={}",
+                d + 1
             )));
         }
         let mut state = seed.wrapping_add(0xDEAD_BEEF_C0DE_F00D);
@@ -92,8 +93,7 @@ impl MinCovDet {
                     break;
                 };
                 let mahal = mahalanobis_of_all(x, &fit).unwrap_or_else(|_| Array1::zeros(n));
-                let mut order: Vec<(usize, f64)> =
-                    (0..n).map(|i| (i, mahal[i])).collect();
+                let mut order: Vec<(usize, f64)> = (0..n).map(|i| (i, mahal[i])).collect();
                 order.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap());
                 let new_subset: Vec<usize> = order.iter().take(h).map(|(i, _)| *i).collect();
                 if new_subset == cur_subset {

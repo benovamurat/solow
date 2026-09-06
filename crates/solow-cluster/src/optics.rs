@@ -34,11 +34,7 @@ impl Optics {
     }
 
     /// Full-configuration fit.
-    pub fn fit_with(
-        x: ArrayView2<'_, f64>,
-        min_samples: usize,
-        max_eps: f64,
-    ) -> Result<Self> {
+    pub fn fit_with(x: ArrayView2<'_, f64>, min_samples: usize, max_eps: f64) -> Result<Self> {
         let n = x.nrows();
         if n == 0 {
             return Err(Error::Value("Optics: empty input".into()));
@@ -167,9 +163,7 @@ mod tests {
 
     #[test]
     fn optics_orders_two_clumps() {
-        let x = array![
-            [0.0_f64], [0.1], [0.2], [5.0], [5.1], [5.2]
-        ];
+        let x = array![[0.0_f64], [0.1], [0.2], [5.0], [5.1], [5.2]];
         let m = Optics::fit_with(x.view(), 2, f64::INFINITY).unwrap();
         assert_eq!(m.ordering.len(), 6);
         // Every point except the ordering-starter should have finite reach.

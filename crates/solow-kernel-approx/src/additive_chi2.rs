@@ -78,8 +78,7 @@ impl AdditiveChi2Sampler {
                 out[[i, base]] = xij.sqrt();
                 for k in 1..=self.sample_steps {
                     let omega = k as f64 * self.sample_interval;
-                    let factor =
-                        (2.0 * xij / (std::f64::consts::PI * omega).cosh()).sqrt();
+                    let factor = (2.0 * xij / (std::f64::consts::PI * omega).cosh()).sqrt();
                     let (cosw, sinw) = if xij > 0.0 {
                         let l = xij.ln();
                         ((omega * l).cos(), (omega * l).sin())

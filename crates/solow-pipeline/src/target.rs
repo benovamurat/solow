@@ -30,11 +30,15 @@ impl TransformedTargetRegressor {
     where
         F: Fn(&Array1<f64>) -> Array1<f64>,
         G: Fn(&Array1<f64>) -> Array1<f64> + 'static,
-        H: FnOnce(ArrayView2<'_, f64>, ArrayView1<'_, f64>)
-            -> Result<Box<dyn Fn(ArrayView2<'_, f64>) -> Result<Array1<f64>>>>,
+        H: FnOnce(
+            ArrayView2<'_, f64>,
+            ArrayView1<'_, f64>,
+        ) -> Result<Box<dyn Fn(ArrayView2<'_, f64>) -> Result<Array1<f64>>>>,
     {
         if y.len() != x.nrows() {
-            return Err(Error::Shape("TransformedTargetRegressor: y/x length mismatch".into()));
+            return Err(Error::Shape(
+                "TransformedTargetRegressor: y/x length mismatch".into(),
+            ));
         }
         let y_owned = y.to_owned();
         let y_transformed = forward_target(&y_owned);
@@ -98,7 +102,8 @@ mod tests {
                     Ok(xnew.column(0).map(|xi| a + b * xi))
                 }))
             },
-        ).unwrap();
+        )
+        .unwrap();
         let pred = m.predict(x.view()).unwrap();
         for i in 0..5 {
             assert!(

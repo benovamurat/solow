@@ -24,10 +24,14 @@ impl RadiusNeighborsClassifier {
     pub fn fit(x: ArrayView2<'_, f64>, y: &[i64], radius: f64) -> Result<Self> {
         let n = x.nrows();
         if y.len() != n {
-            return Err(Error::Shape("RadiusNeighborsClassifier: y/x length mismatch".into()));
+            return Err(Error::Shape(
+                "RadiusNeighborsClassifier: y/x length mismatch".into(),
+            ));
         }
         if radius <= 0.0 {
-            return Err(Error::Value("RadiusNeighborsClassifier: radius must be > 0".into()));
+            return Err(Error::Value(
+                "RadiusNeighborsClassifier: radius must be > 0".into(),
+            ));
         }
         let mut classes: Vec<i64> = y.to_vec();
         classes.sort();
@@ -45,7 +49,9 @@ impl RadiusNeighborsClassifier {
         let n = x.nrows();
         let d = self.x_train.ncols();
         if x.ncols() != d {
-            return Err(Error::Shape("RadiusNeighborsClassifier::predict: shape mismatch".into()));
+            return Err(Error::Shape(
+                "RadiusNeighborsClassifier::predict: shape mismatch".into(),
+            ));
         }
         let mut out = Array1::<i64>::zeros(n);
         for i in 0..n {
@@ -91,10 +97,14 @@ impl RadiusNeighborsRegressor {
     pub fn fit(x: ArrayView2<'_, f64>, y: ArrayView1<'_, f64>, radius: f64) -> Result<Self> {
         let n = x.nrows();
         if y.len() != n {
-            return Err(Error::Shape("RadiusNeighborsRegressor: y/x length mismatch".into()));
+            return Err(Error::Shape(
+                "RadiusNeighborsRegressor: y/x length mismatch".into(),
+            ));
         }
         if radius <= 0.0 {
-            return Err(Error::Value("RadiusNeighborsRegressor: radius must be > 0".into()));
+            return Err(Error::Value(
+                "RadiusNeighborsRegressor: radius must be > 0".into(),
+            ));
         }
         Ok(Self {
             x_train: x.to_owned(),
@@ -108,7 +118,9 @@ impl RadiusNeighborsRegressor {
         let n = x.nrows();
         let d = self.x_train.ncols();
         if x.ncols() != d {
-            return Err(Error::Shape("RadiusNeighborsRegressor::predict: shape mismatch".into()));
+            return Err(Error::Shape(
+                "RadiusNeighborsRegressor::predict: shape mismatch".into(),
+            ));
         }
         let mut out = Array1::<f64>::zeros(n);
         for i in 0..n {
@@ -139,8 +151,12 @@ mod tests {
     #[test]
     fn radius_classifier_labels_by_majority_within_radius() {
         let x = array![
-            [0.0_f64, 0.0], [0.1, 0.0], [0.0, 0.1],
-            [5.0, 5.0], [5.1, 5.0], [5.0, 5.1]
+            [0.0_f64, 0.0],
+            [0.1, 0.0],
+            [0.0, 0.1],
+            [5.0, 5.0],
+            [5.1, 5.0],
+            [5.0, 5.1]
         ];
         let y = vec![0_i64, 0, 0, 1, 1, 1];
         let m = RadiusNeighborsClassifier::fit(x.view(), &y, 0.5).unwrap();

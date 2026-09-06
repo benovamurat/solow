@@ -87,11 +87,19 @@ impl PLSSVD {
 
 /// One-sided Jacobi SVD of a rectangular matrix `A ∈ ℝ^{m×n}`. Sorts
 /// singular values / vectors in descending order.
-pub(crate) fn svd_helper(a: &Array2<f64>, max_sweeps: usize, tol: f64) -> (Array2<f64>, Vec<f64>, Array2<f64>) {
+pub(crate) fn svd_helper(
+    a: &Array2<f64>,
+    max_sweeps: usize,
+    tol: f64,
+) -> (Array2<f64>, Vec<f64>, Array2<f64>) {
     svd_jacobi(a, max_sweeps, tol)
 }
 
-fn svd_jacobi(a: &Array2<f64>, max_sweeps: usize, tol: f64) -> (Array2<f64>, Vec<f64>, Array2<f64>) {
+fn svd_jacobi(
+    a: &Array2<f64>,
+    max_sweeps: usize,
+    tol: f64,
+) -> (Array2<f64>, Vec<f64>, Array2<f64>) {
     let m = a.nrows();
     let n = a.ncols();
     let (mut u, mut v);
@@ -180,11 +188,12 @@ mod tests {
     #[test]
     fn pls_svd_gives_descending_singular_values() {
         let x = array![
-            [1.0, 2.0, 3.0], [2.0, 4.0, 5.0], [3.0, 5.0, 7.0], [4.0, 7.0, 9.0]
+            [1.0, 2.0, 3.0],
+            [2.0, 4.0, 5.0],
+            [3.0, 5.0, 7.0],
+            [4.0, 7.0, 9.0]
         ];
-        let y = array![
-            [2.0, 1.0], [4.0, 2.0], [6.0, 3.0], [8.0, 4.0]
-        ];
+        let y = array![[2.0, 1.0], [4.0, 2.0], [6.0, 3.0], [8.0, 4.0]];
         let m = PLSSVD::fit(x.view(), y.view(), 2).unwrap();
         assert_eq!(m.singular_values.len(), 2);
         assert!(m.singular_values[0] >= m.singular_values[1]);

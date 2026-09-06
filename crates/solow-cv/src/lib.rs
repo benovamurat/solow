@@ -51,8 +51,7 @@ mod shuffle;
 mod splitters;
 
 pub use block_bootstrap::{
-    circular_block_bootstrap_indices, moving_block_bootstrap_indices,
-    stationary_bootstrap_indices,
+    circular_block_bootstrap_indices, moving_block_bootstrap_indices, stationary_bootstrap_indices,
 };
 pub use bootstrap::{bootstrap_ci, BootstrapCi, BootstrapMethod};
 pub use extras::{
@@ -62,10 +61,10 @@ pub use extras::{
 pub use group_splitters::{
     CombinatorialPurgedKFold, GroupKFold, PurgedKFold, StratifiedGroupKFold,
 };
-pub use shuffle::{GroupShuffleSplit, StratifiedShuffleSplit};
 #[cfg(feature = "parallel")]
 pub use scoring::cross_val_score_parallel;
 pub use scoring::{cross_val_score, cross_val_score_from_folds, CrossValScores};
+pub use shuffle::{GroupShuffleSplit, StratifiedShuffleSplit};
 pub use splitters::{
     KFold, LeaveOneOut, ShuffleSplit, Split, Splitter, StratifiedKFold, TimeSeriesSplit,
 };

@@ -31,8 +31,8 @@ pub use regressor::GaussianProcessRegressor;
 pub mod prelude {
     pub use crate::classifier::GaussianProcessClassifier;
     pub use crate::kernels::{
-        ConstantKernel, DotProduct, Exponentiation, Kernel, Matern, Product,
-        RationalQuadratic, Rbf, Sum, WhiteKernel,
+        ConstantKernel, DotProduct, Exponentiation, Kernel, Matern, Product, RationalQuadratic,
+        Rbf, Sum, WhiteKernel,
     };
     pub use crate::regressor::GaussianProcessRegressor;
 }

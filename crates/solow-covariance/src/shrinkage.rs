@@ -161,9 +161,7 @@ mod tests {
         let s = ShrunkCovariance::fit(x.view(), 0.0).unwrap();
         for i in 0..2 {
             for j in 0..2 {
-                assert!(
-                    (s.covariance[[i, j]] - s.base.covariance[[i, j]]).abs() < 1e-12
-                );
+                assert!((s.covariance[[i, j]] - s.base.covariance[[i, j]]).abs() < 1e-12);
             }
         }
     }
@@ -183,9 +181,7 @@ mod tests {
 
     #[test]
     fn oas_returns_a_valid_shrinkage() {
-        let x = array![
-            [1.0, 2.0], [3.0, 4.0], [5.0, 6.0], [7.0, 8.0], [9.0, 10.0]
-        ];
+        let x = array![[1.0, 2.0], [3.0, 4.0], [5.0, 6.0], [7.0, 8.0], [9.0, 10.0]];
         let oas = Oas::fit(x.view()).unwrap();
         assert!((0.0..=1.0).contains(&oas.shrinkage));
     }

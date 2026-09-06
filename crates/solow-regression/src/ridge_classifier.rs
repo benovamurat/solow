@@ -37,11 +37,15 @@ impl RidgeClassifier {
         labels.sort();
         labels.dedup();
         if labels.len() != 2 {
-            return Err(Error::Value("RidgeClassifier: exactly 2 classes required".into()));
+            return Err(Error::Value(
+                "RidgeClassifier: exactly 2 classes required".into(),
+            ));
         }
         let (class_neg, class_pos) = (labels[0], labels[1]);
-        let y_signed: Vec<f64> =
-            y.iter().map(|&yi| if yi == class_pos { 1.0 } else { -1.0 }).collect();
+        let y_signed: Vec<f64> = y
+            .iter()
+            .map(|&yi| if yi == class_pos { 1.0 } else { -1.0 })
+            .collect();
         let y_arr = Array1::from_vec(y_signed);
         let ridge = Ridge::fit(y_arr.view(), x, alpha, true)?;
         let intercept = ridge.intercept;
@@ -61,7 +65,13 @@ impl RidgeClassifier {
     /// Predict labels.
     pub fn predict(&self, x: ArrayView2<'_, f64>) -> Result<Array1<i64>> {
         let scores = self.decision_function(x)?;
-        Ok(scores.map(|s| if *s >= 0.0 { self.class_pos } else { self.class_neg }))
+        Ok(scores.map(|s| {
+            if *s >= 0.0 {
+                self.class_pos
+            } else {
+                self.class_neg
+            }
+        }))
     }
 }
 
@@ -81,17 +91,23 @@ impl RidgeClassifierCV {
     pub fn fit(x: ArrayView2<'_, f64>, y: &[i64], alphas: Vec<f64>) -> Result<Self> {
         let n = x.nrows();
         if y.len() != n {
-            return Err(Error::Shape("RidgeClassifierCV: y/x length mismatch".into()));
+            return Err(Error::Shape(
+                "RidgeClassifierCV: y/x length mismatch".into(),
+            ));
         }
         let mut labels: Vec<i64> = y.to_vec();
         labels.sort();
         labels.dedup();
         if labels.len() != 2 {
-            return Err(Error::Value("RidgeClassifierCV: exactly 2 classes required".into()));
+            return Err(Error::Value(
+                "RidgeClassifierCV: exactly 2 classes required".into(),
+            ));
         }
         let (class_neg, class_pos) = (labels[0], labels[1]);
-        let y_signed: Vec<f64> =
-            y.iter().map(|&yi| if yi == class_pos { 1.0 } else { -1.0 }).collect();
+        let y_signed: Vec<f64> = y
+            .iter()
+            .map(|&yi| if yi == class_pos { 1.0 } else { -1.0 })
+            .collect();
         let y_arr = Array1::from_vec(y_signed);
         let ridge_cv = RidgeCV::fit(y_arr.view(), x, &alphas, 5, true)?;
         Ok(Self {
@@ -104,7 +120,13 @@ impl RidgeClassifierCV {
     /// Predict labels.
     pub fn predict(&self, x: ArrayView2<'_, f64>) -> Result<Array1<i64>> {
         let scores = self.ridge_cv.fit.predict(x)?;
-        Ok(scores.map(|s| if *s >= 0.0 { self.class_pos } else { self.class_neg }))
+        Ok(scores.map(|s| {
+            if *s >= 0.0 {
+                self.class_pos
+            } else {
+                self.class_neg
+            }
+        }))
     }
 }
 
@@ -116,8 +138,12 @@ mod tests {
     #[test]
     fn ridge_classifier_separates_easy_two_class_data() {
         let x = array![
-            [0.0_f64, 0.0], [0.1, 0.1], [0.2, 0.2],
-            [5.0, 5.0], [5.1, 5.1], [5.2, 5.2]
+            [0.0_f64, 0.0],
+            [0.1, 0.1],
+            [0.2, 0.2],
+            [5.0, 5.0],
+            [5.1, 5.1],
+            [5.2, 5.2]
         ];
         let y = vec![0_i64, 0, 0, 1, 1, 1];
         let m = RidgeClassifier::fit(x.view(), &y).unwrap();

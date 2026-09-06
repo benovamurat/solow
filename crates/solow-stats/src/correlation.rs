@@ -16,7 +16,9 @@ pub struct CorrelationResult {
 pub fn pearsonr(x: &[f64], y: &[f64]) -> Result<CorrelationResult> {
     let n = x.len();
     if n < 3 || y.len() != n {
-        return Err(Error::Value("pearsonr: need n ≥ 3 and matched lengths".into()));
+        return Err(Error::Value(
+            "pearsonr: need n ≥ 3 and matched lengths".into(),
+        ));
     }
     let mean_x: f64 = x.iter().sum::<f64>() / n as f64;
     let mean_y: f64 = y.iter().sum::<f64>() / n as f64;
@@ -32,7 +34,9 @@ pub fn pearsonr(x: &[f64], y: &[f64]) -> Result<CorrelationResult> {
     }
     let denom = (sxx * syy).sqrt();
     if denom < 1e-300 {
-        return Err(Error::Value("pearsonr: at least one column has zero variance".into()));
+        return Err(Error::Value(
+            "pearsonr: at least one column has zero variance".into(),
+        ));
     }
     let r = (sxy / denom).clamp(-1.0, 1.0);
     // Two-sided p from a t(n − 2) distribution: t = r · sqrt((n − 2)/(1 − r²)).
@@ -43,13 +47,18 @@ pub fn pearsonr(x: &[f64], y: &[f64]) -> Result<CorrelationResult> {
         let t = r * (df / (1.0 - r * r)).sqrt();
         2.0 * student_t_survival(t.abs(), df)
     };
-    Ok(CorrelationResult { statistic: r, pvalue })
+    Ok(CorrelationResult {
+        statistic: r,
+        pvalue,
+    })
 }
 
 /// Spearman rank correlation.
 pub fn spearmanr(x: &[f64], y: &[f64]) -> Result<CorrelationResult> {
     if x.len() != y.len() || x.len() < 3 {
-        return Err(Error::Value("spearmanr: need n ≥ 3 and matched lengths".into()));
+        return Err(Error::Value(
+            "spearmanr: need n ≥ 3 and matched lengths".into(),
+        ));
     }
     let rx = ranks_with_ties(x);
     let ry = ranks_with_ties(y);
@@ -60,7 +69,9 @@ pub fn spearmanr(x: &[f64], y: &[f64]) -> Result<CorrelationResult> {
 pub fn kendalltau(x: &[f64], y: &[f64]) -> Result<CorrelationResult> {
     let n = x.len();
     if y.len() != n || n < 3 {
-        return Err(Error::Value("kendalltau: need n ≥ 3 and matched lengths".into()));
+        return Err(Error::Value(
+            "kendalltau: need n ≥ 3 and matched lengths".into(),
+        ));
     }
     let mut concordant = 0_i64;
     let mut discordant = 0_i64;
@@ -87,12 +98,17 @@ pub fn kendalltau(x: &[f64], y: &[f64]) -> Result<CorrelationResult> {
     }
     let n0 = n as f64 * (n as f64 - 1.0) / 2.0;
     let tau_b = (concordant - discordant) as f64
-        / (((n0 - ties_x as f64) * (n0 - ties_y as f64)).sqrt().max(1e-300));
+        / (((n0 - ties_x as f64) * (n0 - ties_y as f64))
+            .sqrt()
+            .max(1e-300));
     // Two-sided normal-approximation p-value.
     let var = (2.0 * (2.0 * n as f64 + 5.0)) / (9.0 * n as f64 * (n as f64 - 1.0));
     let z = tau_b / var.sqrt();
     let pvalue = 2.0 * standard_normal_survival(z.abs());
-    Ok(CorrelationResult { statistic: tau_b, pvalue })
+    Ok(CorrelationResult {
+        statistic: tau_b,
+        pvalue,
+    })
 }
 
 fn ranks_with_ties(x: &[f64]) -> Vec<f64> {
@@ -220,9 +236,7 @@ fn ln_gamma(x: f64) -> f64 {
         1.505_632_735_149_311_6e-7,
     ];
     if x < 0.5 {
-        std::f64::consts::PI.ln()
-            - (std::f64::consts::PI * x).sin().ln()
-            - ln_gamma(1.0 - x)
+        std::f64::consts::PI.ln() - (std::f64::consts::PI * x).sin().ln() - ln_gamma(1.0 - x)
     } else {
         let x = x - 1.0;
         let mut a = cof[0];

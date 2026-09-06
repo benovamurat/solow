@@ -28,7 +28,9 @@ impl StackingClassifier {
         ridge: f64,
     ) -> Result<Self> {
         if base_proba.is_empty() {
-            return Err(Error::Value("StackingClassifier: no base predictors".into()));
+            return Err(Error::Value(
+                "StackingClassifier: no base predictors".into(),
+            ));
         }
         let mut classes: Vec<i64> = y.to_vec();
         classes.sort();
@@ -155,10 +157,7 @@ impl StackingRegressor {
             }
             coef[i] = s;
         }
-        Ok(Self {
-            base_predict,
-            coef,
-        })
+        Ok(Self { base_predict, coef })
     }
 
     /// Predict.

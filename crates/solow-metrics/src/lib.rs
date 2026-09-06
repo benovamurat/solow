@@ -84,14 +84,14 @@ pub use classification::{
     zero_one_loss, Average, KappaWeights, MulticlassAuc, PrecisionRecallFScore,
     RocCurve as RocCurveResult,
 };
+pub use cluster::{
+    adjusted_mutual_info_score, adjusted_rand_score, calinski_harabasz_score, completeness_score,
+    davies_bouldin_score, fowlkes_mallows_score, homogeneity_score, normalized_mutual_info_score,
+    silhouette_score, v_measure_score, MiAverage,
+};
 pub use comparison::{
     friedman_test, nemenyi_critical_difference, wilcoxon_signed_rank, FriedmanResult,
     WilcoxonResult,
-};
-pub use cluster::{
-    adjusted_mutual_info_score, adjusted_rand_score, calinski_harabasz_score, completeness_score,
-    davies_bouldin_score, fowlkes_mallows_score, homogeneity_score,
-    normalized_mutual_info_score, silhouette_score, v_measure_score, MiAverage,
 };
 pub use conformal::{JackknifePlus, PredictionInterval, SplitConformal};
 pub use effect_size::{
@@ -109,7 +109,6 @@ pub use pairwise::{
     chi2_kernel, cosine_similarity, laplacian_kernel, linear_kernel, pairwise_distances,
     polynomial_kernel, rbf_kernel, sigmoid_kernel, PairwiseMetric,
 };
-pub use report::{classification_report, ClassificationReport, ClassificationRow};
 pub use regression::{
     d2_absolute_error_score, d2_tweedie_score, explained_variance_score, huber_loss, log_cosh_loss,
     max_error, mean_absolute_error, mean_absolute_percentage_error, mean_gamma_deviance,
@@ -117,6 +116,7 @@ pub use regression::{
     mean_tweedie_deviance, median_absolute_error, r2_score, root_mean_squared_error,
     root_mean_squared_log_error, symmetric_mean_absolute_percentage_error, RegressionReport,
 };
+pub use report::{classification_report, ClassificationReport, ClassificationRow};
 
 /// Commonly used imports.
 ///

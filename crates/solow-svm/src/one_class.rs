@@ -74,10 +74,8 @@ impl OneClassSvm {
                     continue;
                 }
                 let sum = alpha[i] + alpha[j];
-                let a_j_new = (alpha[j] + (grad_i - grad_j) / eta).clamp(
-                    (sum - ub).max(0.0),
-                    sum.min(ub),
-                );
+                let a_j_new =
+                    (alpha[j] + (grad_i - grad_j) / eta).clamp((sum - ub).max(0.0), sum.min(ub));
                 let a_i_new = sum - a_j_new;
                 let change = (a_i_new - alpha[i]).abs() + (a_j_new - alpha[j]).abs();
                 if change > max_change {

@@ -128,8 +128,7 @@ impl BayesianRidge {
                 }
                 resid_sq += (y[r] - yhat).powi(2);
             }
-            alpha = (n as f64 - gamma + 2.0 * alpha_1)
-                / (resid_sq + 2.0 * alpha_2).max(1e-30);
+            alpha = (n as f64 - gamma + 2.0 * alpha_1) / (resid_sq + 2.0 * alpha_2).max(1e-30);
             let mut delta = 0.0_f64;
             for i in 0..p {
                 delta += (coef[i] - prev_coef[i]).abs();
@@ -158,14 +157,22 @@ impl BayesianRidge {
         let d = x.ncols();
         let p = self.coef.len();
         if self.fit_intercept && p != d + 1 {
-            return Err(Error::Shape("BayesianRidge::predict: shape mismatch".into()));
+            return Err(Error::Shape(
+                "BayesianRidge::predict: shape mismatch".into(),
+            ));
         }
         if !self.fit_intercept && p != d {
-            return Err(Error::Shape("BayesianRidge::predict: shape mismatch".into()));
+            return Err(Error::Shape(
+                "BayesianRidge::predict: shape mismatch".into(),
+            ));
         }
         let mut out = Array1::<f64>::zeros(n);
         for i in 0..n {
-            let mut s = if self.fit_intercept { self.coef[d] } else { 0.0 };
+            let mut s = if self.fit_intercept {
+                self.coef[d]
+            } else {
+                0.0
+            };
             for j in 0..d {
                 s += x[[i, j]] * self.coef[j];
             }
@@ -269,7 +276,8 @@ impl ARDRegression {
             }
             for i in 0..p {
                 let gamma_i = 1.0 - lambda[i] * sigma[[i, i]];
-                lambda[i] = (gamma_i + 2.0 * lambda_1) / (coef[i] * coef[i] + 2.0 * lambda_2).max(1e-30);
+                lambda[i] =
+                    (gamma_i + 2.0 * lambda_1) / (coef[i] * coef[i] + 2.0 * lambda_2).max(1e-30);
             }
             let gamma_total: f64 = (0..p).map(|i| 1.0 - lambda[i] * sigma[[i, i]]).sum();
             let mut resid_sq = 0.0_f64;
@@ -280,8 +288,8 @@ impl ARDRegression {
                 }
                 resid_sq += (y[r] - yhat).powi(2);
             }
-            alpha = (n as f64 - gamma_total + 2.0 * alpha_1)
-                / (resid_sq + 2.0 * alpha_2).max(1e-30);
+            alpha =
+                (n as f64 - gamma_total + 2.0 * alpha_1) / (resid_sq + 2.0 * alpha_2).max(1e-30);
             let mut delta = 0.0_f64;
             for i in 0..p {
                 delta += (coef[i] - prev_coef[i]).abs();
@@ -309,14 +317,22 @@ impl ARDRegression {
         let d = x.ncols();
         let p = self.coef.len();
         if self.fit_intercept && p != d + 1 {
-            return Err(Error::Shape("ARDRegression::predict: shape mismatch".into()));
+            return Err(Error::Shape(
+                "ARDRegression::predict: shape mismatch".into(),
+            ));
         }
         if !self.fit_intercept && p != d {
-            return Err(Error::Shape("ARDRegression::predict: shape mismatch".into()));
+            return Err(Error::Shape(
+                "ARDRegression::predict: shape mismatch".into(),
+            ));
         }
         let mut out = Array1::<f64>::zeros(n);
         for i in 0..n {
-            let mut s = if self.fit_intercept { self.coef[d] } else { 0.0 };
+            let mut s = if self.fit_intercept {
+                self.coef[d]
+            } else {
+                0.0
+            };
             for j in 0..d {
                 s += x[[i, j]] * self.coef[j];
             }
@@ -411,8 +427,14 @@ mod tests {
     fn ard_regression_shrinks_irrelevant_features() {
         // y = 2·x₀ + noise-only column x₁.
         let x = array![
-            [1.0_f64, 3.7], [2.0, 0.1], [3.0, -2.5], [4.0, 1.9],
-            [5.0, -0.3], [6.0, 4.2], [7.0, 3.1], [8.0, -1.4]
+            [1.0_f64, 3.7],
+            [2.0, 0.1],
+            [3.0, -2.5],
+            [4.0, 1.9],
+            [5.0, -0.3],
+            [6.0, 4.2],
+            [7.0, 3.1],
+            [8.0, -1.4]
         ];
         let y = array![2.0_f64, 4.0, 6.0, 8.0, 10.0, 12.0, 14.0, 16.0];
         let m = ARDRegression::fit(x.view(), y.view()).unwrap();

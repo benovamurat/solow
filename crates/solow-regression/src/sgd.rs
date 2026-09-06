@@ -52,7 +52,15 @@ impl SgdRegressor {
     /// Fit with the reference defaults.
     pub fn fit(x: ArrayView2<'_, f64>, y: ArrayView1<'_, f64>) -> Result<Self> {
         Self::fit_with(
-            x, y, SgdLoss::SquaredError, SgdPenalty::L2, 0.0001, true, 1000, 0.01, 42,
+            x,
+            y,
+            SgdLoss::SquaredError,
+            SgdPenalty::L2,
+            0.0001,
+            true,
+            1000,
+            0.01,
+            42,
         )
     }
 
@@ -146,7 +154,11 @@ impl SgdRegressor {
         }
         let mut out = Array1::<f64>::zeros(n);
         for i in 0..n {
-            let mut s = if self.fit_intercept { self.coef[d] } else { 0.0 };
+            let mut s = if self.fit_intercept {
+                self.coef[d]
+            } else {
+                0.0
+            };
             for j in 0..d {
                 s += x[[i, j]] * self.coef[j];
             }
@@ -172,7 +184,15 @@ impl SgdClassifier {
     /// Fit binary with `y ∈ {-1, +1}`.
     pub fn fit(x: ArrayView2<'_, f64>, y: ArrayView1<'_, f64>) -> Result<Self> {
         Self::fit_with(
-            x, y, SgdLoss::Hinge, SgdPenalty::L2, 0.0001, true, 1000, 0.01, 42,
+            x,
+            y,
+            SgdLoss::Hinge,
+            SgdPenalty::L2,
+            0.0001,
+            true,
+            1000,
+            0.01,
+            42,
         )
     }
 
@@ -211,10 +231,18 @@ impl SgdClassifier {
                 let z = y[i] * score;
                 let grad = match loss {
                     SgdLoss::Hinge => {
-                        if z < 1.0 { -y[i] } else { 0.0 }
+                        if z < 1.0 {
+                            -y[i]
+                        } else {
+                            0.0
+                        }
                     }
                     SgdLoss::Perceptron => {
-                        if score * y[i] <= 0.0 { -y[i] } else { 0.0 }
+                        if score * y[i] <= 0.0 {
+                            -y[i]
+                        } else {
+                            0.0
+                        }
                     }
                     SgdLoss::ModifiedHuber => {
                         if z >= 1.0 {
@@ -282,7 +310,15 @@ impl Perceptron {
     /// Fit with the reference defaults.
     pub fn fit(x: ArrayView2<'_, f64>, y: ArrayView1<'_, f64>) -> Result<Self> {
         let inner = SgdClassifier::fit_with(
-            x, y, SgdLoss::Perceptron, SgdPenalty::None, 0.0, true, 1000, 1.0, 42,
+            x,
+            y,
+            SgdLoss::Perceptron,
+            SgdPenalty::None,
+            0.0,
+            true,
+            1000,
+            1.0,
+            42,
         )?;
         Ok(Self { inner })
     }
@@ -483,9 +519,17 @@ mod tests {
         let x = array![[1.0_f64], [2.0], [3.0], [4.0], [5.0], [6.0], [7.0], [8.0]];
         let y = array![2.0_f64, 4.0, 6.0, 8.0, 10.0, 12.0, 14.0, 16.0];
         let m = SgdRegressor::fit_with(
-            x.view(), y.view(),
-            SgdLoss::SquaredError, SgdPenalty::L2, 1e-6, true, 500, 0.01, 42,
-        ).unwrap();
+            x.view(),
+            y.view(),
+            SgdLoss::SquaredError,
+            SgdPenalty::L2,
+            1e-6,
+            true,
+            500,
+            0.01,
+            42,
+        )
+        .unwrap();
         let p = m.predict(x.view()).unwrap();
         let mse = (0..8).map(|i| (p[i] - y[i]).powi(2)).sum::<f64>() / 8.0;
         assert!(mse < 0.5, "mse = {mse}");
@@ -494,8 +538,14 @@ mod tests {
     #[test]
     fn sgd_classifier_separates_two_easy_clusters() {
         let x = array![
-            [0.0_f64, 0.0], [0.1, 0.1], [0.2, 0.2], [0.3, 0.3],
-            [5.0, 5.0], [5.1, 5.1], [5.2, 5.2], [5.3, 5.3]
+            [0.0_f64, 0.0],
+            [0.1, 0.1],
+            [0.2, 0.2],
+            [0.3, 0.3],
+            [5.0, 5.0],
+            [5.1, 5.1],
+            [5.2, 5.2],
+            [5.3, 5.3]
         ];
         let y = array![-1.0_f64, -1.0, -1.0, -1.0, 1.0, 1.0, 1.0, 1.0];
         let m = SgdClassifier::fit(x.view(), y.view()).unwrap();
@@ -511,8 +561,12 @@ mod tests {
     #[test]
     fn perceptron_separates_two_easy_clusters() {
         let x = array![
-            [0.0_f64, 0.0], [0.1, 0.1], [0.2, 0.2],
-            [5.0, 5.0], [5.1, 5.1], [5.2, 5.2]
+            [0.0_f64, 0.0],
+            [0.1, 0.1],
+            [0.2, 0.2],
+            [5.0, 5.0],
+            [5.1, 5.1],
+            [5.2, 5.2]
         ];
         let y = array![-1.0_f64, -1.0, -1.0, 1.0, 1.0, 1.0];
         let m = Perceptron::fit(x.view(), y.view()).unwrap();
@@ -528,8 +582,12 @@ mod tests {
     #[test]
     fn passive_aggressive_classifier_separates_two_easy_clusters() {
         let x = array![
-            [0.0_f64, 0.0], [0.1, 0.1], [0.2, 0.2],
-            [5.0, 5.0], [5.1, 5.1], [5.2, 5.2]
+            [0.0_f64, 0.0],
+            [0.1, 0.1],
+            [0.2, 0.2],
+            [5.0, 5.0],
+            [5.1, 5.1],
+            [5.2, 5.2]
         ];
         let y = array![-1.0_f64, -1.0, -1.0, 1.0, 1.0, 1.0];
         let m = PassiveAggressiveClassifier::fit(x.view(), y.view()).unwrap();

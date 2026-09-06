@@ -23,13 +23,17 @@ impl<C: BinaryClassifier, F: FnMut() -> C> OneVsOneClassifier<C, F> {
     pub fn fit(mut factory: F, x: ArrayView2<'_, f64>, y: &[i64]) -> Result<Self> {
         let n = x.nrows();
         if y.len() != n {
-            return Err(Error::Shape("OneVsOneClassifier: y/x length mismatch".into()));
+            return Err(Error::Shape(
+                "OneVsOneClassifier: y/x length mismatch".into(),
+            ));
         }
         let mut classes: Vec<i64> = y.to_vec();
         classes.sort();
         classes.dedup();
         if classes.len() < 2 {
-            return Err(Error::Value("OneVsOneClassifier: need at least 2 classes".into()));
+            return Err(Error::Value(
+                "OneVsOneClassifier: need at least 2 classes".into(),
+            ));
         }
         let mut estimators: Vec<C> = Vec::new();
         let mut pair_index: Vec<(usize, usize)> = Vec::new();
@@ -68,7 +72,9 @@ impl<C: BinaryClassifier, F: FnMut() -> C> MultiClassifier for OneVsOneClassifie
     fn fit(&mut self, x: ArrayView2<'_, f64>, y: &[i64]) -> Result<()> {
         let n = x.nrows();
         if y.len() != n {
-            return Err(Error::Shape("OneVsOneClassifier::fit: y/x length mismatch".into()));
+            return Err(Error::Shape(
+                "OneVsOneClassifier::fit: y/x length mismatch".into(),
+            ));
         }
         let mut classes: Vec<i64> = y.to_vec();
         classes.sort();

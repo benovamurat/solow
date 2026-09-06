@@ -98,7 +98,11 @@ impl TruncatedSVD {
 }
 
 /// One-sided Jacobi SVD of `A ∈ ℝ^{m×n}`, sorted descending.
-fn svd_jacobi(a: &Array2<f64>, max_sweeps: usize, tol: f64) -> (Array2<f64>, Vec<f64>, Array2<f64>) {
+fn svd_jacobi(
+    a: &Array2<f64>,
+    max_sweeps: usize,
+    tol: f64,
+) -> (Array2<f64>, Vec<f64>, Array2<f64>) {
     let m = a.nrows();
     let n = a.ncols();
     if m >= n {
@@ -184,7 +188,10 @@ mod tests {
     #[test]
     fn tsvd_returns_ordered_singular_values() {
         let x = array![
-            [1.0_f64, 0.0, 0.0], [0.0, 2.0, 0.0], [0.0, 0.0, 3.0], [1.0, 1.0, 1.0]
+            [1.0_f64, 0.0, 0.0],
+            [0.0, 2.0, 0.0],
+            [0.0, 0.0, 3.0],
+            [1.0, 1.0, 1.0]
         ];
         let m = TruncatedSVD::fit(x.view(), 2).unwrap();
         assert!(m.singular_values[0] >= m.singular_values[1]);

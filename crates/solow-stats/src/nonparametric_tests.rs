@@ -20,12 +20,17 @@ pub struct TestResult {
 /// tie correction (Mann-Whitney 1947).
 pub fn mannwhitneyu(x: &[f64], y: &[f64]) -> Result<TestResult> {
     if x.is_empty() || y.is_empty() {
-        return Err(Error::Value("mannwhitneyu: both samples must be non-empty".into()));
+        return Err(Error::Value(
+            "mannwhitneyu: both samples must be non-empty".into(),
+        ));
     }
     let n1 = x.len() as f64;
     let n2 = y.len() as f64;
-    let mut combined: Vec<(f64, u8)> =
-        x.iter().map(|&v| (v, 0)).chain(y.iter().map(|&v| (v, 1))).collect();
+    let mut combined: Vec<(f64, u8)> = x
+        .iter()
+        .map(|&v| (v, 0))
+        .chain(y.iter().map(|&v| (v, 1)))
+        .collect();
     combined.sort_by(|a, b| a.0.partial_cmp(&b.0).unwrap());
     let n = combined.len();
     let mut ranks = vec![0.0_f64; n];
@@ -60,7 +65,10 @@ pub fn mannwhitneyu(x: &[f64], y: &[f64]) -> Result<TestResult> {
     let var = n1 * n2 / 12.0 * (n_all + 1.0 - ties_sum / (n_all * (n_all - 1.0) / 12.0));
     let z = (u - mean) / var.sqrt().max(1e-300);
     let pvalue = 2.0 * standard_normal_survival(z.abs());
-    Ok(TestResult { statistic: u, pvalue })
+    Ok(TestResult {
+        statistic: u,
+        pvalue,
+    })
 }
 
 /// Kruskal-Wallis one-way ANOVA on ranks. Returns `(H, p)` where `H`
@@ -109,7 +117,10 @@ pub fn kruskal(groups: &[Vec<f64>]) -> Result<TestResult> {
     }
     h = 12.0 / (n * (n + 1.0)) * h - 3.0 * (n + 1.0);
     let pvalue = chi2_survival(h, k - 1.0);
-    Ok(TestResult { statistic: h, pvalue })
+    Ok(TestResult {
+        statistic: h,
+        pvalue,
+    })
 }
 
 /// McNemar's test on a 2 × 2 paired-binary table.
@@ -128,11 +139,17 @@ pub fn mcnemar(b: usize, c: usize, exact: bool) -> Result<TestResult> {
             p += binomial_pmf(n, i, 0.5);
         }
         let pvalue = (2.0 * p).min(1.0);
-        Ok(TestResult { statistic: k as f64, pvalue })
+        Ok(TestResult {
+            statistic: k as f64,
+            pvalue,
+        })
     } else {
         let stat = (bf - cf).powi(2) / (bf + cf);
         let pvalue = chi2_survival(stat, 1.0);
-        Ok(TestResult { statistic: stat, pvalue })
+        Ok(TestResult {
+            statistic: stat,
+            pvalue,
+        })
     }
 }
 
@@ -192,7 +209,9 @@ fn binomial_pmf(n: usize, k: usize, p: f64) -> f64 {
 }
 
 fn ln_choose(n: usize, k: usize) -> f64 {
-    (1..=k).map(|i| ((n - i + 1) as f64).ln() - (i as f64).ln()).sum()
+    (1..=k)
+        .map(|i| ((n - i + 1) as f64).ln() - (i as f64).ln())
+        .sum()
 }
 
 fn chi2_survival(x: f64, df: f64) -> f64 {

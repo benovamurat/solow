@@ -60,7 +60,11 @@ pub fn levene(groups: &[Vec<f64>], center: LeveneCenter) -> Result<VarianceTestR
     let dfd = (n_total - k) as f64;
     let f = (ss_between / dfn) / (ss_within / dfd).max(1e-300);
     let pvalue = f_survival(f, dfn, dfd);
-    Ok(VarianceTestResult { statistic: f, pvalue, df: (dfn, dfd) })
+    Ok(VarianceTestResult {
+        statistic: f,
+        pvalue,
+        df: (dfn, dfd),
+    })
 }
 
 /// Bartlett's test — classical normal-theory χ² test on log-variance
@@ -74,7 +78,9 @@ pub fn bartlett(groups: &[Vec<f64>]) -> Result<VarianceTestResult> {
     let mut si2 = Vec::with_capacity(groups.len());
     for g in groups {
         if g.len() < 2 {
-            return Err(Error::Value("bartlett: each group must have ≥ 2 samples".into()));
+            return Err(Error::Value(
+                "bartlett: each group must have ≥ 2 samples".into(),
+            ));
         }
         let n = g.len() as f64;
         let m = g.iter().sum::<f64>() / n;
@@ -83,17 +89,28 @@ pub fn bartlett(groups: &[Vec<f64>]) -> Result<VarianceTestResult> {
         si2.push(v);
     }
     let n_total: f64 = ni.iter().sum();
-    let sp2: f64 =
-        ni.iter().zip(si2.iter()).map(|(n, v)| (n - 1.0) * v).sum::<f64>() / (n_total - k);
+    let sp2: f64 = ni
+        .iter()
+        .zip(si2.iter())
+        .map(|(n, v)| (n - 1.0) * v)
+        .sum::<f64>()
+        / (n_total - k);
     let numer = (n_total - k) * sp2.ln()
-        - ni.iter().zip(si2.iter()).map(|(n, v)| (n - 1.0) * v.ln()).sum::<f64>();
+        - ni.iter()
+            .zip(si2.iter())
+            .map(|(n, v)| (n - 1.0) * v.ln())
+            .sum::<f64>();
     let one_over_n_minus_1: f64 = ni.iter().map(|n| 1.0 / (n - 1.0)).sum();
     let one_over_total: f64 = 1.0 / (n_total - k);
     let c = 1.0 + 1.0 / (3.0 * (k - 1.0)) * (one_over_n_minus_1 - one_over_total);
     let chi2 = numer / c;
     let dfn = k - 1.0;
     let pvalue = chi2_survival(chi2, dfn);
-    Ok(VarianceTestResult { statistic: chi2, pvalue, df: (dfn, 0.0) })
+    Ok(VarianceTestResult {
+        statistic: chi2,
+        pvalue,
+        df: (dfn, 0.0),
+    })
 }
 
 /// Fligner-Killeen (1976) rank-based variance test.
@@ -135,7 +152,11 @@ pub fn fligner(groups: &[Vec<f64>]) -> Result<VarianceTestResult> {
     chi2 /= var_a.max(1e-300);
     let dfn = (groups.len() - 1) as f64;
     let pvalue = chi2_survival(chi2, dfn);
-    Ok(VarianceTestResult { statistic: chi2, pvalue, df: (dfn, 0.0) })
+    Ok(VarianceTestResult {
+        statistic: chi2,
+        pvalue,
+        df: (dfn, 0.0),
+    })
 }
 
 fn median(x: &[f64]) -> f64 {

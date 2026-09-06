@@ -44,11 +44,7 @@ impl KernelDensity {
     }
 
     /// Full-configuration fit.
-    pub fn fit_with(
-        x: ArrayView2<'_, f64>,
-        bandwidth: f64,
-        kernel: KdeKernel,
-    ) -> Result<Self> {
+    pub fn fit_with(x: ArrayView2<'_, f64>, bandwidth: f64, kernel: KdeKernel) -> Result<Self> {
         if bandwidth <= 0.0 {
             return Err(Error::Value("KernelDensity: bandwidth must be > 0".into()));
         }
@@ -65,7 +61,9 @@ impl KernelDensity {
     /// Return log-density at each row of `x`.
     pub fn score_samples(&self, x: ArrayView2<'_, f64>) -> Result<Array1<f64>> {
         if x.ncols() != self.x_train.ncols() {
-            return Err(Error::Shape("KernelDensity::score_samples: shape mismatch".into()));
+            return Err(Error::Shape(
+                "KernelDensity::score_samples: shape mismatch".into(),
+            ));
         }
         let n = x.nrows();
         let m = self.x_train.nrows();

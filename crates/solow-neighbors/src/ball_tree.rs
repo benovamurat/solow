@@ -41,7 +41,9 @@ impl BallTree {
             return Err(Error::Value("BallTree::build_with: empty input".into()));
         }
         if leaf_size == 0 {
-            return Err(Error::Value("BallTree::build_with: leaf_size must be ≥ 1".into()));
+            return Err(Error::Value(
+                "BallTree::build_with: leaf_size must be ≥ 1".into(),
+            ));
         }
         let data = x.to_owned();
         let mut nodes: Vec<Node> = Vec::new();
@@ -112,7 +114,11 @@ impl BallTree {
             }
         }
         let mut sorted = indices.clone();
-        sorted.sort_by(|&a, &b| data[[a, best_axis]].partial_cmp(&data[[b, best_axis]]).unwrap());
+        sorted.sort_by(|&a, &b| {
+            data[[a, best_axis]]
+                .partial_cmp(&data[[b, best_axis]])
+                .unwrap()
+        });
         let mid = sorted.len() / 2;
         let left_idx = sorted[..mid].to_vec();
         let right_idx = sorted[mid..].to_vec();

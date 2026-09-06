@@ -60,8 +60,10 @@ impl LocalOutlierFactor {
         let mut k_dist = vec![0.0_f64; n];
         let mut neighbours: Vec<Vec<usize>> = Vec::with_capacity(n);
         for i in 0..n {
-            let mut idx: Vec<(usize, f64)> =
-                (0..n).filter(|&j| j != i).map(|j| (j, dist[i][j])).collect();
+            let mut idx: Vec<(usize, f64)> = (0..n)
+                .filter(|&j| j != i)
+                .map(|j| (j, dist[i][j]))
+                .collect();
             idx.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap());
             let cutoff = idx[n_neighbors - 1].1;
             k_dist[i] = cutoff;
@@ -123,10 +125,17 @@ mod tests {
     #[test]
     fn lof_flags_a_lone_outlier() {
         let x = array![
-            [0.0_f64, 0.0], [0.1, 0.1], [0.2, 0.2], [0.15, 0.05],
-            [0.05, 0.15], [50.0, 50.0]
+            [0.0_f64, 0.0],
+            [0.1, 0.1],
+            [0.2, 0.2],
+            [0.15, 0.05],
+            [0.05, 0.15],
+            [50.0, 50.0]
         ];
         let m = LocalOutlierFactor::fit_with(x.view(), 3, 0.2).unwrap();
-        assert_eq!(m.predictions[5], -1, "the point at (50, 50) should be flagged");
+        assert_eq!(
+            m.predictions[5], -1,
+            "the point at (50, 50) should be flagged"
+        );
     }
 }

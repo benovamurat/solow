@@ -40,10 +40,14 @@ impl MiniBatchNmf {
         let n = x.nrows();
         let d = x.ncols();
         if n_components == 0 || n_components > n.min(d) {
-            return Err(Error::Value("MiniBatchNMF: n_components out of range".into()));
+            return Err(Error::Value(
+                "MiniBatchNMF: n_components out of range".into(),
+            ));
         }
         if x.iter().any(|&v| v < 0.0) {
-            return Err(Error::Value("MiniBatchNMF: inputs must be non-negative".into()));
+            return Err(Error::Value(
+                "MiniBatchNMF: inputs must be non-negative".into(),
+            ));
         }
         // Initialise W, H uniformly random in [0, 1) with a small offset.
         let mut state = seed.wrapping_add(0xF00D_C0DE);
@@ -197,8 +201,11 @@ mod tests {
     #[test]
     fn minibatch_nmf_reduces_reconstruction_error() {
         let x = array![
-            [1.0_f64, 0.0, 1.0], [0.0, 1.0, 1.0], [1.0, 1.0, 2.0],
-            [1.0, 0.0, 1.0], [0.0, 2.0, 2.0]
+            [1.0_f64, 0.0, 1.0],
+            [0.0, 1.0, 1.0],
+            [1.0, 1.0, 2.0],
+            [1.0, 0.0, 1.0],
+            [0.0, 2.0, 2.0]
         ];
         let m = MiniBatchNmf::fit_with(x.view(), 2, 3, 100, 1e-4, 42).unwrap();
         assert_eq!(m.w.shape(), &[5, 2]);

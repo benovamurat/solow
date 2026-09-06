@@ -255,9 +255,7 @@ mod tests {
 
     #[test]
     fn sparse_pca_returns_the_right_shape() {
-        let x = array![
-            [1.0_f64, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]
-        ];
+        let x = array![[1.0_f64, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]];
         let m = SparsePCA::fit_with(x.view(), 2, 0.1, 100, 1e-6).unwrap();
         assert_eq!(m.components.shape(), &[2, 3]);
     }

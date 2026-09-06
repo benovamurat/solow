@@ -31,14 +31,12 @@ pub struct GaussianProcessClassifier<K: Kernel> {
 
 impl<K: Kernel> GaussianProcessClassifier<K> {
     /// Fit via Newton iteration.
-    pub fn fit(
-        kernel: K,
-        x: ArrayView2<'_, f64>,
-        y: &[u8],
-    ) -> Result<Self> {
+    pub fn fit(kernel: K, x: ArrayView2<'_, f64>, y: &[u8]) -> Result<Self> {
         let n = x.nrows();
         if y.len() != n {
-            return Err(Error::Shape("GaussianProcessClassifier: y/x size mismatch".into()));
+            return Err(Error::Shape(
+                "GaussianProcessClassifier: y/x size mismatch".into(),
+            ));
         }
         for &yi in y {
             if yi > 1 {
@@ -230,10 +228,7 @@ mod tests {
 
     #[test]
     fn gpc_separates_two_bumps() {
-        let x = array![
-            [-2.0], [-1.5], [-1.0], [-0.5],
-            [ 0.5], [ 1.0], [ 1.5], [ 2.0]
-        ];
+        let x = array![[-2.0], [-1.5], [-1.0], [-0.5], [0.5], [1.0], [1.5], [2.0]];
         let y: Vec<u8> = vec![0, 0, 0, 0, 1, 1, 1, 1];
         let gpc = GaussianProcessClassifier::fit(Rbf::new(0.5), x.view(), &y).unwrap();
         let probs = gpc.predict_proba(x.view());

@@ -22,12 +22,7 @@ pub struct OutputCodeClassifier<C: BinaryClassifier, F: FnMut() -> C> {
 
 impl<C: BinaryClassifier, F: FnMut() -> C> OutputCodeClassifier<C, F> {
     /// Fit with `code_size = 1.5 · n_classes`.
-    pub fn fit(
-        factory: F,
-        x: ArrayView2<'_, f64>,
-        y: &[i64],
-        seed: u64,
-    ) -> Result<Self> {
+    pub fn fit(factory: F, x: ArrayView2<'_, f64>, y: &[i64], seed: u64) -> Result<Self> {
         Self::fit_with(factory, x, y, 1.5, seed)
     }
 
@@ -41,13 +36,17 @@ impl<C: BinaryClassifier, F: FnMut() -> C> OutputCodeClassifier<C, F> {
     ) -> Result<Self> {
         let n = x.nrows();
         if y.len() != n {
-            return Err(Error::Shape("OutputCodeClassifier: y/x length mismatch".into()));
+            return Err(Error::Shape(
+                "OutputCodeClassifier: y/x length mismatch".into(),
+            ));
         }
         let mut classes: Vec<i64> = y.to_vec();
         classes.sort();
         classes.dedup();
         if classes.len() < 2 {
-            return Err(Error::Value("OutputCodeClassifier: need ≥ 2 classes".into()));
+            return Err(Error::Value(
+                "OutputCodeClassifier: need ≥ 2 classes".into(),
+            ));
         }
         let n_classes = classes.len();
         let n_codes = ((n_classes as f64) * code_size).ceil().max(1.0) as usize;
@@ -63,10 +62,17 @@ impl<C: BinaryClassifier, F: FnMut() -> C> OutputCodeClassifier<C, F> {
         // Fit one binary classifier per code column.
         let mut estimators: Vec<C> = Vec::with_capacity(n_codes);
         for c in 0..n_codes {
-            let yy: Vec<u8> = y.iter().map(|&yi| {
-                let ci = classes.iter().position(|&v| v == yi).unwrap();
-                if code[[ci, c]] > 0.0 { 1 } else { 0 }
-            }).collect();
+            let yy: Vec<u8> = y
+                .iter()
+                .map(|&yi| {
+                    let ci = classes.iter().position(|&v| v == yi).unwrap();
+                    if code[[ci, c]] > 0.0 {
+                        1
+                    } else {
+                        0
+                    }
+                })
+                .collect();
             let mut est = factory();
             est.fit(x, &yy)?;
             estimators.push(est);

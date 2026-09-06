@@ -28,8 +28,8 @@ mod multitask;
 mod penalized;
 mod penalized_cv;
 mod quantile;
-mod ridge_classifier;
 mod recursive;
+mod ridge_classifier;
 mod robust_regression;
 mod robustcov;
 mod rolling;
@@ -37,9 +37,7 @@ mod sgd;
 
 pub use bayesian::{ARDRegression, BayesianRidge};
 pub use dimred::{SirResults, SlicedInverseReg};
-pub use dummy::{
-    DummyClassifier, DummyClassifierStrategy, DummyRegressor, DummyRegressorStrategy,
-};
+pub use dummy::{DummyClassifier, DummyClassifierStrategy, DummyRegressor, DummyRegressorStrategy};
 pub use glsar::{Glsar, GlsarResults};
 pub use huber::{HuberRegressor, KernelRidge, RidgeKernel};
 pub use lars::{Lars, LassoLars, OrthogonalMatchingPursuit};
@@ -49,8 +47,8 @@ pub use multitask::{MultiTaskElasticNet, MultiTaskLasso};
 pub use penalized::{ElasticNet, Lasso, Ridge};
 pub use penalized_cv::{ElasticNetCV, LassoCV, RidgeCV};
 pub use quantile::{QuantReg, QuantRegResults};
-pub use ridge_classifier::{RidgeClassifier, RidgeClassifierCV};
 pub use recursive::{RecursiveLS, RecursiveLSResults};
+pub use ridge_classifier::{RidgeClassifier, RidgeClassifierCV};
 pub use robust_regression::{RansacRegressor, TheilSenRegressor};
 pub use robustcov::{bse_from_cov, robust_cov, CovType};
 pub use rolling::{RollingOLS, RollingOLSResults};

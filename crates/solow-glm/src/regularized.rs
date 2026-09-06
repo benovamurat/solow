@@ -42,7 +42,11 @@ impl PoissonRegressor {
                 coef[k] *= shrink;
             }
         }
-        Ok(Self { coef, results, alpha })
+        Ok(Self {
+            coef,
+            results,
+            alpha,
+        })
     }
 
     /// Predict.
@@ -50,7 +54,9 @@ impl PoissonRegressor {
         let n = x.nrows();
         let d = x.ncols();
         if self.coef.len() != d + 1 {
-            return Err(Error::Shape("PoissonRegressor::predict: shape mismatch".into()));
+            return Err(Error::Shape(
+                "PoissonRegressor::predict: shape mismatch".into(),
+            ));
         }
         let mut out = Array1::<f64>::zeros(n);
         for i in 0..n {
@@ -93,7 +99,11 @@ impl GammaRegressor {
                 coef[k] *= shrink;
             }
         }
-        Ok(Self { coef, results, alpha })
+        Ok(Self {
+            coef,
+            results,
+            alpha,
+        })
     }
 
     /// Predict.
@@ -101,7 +111,9 @@ impl GammaRegressor {
         let n = x.nrows();
         let d = x.ncols();
         if self.coef.len() != d + 1 {
-            return Err(Error::Shape("GammaRegressor::predict: shape mismatch".into()));
+            return Err(Error::Shape(
+                "GammaRegressor::predict: shape mismatch".into(),
+            ));
         }
         let mut out = Array1::<f64>::zeros(n);
         for i in 0..n {
@@ -168,7 +180,9 @@ impl TweedieRegressor {
         let n = x.nrows();
         let d = x.ncols();
         if self.coef.len() != d + 1 {
-            return Err(Error::Shape("TweedieRegressor::predict: shape mismatch".into()));
+            return Err(Error::Shape(
+                "TweedieRegressor::predict: shape mismatch".into(),
+            ));
         }
         let mut out = Array1::<f64>::zeros(n);
         for i in 0..n {
@@ -215,7 +229,12 @@ mod tests {
         let m = PoissonRegressor::fit(x.view(), y.view(), 0.0).unwrap();
         let p = m.predict(x.view()).unwrap();
         for i in 0..6 {
-            assert!((p[i] - y[i]).abs() < 0.2, "row {i}: pred={} y={}", p[i], y[i]);
+            assert!(
+                (p[i] - y[i]).abs() < 0.2,
+                "row {i}: pred={} y={}",
+                p[i],
+                y[i]
+            );
         }
     }
 }

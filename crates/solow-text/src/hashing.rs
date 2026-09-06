@@ -22,7 +22,9 @@ impl HashingVectorizer {
     /// Build with the reference defaults `n_features = 2²⁰ = 1_048_576`.
     pub fn new(n_features: usize) -> Result<Self> {
         if n_features == 0 {
-            return Err(Error::Value("HashingVectorizer: n_features must be ≥ 1".into()));
+            return Err(Error::Value(
+                "HashingVectorizer: n_features must be ≥ 1".into(),
+            ));
         }
         Ok(Self {
             n_features,
@@ -144,10 +146,12 @@ mod tests {
     #[test]
     fn feature_hasher_accepts_token_count_pairs() {
         let fh = FeatureHasher::new(8).unwrap();
-        let m = fh.transform(&[
-            vec![("apple".to_string(), 2.0), ("pear".to_string(), 1.0)],
-            vec![("apple".to_string(), 1.0)],
-        ]).unwrap();
+        let m = fh
+            .transform(&[
+                vec![("apple".to_string(), 2.0), ("pear".to_string(), 1.0)],
+                vec![("apple".to_string(), 1.0)],
+            ])
+            .unwrap();
         assert_eq!(m.shape(), &[2, 8]);
     }
 }

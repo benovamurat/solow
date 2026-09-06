@@ -25,7 +25,9 @@ pub struct GofResult {
 pub fn shapiro_wilk(x: &[f64]) -> Result<GofResult> {
     let n = x.len();
     if n < 3 || n > 5000 {
-        return Err(Error::Value("shapiro_wilk: sample size must be in [3, 5000]".into()));
+        return Err(Error::Value(
+            "shapiro_wilk: sample size must be in [3, 5000]".into(),
+        ));
     }
     let mut sorted: Vec<f64> = x.to_vec();
     sorted.sort_by(|a, b| a.partial_cmp(b).unwrap());
@@ -42,14 +44,12 @@ pub fn shapiro_wilk(x: &[f64]) -> Result<GofResult> {
     let mut a = vec![0.0_f64; n];
     // Approximate first and last a's via the Royston polynomial fit.
     let u = 1.0 / (n as f64).sqrt();
-    let a_n = -2.706_056 * u.powi(5)
-        + 4.434_685 * u.powi(4)
+    let a_n = -2.706_056 * u.powi(5) + 4.434_685 * u.powi(4)
         - 2.071_190 * u.powi(3)
         - 0.147_981 * u.powi(2)
         + 0.221_157 * u
         + m_i[n - 1] / m_sq_sqrt;
-    let a_n1 = -3.582_633 * u.powi(5)
-        + 5.682_633 * u.powi(4)
+    let a_n1 = -3.582_633 * u.powi(5) + 5.682_633 * u.powi(4)
         - 1.752_460 * u.powi(3)
         - 0.293_762 * u.powi(2)
         + 0.042_981 * u
@@ -84,20 +84,23 @@ pub fn shapiro_wilk(x: &[f64]) -> Result<GofResult> {
             - 0.000_671_4 * (n as f64).powi(3);
         let sigma = (-0.312_98 + 0.729_87 * n as f64 - 0.325_88 * (n as f64).powi(2)
             + 0.0104_54 * (n as f64).powi(3))
-            .exp();
+        .exp();
         let z = (gamma - (1.0 - w).ln()) / sigma - mu / sigma;
         1.0 - standard_normal_cdf(z)
     } else {
-        let mu = 0.0038915 * (n as f64).ln().powi(3) - 0.083751 * (n as f64).ln().powi(2)
+        let mu = 0.0038915 * (n as f64).ln().powi(3)
+            - 0.083751 * (n as f64).ln().powi(2)
             - 0.31082 * (n as f64).ln()
             - 1.5861;
-        let sigma = (0.0030302 * (n as f64).ln().powi(2)
-            - 0.082676 * (n as f64).ln()
-            - 0.4803).exp();
+        let sigma =
+            (0.0030302 * (n as f64).ln().powi(2) - 0.082676 * (n as f64).ln() - 0.4803).exp();
         let z = ((1.0 - w).ln() - mu) / sigma;
         1.0 - standard_normal_cdf(z)
     };
-    Ok(GofResult { statistic: w, pvalue: pvalue.clamp(0.0, 1.0) })
+    Ok(GofResult {
+        statistic: w,
+        pvalue: pvalue.clamp(0.0, 1.0),
+    })
 }
 
 /// Anderson-Darling test with the Stephens (1974) correction for
@@ -116,8 +119,7 @@ pub fn anderson_darling(x: &[f64]) -> Result<GofResult> {
     for (i, &z) in zi.iter().enumerate() {
         let phi = standard_normal_cdf(z);
         let phi_c = 1.0 - phi;
-        a2 += (2 * (i + 1) - 1) as f64
-            * (phi.max(1e-300).ln() + phi_c.max(1e-300).ln());
+        a2 += (2 * (i + 1) - 1) as f64 * (phi.max(1e-300).ln() + phi_c.max(1e-300).ln());
     }
     a2 = -(n as f64) - a2 / n as f64;
     let a2_adj = a2 * (1.0 + 0.75 / n as f64 + 2.25 / (n as f64).powi(2));
@@ -131,13 +133,18 @@ pub fn anderson_darling(x: &[f64]) -> Result<GofResult> {
     } else {
         (1.2937 - 5.709 * a2_adj + 0.0186 * a2_adj.powi(2)).exp()
     };
-    Ok(GofResult { statistic: a2_adj, pvalue: pvalue.clamp(0.0, 1.0) })
+    Ok(GofResult {
+        statistic: a2_adj,
+        pvalue: pvalue.clamp(0.0, 1.0),
+    })
 }
 
 /// Two-sample Kolmogorov-Smirnov test.
 pub fn ks_2samp(a: &[f64], b: &[f64]) -> Result<GofResult> {
     if a.is_empty() || b.is_empty() {
-        return Err(Error::Value("ks_2samp: both samples must be non-empty".into()));
+        return Err(Error::Value(
+            "ks_2samp: both samples must be non-empty".into(),
+        ));
     }
     let mut ai: Vec<f64> = a.to_vec();
     let mut bi: Vec<f64> = b.to_vec();
@@ -166,7 +173,10 @@ pub fn ks_2samp(a: &[f64], b: &[f64]) -> Result<GofResult> {
     }
     let en = (na * nb / (na + nb)).sqrt();
     let pvalue = ks_p((en + 0.12 + 0.11 / en) * d);
-    Ok(GofResult { statistic: d, pvalue: pvalue.clamp(0.0, 1.0) })
+    Ok(GofResult {
+        statistic: d,
+        pvalue: pvalue.clamp(0.0, 1.0),
+    })
 }
 
 /// Wald-Wolfowitz runs test for randomness (dichotomised at the median).
@@ -202,7 +212,10 @@ pub fn runs_test(x: &[f64]) -> Result<GofResult> {
         prev = Some(up);
     }
     if n1 == 0 || n2 == 0 {
-        return Ok(GofResult { statistic: runs as f64, pvalue: 1.0 });
+        return Ok(GofResult {
+            statistic: runs as f64,
+            pvalue: 1.0,
+        });
     }
     let n1f = n1 as f64;
     let n2f = n2 as f64;
@@ -211,7 +224,10 @@ pub fn runs_test(x: &[f64]) -> Result<GofResult> {
     let var_r = (2.0 * n1f * n2f * (2.0 * n1f * n2f - total)) / (total * total * (total - 1.0));
     let z = (runs as f64 - mean_r) / var_r.sqrt().max(1e-30);
     let pvalue = 2.0 * (1.0 - standard_normal_cdf(z.abs()));
-    Ok(GofResult { statistic: z, pvalue: pvalue.clamp(0.0, 1.0) })
+    Ok(GofResult {
+        statistic: z,
+        pvalue: pvalue.clamp(0.0, 1.0),
+    })
 }
 
 fn ks_p(lambda: f64) -> f64 {

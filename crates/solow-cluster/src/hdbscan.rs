@@ -215,17 +215,27 @@ mod tests {
     fn hdbscan_finds_two_dense_clusters() {
         // Two dense clumps.
         let x = array![
-            [0.0_f64, 0.0], [0.1, 0.1], [0.05, 0.15], [0.15, 0.05],
-            [5.0, 5.0], [5.1, 5.1], [5.05, 5.15], [5.15, 5.05]
+            [0.0_f64, 0.0],
+            [0.1, 0.1],
+            [0.05, 0.15],
+            [0.15, 0.05],
+            [5.0, 5.0],
+            [5.1, 5.1],
+            [5.05, 5.15],
+            [5.15, 5.05]
         ];
         let m = Hdbscan::fit_with(x.view(), 2, 3).unwrap();
         let mut cluster_a = 0;
         let mut cluster_b = 0;
         for i in 0..4 {
-            if m.labels[i] >= 0 { cluster_a = m.labels[i]; }
+            if m.labels[i] >= 0 {
+                cluster_a = m.labels[i];
+            }
         }
         for i in 4..8 {
-            if m.labels[i] >= 0 { cluster_b = m.labels[i]; }
+            if m.labels[i] >= 0 {
+                cluster_b = m.labels[i];
+            }
         }
         assert_ne!(cluster_a, cluster_b);
     }

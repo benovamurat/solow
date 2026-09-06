@@ -88,7 +88,9 @@ impl IncrementalPCA {
         let d = self.mean.len();
         let k = self.n_components;
         if x.ncols() != d {
-            return Err(Error::Shape("IncrementalPCA::transform: shape mismatch".into()));
+            return Err(Error::Shape(
+                "IncrementalPCA::transform: shape mismatch".into(),
+            ));
         }
         let mut out = Array2::<f64>::zeros((n, k));
         for i in 0..n {
@@ -164,8 +166,11 @@ mod tests {
     #[test]
     fn ipca_returns_components_of_the_right_shape() {
         let x = array![
-            [1.0_f64, 2.0, 3.0], [3.0, 5.0, 8.0], [5.0, 7.0, 11.0],
-            [7.0, 9.0, 15.0], [9.0, 12.0, 20.0]
+            [1.0_f64, 2.0, 3.0],
+            [3.0, 5.0, 8.0],
+            [5.0, 7.0, 11.0],
+            [7.0, 9.0, 15.0],
+            [9.0, 12.0, 20.0]
         ];
         let m = IncrementalPCA::fit(x.view(), 2).unwrap();
         assert_eq!(m.components.shape(), &[2, 3]);

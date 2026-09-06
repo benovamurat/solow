@@ -159,9 +159,7 @@ mod tests {
 
     #[test]
     fn mds_recovers_2d_layout_of_a_2d_configuration() {
-        let x = array![
-            [0.0_f64, 0.0], [1.0, 0.0], [0.0, 1.0], [1.0, 1.0]
-        ];
+        let x = array![[0.0_f64, 0.0], [1.0, 0.0], [0.0, 1.0], [1.0, 1.0]];
         let m = MDS::fit(x.view(), 2).unwrap();
         assert_eq!(m.embedding.shape(), &[4, 2]);
     }

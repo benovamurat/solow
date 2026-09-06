@@ -68,7 +68,11 @@ impl AffinityPropagation {
                 }
             }
             off.sort_by(|a, b| a.partial_cmp(b).unwrap());
-            if off.is_empty() { 0.0 } else { off[off.len() / 2] }
+            if off.is_empty() {
+                0.0
+            } else {
+                off[off.len() / 2]
+            }
         });
         for i in 0..n {
             s[i][i] = pref;
@@ -182,8 +186,12 @@ mod tests {
     #[test]
     fn affinity_propagation_finds_a_positive_number_of_exemplars() {
         let x = array![
-            [0.0_f64, 0.0], [0.1, 0.1], [0.05, 0.15],
-            [5.0, 5.0], [5.1, 5.1], [5.05, 5.15]
+            [0.0_f64, 0.0],
+            [0.1, 0.1],
+            [0.05, 0.15],
+            [5.0, 5.0],
+            [5.1, 5.1],
+            [5.05, 5.15]
         ];
         let m = AffinityPropagation::fit(x.view()).unwrap();
         assert!(!m.cluster_centers_indices.is_empty());

@@ -45,7 +45,10 @@ impl IterativeImputer {
         // Initial column means.
         let mut init = vec![0.0_f64; d];
         for j in 0..d {
-            let observed: Vec<f64> = (0..n).map(|i| x[[i, j]]).filter(|v| v.is_finite()).collect();
+            let observed: Vec<f64> = (0..n)
+                .map(|i| x[[i, j]])
+                .filter(|v| v.is_finite())
+                .collect();
             init[j] = if observed.is_empty() {
                 0.0
             } else {

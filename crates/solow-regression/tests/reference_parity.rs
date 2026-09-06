@@ -24,14 +24,29 @@ fn f2d(v: &Value) -> Array2<f64> {
         .as_array()
         .unwrap()
         .iter()
-        .map(|r| r.as_array().unwrap().iter().map(|c| c.as_f64().unwrap()).collect())
+        .map(|r| {
+            r.as_array()
+                .unwrap()
+                .iter()
+                .map(|c| c.as_f64().unwrap())
+                .collect()
+        })
         .collect();
-    Array2::from_shape_vec((rows.len(), rows[0].len()), rows.into_iter().flatten().collect())
-        .unwrap()
+    Array2::from_shape_vec(
+        (rows.len(), rows[0].len()),
+        rows.into_iter().flatten().collect(),
+    )
+    .unwrap()
 }
 
 fn f1d(v: &Value) -> Array1<f64> {
-    Array1::from(v.as_array().unwrap().iter().map(|c| c.as_f64().unwrap()).collect::<Vec<_>>())
+    Array1::from(
+        v.as_array()
+            .unwrap()
+            .iter()
+            .map(|c| c.as_f64().unwrap())
+            .collect::<Vec<_>>(),
+    )
 }
 
 #[test]

@@ -65,10 +65,8 @@ impl<C: BaseClassifier> SelfTrainingClassifier<C> {
         for it in 1..=max_iter {
             used = it;
             // Fit on the labelled subset.
-            let labelled_rows: Vec<usize> =
-                (0..n).filter(|&i| current[i] >= 0).collect();
-            let unlabelled_rows: Vec<usize> =
-                (0..n).filter(|&i| current[i] < 0).collect();
+            let labelled_rows: Vec<usize> = (0..n).filter(|&i| current[i] >= 0).collect();
+            let unlabelled_rows: Vec<usize> = (0..n).filter(|&i| current[i] < 0).collect();
             if labelled_rows.is_empty() {
                 return Err(Error::Value(
                     "SelfTrainingClassifier: at least one labelled sample required".into(),
@@ -83,8 +81,7 @@ impl<C: BaseClassifier> SelfTrainingClassifier<C> {
             let x_un = row_subset(x, &unlabelled_rows);
             let probs = base.predict_proba(x_un.view())?;
             let classes = base.classes();
-            let mut per_row_max: Vec<(usize, f64, i64)> =
-                Vec::with_capacity(unlabelled_rows.len());
+            let mut per_row_max: Vec<(usize, f64, i64)> = Vec::with_capacity(unlabelled_rows.len());
             for (rr, &row) in unlabelled_rows.iter().enumerate() {
                 let mut best = 0;
                 let mut best_p = probs[[rr, 0]];
@@ -173,7 +170,9 @@ mod tests {
             let k = self.centroids.len();
             let mut out = Array2::<f64>::zeros((x.nrows(), k));
             for i in 0..x.nrows() {
-                let mut dists: Vec<f64> = self.centroids.iter()
+                let mut dists: Vec<f64> = self
+                    .centroids
+                    .iter()
                     .map(|(_, c)| ((x[[i, 0]] - c).abs()))
                     .collect();
                 // Turn distance into probability via -d then softmax.
@@ -195,10 +194,7 @@ mod tests {
 
     #[test]
     fn self_training_labels_two_clusters_from_one_seed_each() {
-        let x = array![
-            [0.0_f64], [0.1], [0.2], [0.3],
-            [5.0], [5.1], [5.2], [5.3]
-        ];
+        let x = array![[0.0_f64], [0.1], [0.2], [0.3], [5.0], [5.1], [5.2], [5.3]];
         let y = vec![0_i64, -1, -1, -1, -1, -1, -1, 1];
         let toy = Toy { centroids: vec![] };
         let m = SelfTrainingClassifier::fit(
@@ -207,7 +203,8 @@ mod tests {
             &y,
             SelfTrainingCriterion::Threshold(0.5),
             10,
-        ).unwrap();
+        )
+        .unwrap();
         // Every unlabelled row should have been added.
         for i in 0..8 {
             assert!(m.labeled_iter[i] >= 0, "row {i} was never added");

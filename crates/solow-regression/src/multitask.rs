@@ -60,7 +60,9 @@ impl MultiTaskLasso {
         let d = self.x_mean.len();
         let q = self.y_mean.len();
         if x.ncols() != d {
-            return Err(Error::Shape("MultiTaskLasso::predict: shape mismatch".into()));
+            return Err(Error::Shape(
+                "MultiTaskLasso::predict: shape mismatch".into(),
+            ));
         }
         let n = x.nrows();
         let mut out = Array2::<f64>::zeros((n, q));
@@ -120,7 +122,9 @@ impl MultiTaskElasticNet {
             return Err(Error::Shape("MultiTaskEN: y/x row mismatch".into()));
         }
         if !(0.0..=1.0).contains(&l1_ratio) {
-            return Err(Error::Value("MultiTaskEN: l1_ratio must be in [0, 1]".into()));
+            return Err(Error::Value(
+                "MultiTaskEN: l1_ratio must be in [0, 1]".into(),
+            ));
         }
         if alpha < 0.0 {
             return Err(Error::Value("MultiTaskEN: alpha must be ≥ 0".into()));
@@ -256,16 +260,29 @@ mod tests {
     fn multi_task_lasso_recovers_a_two_output_linear_signal() {
         // y_0 = 2·x_0 + 3·x_1, y_1 = -x_0 + x_1
         let x = array![
-            [1.0_f64, 0.0], [0.0, 1.0], [2.0, 1.0], [1.0, 2.0], [3.0, 2.0]
+            [1.0_f64, 0.0],
+            [0.0, 1.0],
+            [2.0, 1.0],
+            [1.0, 2.0],
+            [3.0, 2.0]
         ];
         let y = array![
-            [2.0_f64, -1.0], [3.0, 1.0], [7.0, -1.0], [8.0, 1.0], [12.0, -1.0]
+            [2.0_f64, -1.0],
+            [3.0, 1.0],
+            [7.0, -1.0],
+            [8.0, 1.0],
+            [12.0, -1.0]
         ];
         let m = MultiTaskLasso::fit_with(x.view(), y.view(), 0.001, 5000, 1e-8).unwrap();
         let p = m.predict(x.view()).unwrap();
         for i in 0..5 {
             for j in 0..2 {
-                assert!((p[[i, j]] - y[[i, j]]).abs() < 0.2, "row {i} col {j}: pred={} y={}", p[[i, j]], y[[i, j]]);
+                assert!(
+                    (p[[i, j]] - y[[i, j]]).abs() < 0.2,
+                    "row {i} col {j}: pred={} y={}",
+                    p[[i, j]],
+                    y[[i, j]]
+                );
             }
         }
     }

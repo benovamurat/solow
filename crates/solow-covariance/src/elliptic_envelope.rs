@@ -47,7 +47,9 @@ impl EllipticEnvelope {
             .as_slice()
             .map(|_| ())
             .and_then(|_| mcd_scores(&mcd, x))
-            .ok_or_else(|| Error::Value("EllipticEnvelope: Mahalanobis calculation failed".into()))?;
+            .ok_or_else(|| {
+                Error::Value("EllipticEnvelope: Mahalanobis calculation failed".into())
+            })?;
         // Contamination cutoff: mark the top-fraction as outliers.
         let mut sorted = scores.clone();
         sorted.sort_by(|a, b| b.partial_cmp(a).unwrap());

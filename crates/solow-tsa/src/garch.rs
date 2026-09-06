@@ -45,8 +45,7 @@ impl Garch11 {
         // A pragmatic simplification: coordinate-descent on (ω, α, β) with
         // the reparameterisation α, β ∈ (0, 1) via sigmoid, and ω > 0 via
         // exp.
-        let sample_var: f64 =
-            x.iter().map(|v| v * v).sum::<f64>() / n as f64;
+        let sample_var: f64 = x.iter().map(|v| v * v).sum::<f64>() / n as f64;
         let mut omega = 0.05 * sample_var;
         let mut alpha = 0.1_f64;
         let mut beta = 0.85_f64;
@@ -101,7 +100,11 @@ impl Garch11 {
     /// Forecast conditional variance `h` steps ahead.
     pub fn forecast_variance(&self, h: usize) -> Array1<f64> {
         let n = self.sigma2.len();
-        let last_sigma2 = if n == 0 { self.omega } else { self.sigma2[n - 1] };
+        let last_sigma2 = if n == 0 {
+            self.omega
+        } else {
+            self.sigma2[n - 1]
+        };
         let mut out = Array1::<f64>::zeros(h);
         let mut prev = last_sigma2;
         for i in 0..h {

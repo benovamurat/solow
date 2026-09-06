@@ -17,7 +17,9 @@ use solow_core::{Error, Result};
 /// Cohen's d — `(μ₁ − μ₂) / σ_pooled`.
 pub fn cohens_d(x1: &[f64], x2: &[f64]) -> Result<f64> {
     if x1.len() < 2 || x2.len() < 2 {
-        return Err(Error::Value("cohens_d: both groups must have ≥ 2 samples".into()));
+        return Err(Error::Value(
+            "cohens_d: both groups must have ≥ 2 samples".into(),
+        ));
     }
     let (m1, s1) = mean_var(x1);
     let (m2, s2) = mean_var(x2);
@@ -38,7 +40,9 @@ pub fn hedges_g(x1: &[f64], x2: &[f64]) -> Result<f64> {
 /// Glass's Δ — `(μ₁ − μ₂) / σ_control` (the second group's std alone).
 pub fn glass_delta(treatment: &[f64], control: &[f64]) -> Result<f64> {
     if control.len() < 2 {
-        return Err(Error::Value("glass_delta: control needs ≥ 2 samples".into()));
+        return Err(Error::Value(
+            "glass_delta: control needs ≥ 2 samples".into(),
+        ));
     }
     let (mt, _) = mean_var(treatment);
     let (mc, vc) = mean_var(control);
@@ -55,10 +59,17 @@ pub fn eta_squared(ss_between: f64, ss_total: f64) -> Result<f64> {
 }
 
 /// ω² (omega squared) — a less biased variance-explained estimate.
-pub fn omega_squared(ss_between: f64, ss_within: f64, df_between: f64, ms_within: f64) -> Result<f64> {
+pub fn omega_squared(
+    ss_between: f64,
+    ss_within: f64,
+    df_between: f64,
+    ms_within: f64,
+) -> Result<f64> {
     let denom = ss_between + ss_within + ms_within;
     if denom <= 0.0 {
-        return Err(Error::Value("omega_squared: total denominator must be > 0".into()));
+        return Err(Error::Value(
+            "omega_squared: total denominator must be > 0".into(),
+        ));
     }
     Ok((ss_between - df_between * ms_within) / denom)
 }
@@ -67,7 +78,9 @@ pub fn omega_squared(ss_between: f64, ss_within: f64, df_between: f64, ms_within
 /// `b` minus the reverse. Ranges in `[−1, +1]`.
 pub fn cliffs_delta(a: &[f64], b: &[f64]) -> Result<f64> {
     if a.is_empty() || b.is_empty() {
-        return Err(Error::Value("cliffs_delta: both groups must be non-empty".into()));
+        return Err(Error::Value(
+            "cliffs_delta: both groups must be non-empty".into(),
+        ));
     }
     let mut gt = 0_isize;
     let mut lt = 0_isize;
@@ -88,7 +101,9 @@ pub fn cliffs_delta(a: &[f64], b: &[f64]) -> Result<f64> {
 /// chi-square statistic on a contingency table.
 pub fn cramers_v(chi2: f64, n: usize, min_dim: usize) -> Result<f64> {
     if n == 0 || min_dim < 2 {
-        return Err(Error::Value("cramers_v: n must be > 0 and min_dim ≥ 2".into()));
+        return Err(Error::Value(
+            "cramers_v: n must be > 0 and min_dim ≥ 2".into(),
+        ));
     }
     Ok((chi2 / (n as f64 * (min_dim - 1) as f64)).sqrt())
 }

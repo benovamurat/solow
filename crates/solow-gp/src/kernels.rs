@@ -40,7 +40,9 @@ pub trait Kernel: Send + Sync {
 
     /// `k(x, x)` for every row — useful for predictive variances.
     fn diag(&self, x: ArrayView2<'_, f64>) -> Vec<f64> {
-        (0..x.nrows()).map(|i| self.call(x.row(i), x.row(i))).collect()
+        (0..x.nrows())
+            .map(|i| self.call(x.row(i), x.row(i)))
+            .collect()
     }
 }
 
@@ -57,7 +59,10 @@ pub struct Rbf {
 impl Rbf {
     /// Construct with ℓ, σ = 1.
     pub fn new(length_scale: f64) -> Self {
-        Self { length_scale, sigma: 1.0 }
+        Self {
+            length_scale,
+            sigma: 1.0,
+        }
     }
 }
 

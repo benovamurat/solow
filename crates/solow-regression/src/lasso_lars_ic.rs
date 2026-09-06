@@ -173,8 +173,11 @@ mod tests {
     #[test]
     fn lasso_lars_ic_returns_a_valid_step() {
         let x = array![
-            [1.0_f64, 2.0, 3.0], [2.0, 3.0, 5.0], [3.0, 5.0, 8.0],
-            [4.0, 7.0, 11.0], [5.0, 9.0, 14.0]
+            [1.0_f64, 2.0, 3.0],
+            [2.0, 3.0, 5.0],
+            [3.0, 5.0, 8.0],
+            [4.0, 7.0, 11.0],
+            [5.0, 9.0, 14.0]
         ];
         let y = array![1.0_f64, 2.0, 3.0, 4.0, 5.0];
         let m = LassoLarsIC::fit(x.view(), y.view(), InformationCriterion::Bic).unwrap();

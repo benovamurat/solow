@@ -520,7 +520,8 @@ pub fn d2_absolute_error_score(
 /// * `p > 2` — positive stable, `y > 0`, `ŷ > 0`.
 ///
 /// This is the natural log-likelihood-based error for models fit by IRLS in
-/// [`solow_glm`]: a Poisson GLM is scored at `p = 1`, a Gamma GLM at `p = 2`.
+/// [`solow-glm`](https://docs.rs/solow-glm): a Poisson GLM is scored at `p = 1`,
+/// a Gamma GLM at `p = 2`.
 pub fn mean_tweedie_deviance(
     y_true: ArrayView1<'_, f64>,
     y_pred: ArrayView1<'_, f64>,

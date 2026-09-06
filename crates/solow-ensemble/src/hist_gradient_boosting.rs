@@ -29,10 +29,7 @@ pub struct HistGradientBoostingRegressor {
 
 impl HistGradientBoostingRegressor {
     /// Fit with the reference defaults.
-    pub fn fit(
-        x: ArrayView2<'_, f64>,
-        y: ArrayView1<'_, f64>,
-    ) -> Result<Self> {
+    pub fn fit(x: ArrayView2<'_, f64>, y: ArrayView1<'_, f64>) -> Result<Self> {
         Self::fit_with(x, y, 100, 0.1, 3, 255)
     }
 
@@ -46,13 +43,19 @@ impl HistGradientBoostingRegressor {
         max_bins: usize,
     ) -> Result<Self> {
         if x.nrows() != y.len() {
-            return Err(Error::Shape("HistGradientBoostingRegressor: x/y row mismatch".into()));
+            return Err(Error::Shape(
+                "HistGradientBoostingRegressor: x/y row mismatch".into(),
+            ));
         }
         if n_estimators == 0 {
-            return Err(Error::Value("HistGradientBoostingRegressor: n_estimators must be ≥ 1".into()));
+            return Err(Error::Value(
+                "HistGradientBoostingRegressor: n_estimators must be ≥ 1".into(),
+            ));
         }
         if learning_rate <= 0.0 {
-            return Err(Error::Value("HistGradientBoostingRegressor: learning_rate must be > 0".into()));
+            return Err(Error::Value(
+                "HistGradientBoostingRegressor: learning_rate must be > 0".into(),
+            ));
         }
         // Bin features quantile-wise (equal-count edges).
         let d = x.ncols();
@@ -75,7 +78,9 @@ impl HistGradientBoostingRegressor {
         let mut x_bin = Array2::<f64>::zeros((n, d));
         for i in 0..n {
             for j in 0..d {
-                let bin = bin_thresholds[j].iter().position(|&e| x[[i, j]] <= e)
+                let bin = bin_thresholds[j]
+                    .iter()
+                    .position(|&e| x[[i, j]] <= e)
                     .unwrap_or(bin_thresholds[j].len());
                 x_bin[[i, j]] = bin as f64;
             }
@@ -118,7 +123,9 @@ impl HistGradientBoostingRegressor {
         let mut x_bin = Array2::<f64>::zeros((n, d));
         for i in 0..n {
             for j in 0..d {
-                let bin = self.bin_thresholds[j].iter().position(|&e| x[[i, j]] <= e)
+                let bin = self.bin_thresholds[j]
+                    .iter()
+                    .position(|&e| x[[i, j]] <= e)
                     .unwrap_or(self.bin_thresholds[j].len());
                 x_bin[[i, j]] = bin as f64;
             }
@@ -145,18 +152,17 @@ pub struct HistGradientBoostingClassifier {
 
 impl HistGradientBoostingClassifier {
     /// Fit binary classifier with the reference defaults.
-    pub fn fit(
-        x: ArrayView2<'_, f64>,
-        y: ArrayView1<'_, u8>,
-    ) -> Result<Self> {
+    pub fn fit(x: ArrayView2<'_, f64>, y: ArrayView1<'_, u8>) -> Result<Self> {
         if x.nrows() != y.len() {
-            return Err(Error::Shape("HistGradientBoostingClassifier: x/y row mismatch".into()));
+            return Err(Error::Shape(
+                "HistGradientBoostingClassifier: x/y row mismatch".into(),
+            ));
         }
         let n = x.nrows();
         // Fit inner regressor on log-odds targets.
         let mean_p = y.iter().map(|&v| v as f64).sum::<f64>() / n as f64;
-        let init_logit = ((mean_p.clamp(1e-6, 1.0 - 1e-6))
-            / (1.0 - mean_p.clamp(1e-6, 1.0 - 1e-6))).ln();
+        let init_logit =
+            ((mean_p.clamp(1e-6, 1.0 - 1e-6)) / (1.0 - mean_p.clamp(1e-6, 1.0 - 1e-6))).ln();
         let mut logits = Array1::<f64>::from_elem(n, init_logit);
         let n_est = 100;
         let lr = 0.1;
@@ -181,7 +187,9 @@ impl HistGradientBoostingClassifier {
         let mut x_bin = Array2::<f64>::zeros((n, d));
         for i in 0..n {
             for j in 0..d {
-                let bin = bin_thresholds[j].iter().position(|&e| x[[i, j]] <= e)
+                let bin = bin_thresholds[j]
+                    .iter()
+                    .position(|&e| x[[i, j]] <= e)
                     .unwrap_or(bin_thresholds[j].len());
                 x_bin[[i, j]] = bin as f64;
             }
@@ -226,7 +234,9 @@ impl HistGradientBoostingClassifier {
 
     /// Predicted labels.
     pub fn predict(&self, x: ArrayView2<'_, f64>) -> Result<Array1<u8>> {
-        Ok(self.predict_proba1(x)?.map(|p| if *p >= 0.5 { 1 } else { 0 }))
+        Ok(self
+            .predict_proba1(x)?
+            .map(|p| if *p >= 0.5 { 1 } else { 0 }))
     }
 }
 
@@ -239,12 +249,23 @@ mod tests {
     fn hgbr_learns_a_linear_signal() {
         // y = 2·x
         let x = array![
-            [0.0_f64], [1.0], [2.0], [3.0], [4.0], [5.0], [6.0], [7.0],
-            [8.0], [9.0], [10.0], [11.0]
+            [0.0_f64],
+            [1.0],
+            [2.0],
+            [3.0],
+            [4.0],
+            [5.0],
+            [6.0],
+            [7.0],
+            [8.0],
+            [9.0],
+            [10.0],
+            [11.0]
         ];
         let y_vec: Vec<f64> = (0..12).map(|i| 2.0 * i as f64).collect();
         let y = Array1::from_vec(y_vec);
-        let m = HistGradientBoostingRegressor::fit_with(x.view(), y.view(), 100, 0.1, 3, 32).unwrap();
+        let m =
+            HistGradientBoostingRegressor::fit_with(x.view(), y.view(), 100, 0.1, 3, 32).unwrap();
         let p = m.predict(x.view()).unwrap();
         let mse: f64 = (0..12).map(|i| (p[i] - y[i]).powi(2)).sum::<f64>() / 12.0;
         let var: f64 = y.iter().map(|yi| (yi - 11.0).powi(2)).sum::<f64>() / 12.0;
@@ -254,13 +275,21 @@ mod tests {
     #[test]
     fn hgbc_learns_two_clusters() {
         let x = array![
-            [0.0_f64, 0.0], [0.1, 0.1], [0.2, 0.2],
-            [5.0, 5.0], [5.1, 5.1], [5.2, 5.2]
+            [0.0_f64, 0.0],
+            [0.1, 0.1],
+            [0.2, 0.2],
+            [5.0, 5.0],
+            [5.1, 5.1],
+            [5.2, 5.2]
         ];
         let y = array![0_u8, 0, 0, 1, 1, 1];
         let m = HistGradientBoostingClassifier::fit(x.view(), y.view()).unwrap();
         let p = m.predict(x.view()).unwrap();
-        for i in 0..3 { assert_eq!(p[i], 0); }
-        for i in 3..6 { assert_eq!(p[i], 1); }
+        for i in 0..3 {
+            assert_eq!(p[i], 0);
+        }
+        for i in 3..6 {
+            assert_eq!(p[i], 1);
+        }
     }
 }

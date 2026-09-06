@@ -76,7 +76,9 @@ impl TargetEncoder {
     /// Transform: replace each value with its smoothed target mean.
     pub fn transform(&self, x: ArrayView2<'_, f64>) -> Result<Array2<f64>> {
         if x.ncols() != self.n_features_in {
-            return Err(Error::Shape("TargetEncoder::transform: column count mismatch".into()));
+            return Err(Error::Shape(
+                "TargetEncoder::transform: column count mismatch".into(),
+            ));
         }
         let n = x.nrows();
         let d = x.ncols();

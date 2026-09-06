@@ -24,7 +24,9 @@ impl SelectPercentile {
         F: FnOnce(ArrayView2<'_, f64>) -> Result<Vec<f64>>,
     {
         if !(0.0..=100.0).contains(&percentile) {
-            return Err(Error::Value("SelectPercentile: percentile must be in [0, 100]".into()));
+            return Err(Error::Value(
+                "SelectPercentile: percentile must be in [0, 100]".into(),
+            ));
         }
         let d = x.ncols();
         let scores = y_scores(x)?;
@@ -85,7 +87,11 @@ impl SelectFpr {
             return Err(Error::Shape("SelectFpr: p-value length ≠ x.ncols()".into()));
         }
         let selected: Vec<usize> = (0..d).filter(|&j| pvalues[j] < alpha).collect();
-        Ok(Self { selected, pvalues, alpha })
+        Ok(Self {
+            selected,
+            pvalues,
+            alpha,
+        })
     }
 }
 
@@ -126,7 +132,11 @@ impl SelectFdr {
         let selected: Vec<usize> = ranked.iter().take(cutoff_rank).map(|(i, _)| *i).collect();
         let mut selected = selected;
         selected.sort();
-        Ok(Self { selected, pvalues, alpha })
+        Ok(Self {
+            selected,
+            pvalues,
+            alpha,
+        })
     }
 }
 
@@ -155,7 +165,11 @@ impl SelectFwe {
         let d = x.ncols();
         let bonf = alpha / d as f64;
         let selected: Vec<usize> = (0..d).filter(|&j| pvalues[j] < bonf).collect();
-        Ok(Self { selected, pvalues, alpha })
+        Ok(Self {
+            selected,
+            pvalues,
+            alpha,
+        })
     }
 }
 

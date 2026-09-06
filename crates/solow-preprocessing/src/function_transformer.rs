@@ -63,22 +63,20 @@ mod tests {
     #[test]
     fn function_transformer_applies_log_and_inverses_it() {
         let x = array![[1.0_f64, 2.0], [3.0, 4.0]];
-        let forward: Box<dyn Fn(ArrayView2<'_, f64>) -> Result<Array2<f64>>> =
-            Box::new(|arr| {
-                let mut out = arr.to_owned();
-                for v in out.iter_mut() {
-                    *v = (*v).ln();
-                }
-                Ok(out)
-            });
-        let inverse: Box<dyn Fn(ArrayView2<'_, f64>) -> Result<Array2<f64>>> =
-            Box::new(|arr| {
-                let mut out = arr.to_owned();
-                for v in out.iter_mut() {
-                    *v = (*v).exp();
-                }
-                Ok(out)
-            });
+        let forward: Box<dyn Fn(ArrayView2<'_, f64>) -> Result<Array2<f64>>> = Box::new(|arr| {
+            let mut out = arr.to_owned();
+            for v in out.iter_mut() {
+                *v = (*v).ln();
+            }
+            Ok(out)
+        });
+        let inverse: Box<dyn Fn(ArrayView2<'_, f64>) -> Result<Array2<f64>>> = Box::new(|arr| {
+            let mut out = arr.to_owned();
+            for v in out.iter_mut() {
+                *v = (*v).exp();
+            }
+            Ok(out)
+        });
         let ft = FunctionTransformer::fit(x.view(), forward, Some(inverse)).unwrap();
         let z = ft.transform(x.view()).unwrap();
         let back = ft.inverse_transform(z.view()).unwrap();

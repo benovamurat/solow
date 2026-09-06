@@ -21,7 +21,9 @@ impl<C: BinaryClassifier, F: FnMut() -> C> OneVsRestClassifier<C, F> {
     pub fn fit(mut factory: F, x: ArrayView2<'_, f64>, y: &[i64]) -> Result<Self> {
         let n = x.nrows();
         if y.len() != n {
-            return Err(Error::Shape("OneVsRestClassifier: y/x length mismatch".into()));
+            return Err(Error::Shape(
+                "OneVsRestClassifier: y/x length mismatch".into(),
+            ));
         }
         let mut classes: Vec<i64> = y.to_vec();
         classes.sort();
@@ -50,7 +52,9 @@ impl<C: BinaryClassifier, F: FnMut() -> C> MultiClassifier for OneVsRestClassifi
     fn fit(&mut self, x: ArrayView2<'_, f64>, y: &[i64]) -> Result<()> {
         let n = x.nrows();
         if y.len() != n {
-            return Err(Error::Shape("OneVsRestClassifier::fit: y/x length mismatch".into()));
+            return Err(Error::Shape(
+                "OneVsRestClassifier::fit: y/x length mismatch".into(),
+            ));
         }
         let mut classes: Vec<i64> = y.to_vec();
         classes.sort();
@@ -135,7 +139,17 @@ mod tests {
 
     #[test]
     fn one_vs_rest_recovers_three_class_boundaries() {
-        let x = array![[0.0_f64], [0.5], [1.0], [5.0], [5.5], [6.0], [10.0], [10.5], [11.0]];
+        let x = array![
+            [0.0_f64],
+            [0.5],
+            [1.0],
+            [5.0],
+            [5.5],
+            [6.0],
+            [10.0],
+            [10.5],
+            [11.0]
+        ];
         let y = vec![0_i64, 0, 0, 1, 1, 1, 2, 2, 2];
         let ovr = OneVsRestClassifier::fit(|| GaussBump { pos_mean: 0.0 }, x.view(), &y).unwrap();
         let pred = ovr.predict(x.view()).unwrap();

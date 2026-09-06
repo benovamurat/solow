@@ -49,7 +49,11 @@ impl ExtraTreesClassifier {
             p.seed = seed.wrapping_add(t as u64).wrapping_mul(0x9E37_79B9);
             trees.push(DecisionTreeClassifier::fit(x, y, criterion, p)?);
         }
-        Ok(Self { trees, n_classes, n_estimators })
+        Ok(Self {
+            trees,
+            n_classes,
+            n_estimators,
+        })
     }
 
     /// Predict class labels via argmax of average class probability.
@@ -113,7 +117,10 @@ impl ExtraTreesRegressor {
             p.seed = seed.wrapping_add(t as u64).wrapping_mul(0xA1B2_C3D4);
             trees.push(DecisionTreeRegressor::fit(x, y, criterion, p)?);
         }
-        Ok(Self { trees, n_estimators })
+        Ok(Self {
+            trees,
+            n_estimators,
+        })
     }
 
     /// Predict as the arithmetic mean across trees.
@@ -141,8 +148,12 @@ mod tests {
     #[test]
     fn extra_trees_classifier_learns_a_two_class_dataset() {
         let x = array![
-            [0.0_f64, 0.0], [0.1, 0.1], [0.2, 0.2],
-            [5.0, 5.0], [5.1, 5.1], [5.2, 5.2]
+            [0.0_f64, 0.0],
+            [0.1, 0.1],
+            [0.2, 0.2],
+            [5.0, 5.0],
+            [5.1, 5.1],
+            [5.2, 5.2]
         ];
         let y = array![0_usize, 0, 0, 1, 1, 1];
         let m = ExtraTreesClassifier::fit(
@@ -152,7 +163,8 @@ mod tests {
             ClassificationCriterion::Gini,
             TreeParams::default(),
             42,
-        ).unwrap();
+        )
+        .unwrap();
         let p = m.predict(x.view()).unwrap();
         for i in 0..3 {
             assert_eq!(p[i], 0);

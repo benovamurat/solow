@@ -36,12 +36,7 @@ impl GraphicalLasso {
     }
 
     /// Full-configuration fit.
-    pub fn fit_with(
-        x: ArrayView2<'_, f64>,
-        alpha: f64,
-        max_iter: usize,
-        tol: f64,
-    ) -> Result<Self> {
+    pub fn fit_with(x: ArrayView2<'_, f64>, alpha: f64, max_iter: usize, tol: f64) -> Result<Self> {
         if alpha < 0.0 || !alpha.is_finite() {
             return Err(Error::Value(format!(
                 "GraphicalLasso::fit_with: alpha must be finite and ≥ 0 (got {alpha})"

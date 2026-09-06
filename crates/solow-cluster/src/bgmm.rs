@@ -44,7 +44,9 @@ impl BayesianGaussianMixture {
         let n = x.nrows();
         let d = x.ncols();
         if n_components == 0 || n_components > n {
-            return Err(Error::Value("BayesianGaussianMixture: n_components out of range".into()));
+            return Err(Error::Value(
+                "BayesianGaussianMixture: n_components out of range".into(),
+            ));
         }
         // Initialise means with k-means++-flavoured deterministic seeding
         // (first row + n_components − 1 evenly-spaced rows).
@@ -189,8 +191,12 @@ mod tests {
     #[test]
     fn bgmm_labels_two_well_separated_clusters() {
         let x = array![
-            [0.0_f64, 0.0], [0.1, 0.1], [0.2, 0.2],
-            [5.0, 5.0], [5.1, 5.1], [5.2, 5.2]
+            [0.0_f64, 0.0],
+            [0.1, 0.1],
+            [0.2, 0.2],
+            [5.0, 5.0],
+            [5.1, 5.1],
+            [5.2, 5.2]
         ];
         let m = BayesianGaussianMixture::fit(x.view(), 3).unwrap();
         let pred = m.predict(x.view());

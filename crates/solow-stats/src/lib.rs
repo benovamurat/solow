@@ -23,19 +23,18 @@ mod contingency;
 mod correlation;
 mod correlation_tools;
 mod descriptivestats;
-mod meta_analysis;
-mod nonparametric_tests;
-mod normality_ext;
-mod variance_tests;
 mod diagnostic;
 mod dist_dependence;
 mod equivalence;
 mod influence;
 mod inter_rater;
 mod mediation;
+mod meta_analysis;
 mod multitest;
 mod noncentral;
+mod nonparametric_tests;
 mod normality;
+mod normality_ext;
 mod oaxaca;
 mod oneway;
 mod power;
@@ -45,6 +44,7 @@ mod regdiag;
 mod sandwich;
 mod srange;
 mod tukey;
+mod variance_tests;
 mod wald;
 mod weightstats;
 
@@ -54,14 +54,6 @@ pub use correlation::{kendalltau, pearsonr, spearmanr, CorrelationResult};
 pub use correlation_tools::{
     corr2cov, corr_clipped, corr_nearest, cov2corr, cov2corr_std, cov_nearest, NearestMethod,
 };
-pub use nonparametric_tests::{
-    chi2_contingency, kruskal, mannwhitneyu, mcnemar, TestResult as NpTestResult,
-};
-pub use meta_analysis::{
-    meta_fixed_effect, meta_random_effects, MetaModel, MetaResult, Study as MetaStudy,
-};
-pub use normality_ext::{anderson_darling, ks_2samp, runs_test, shapiro_wilk, GofResult};
-pub use variance_tests::{bartlett, fligner, levene, LeveneCenter, VarianceTestResult};
 pub use descriptivestats::{describe, Description, PERCENTILES};
 pub use diagnostic::{acorr_ljungbox, het_breuschpagan, het_white, LjungBox};
 pub use dist_dependence::{
@@ -72,9 +64,16 @@ pub use equivalence::{ttost_ind, TostResult};
 pub use influence::{kstest_normal, lilliefors, variance_inflation_factor, LillieforsDist};
 pub use inter_rater::{aggregate_raters, cohens_kappa, fleiss_kappa, FleissMethod, KappaResults};
 pub use mediation::{Mediation, MediationResults};
+pub use meta_analysis::{
+    meta_fixed_effect, meta_random_effects, MetaModel, MetaResult, Study as MetaStudy,
+};
 pub use multitest::{multipletests, MultiTestMethod, MultiTestResult};
 pub use noncentral::{nct_cdf, nct_sf};
+pub use nonparametric_tests::{
+    chi2_contingency, kruskal, mannwhitneyu, mcnemar, TestResult as NpTestResult,
+};
 pub use normality::{durbin_watson, jarque_bera, omni_normtest, JarqueBera};
+pub use normality_ext::{anderson_darling, ks_2samp, runs_test, shapiro_wilk, GofResult};
 pub use oaxaca::{OaxacaBlinder, ThreeFold, TwoFold, TwoFoldType};
 pub use oneway::{anova_generic, anova_oneway, f_oneway, OnewayResult, UseVar as OnewayUseVar};
 pub use power::{NormalIndPower, TTestPower};
@@ -89,5 +88,6 @@ pub use sandwich::{
 };
 pub use srange::{srange_cdf, srange_ppf, srange_sf};
 pub use tukey::{pairwise_tukeyhsd, TukeyHsdResult};
+pub use variance_tests::{bartlett, fligner, levene, LeveneCenter, VarianceTestResult};
 pub use wald::{f_test, wald_test, FTestResult, WaldResult};
 pub use weightstats::{ttest_ind, ztest, Alternative, DescrStatsW, TTestResult, UseVar};

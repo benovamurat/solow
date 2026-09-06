@@ -8,8 +8,7 @@ use std::path::PathBuf;
 use solow_cross_decomposition::PLSRegression;
 
 fn fixtures() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .join("../../tests/fixtures/cross_decomposition")
+    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../tests/fixtures/cross_decomposition")
 }
 
 fn load(name: &str) -> Value {
@@ -23,14 +22,29 @@ fn f2d(v: &Value) -> Array2<f64> {
         .as_array()
         .unwrap()
         .iter()
-        .map(|r| r.as_array().unwrap().iter().map(|c| c.as_f64().unwrap()).collect())
+        .map(|r| {
+            r.as_array()
+                .unwrap()
+                .iter()
+                .map(|c| c.as_f64().unwrap())
+                .collect()
+        })
         .collect();
-    Array2::from_shape_vec((rows.len(), rows[0].len()), rows.into_iter().flatten().collect())
-        .unwrap()
+    Array2::from_shape_vec(
+        (rows.len(), rows[0].len()),
+        rows.into_iter().flatten().collect(),
+    )
+    .unwrap()
 }
 
 fn f1d(v: &Value) -> Array1<f64> {
-    Array1::from_vec(v.as_array().unwrap().iter().map(|c| c.as_f64().unwrap()).collect())
+    Array1::from_vec(
+        v.as_array()
+            .unwrap()
+            .iter()
+            .map(|c| c.as_f64().unwrap())
+            .collect(),
+    )
 }
 
 #[test]

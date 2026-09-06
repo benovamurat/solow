@@ -389,7 +389,9 @@ impl OrthogonalMatchingPursuit {
         let n = x.nrows();
         let d = x.ncols();
         if d != self.coef.len() {
-            return Err(Error::Shape("OrthogonalMatchingPursuit::predict: shape mismatch".into()));
+            return Err(Error::Shape(
+                "OrthogonalMatchingPursuit::predict: shape mismatch".into(),
+            ));
         }
         let mut out = Array1::<f64>::zeros(n);
         for i in 0..n {
@@ -487,8 +489,11 @@ mod tests {
     fn omp_selects_the_correct_active_set() {
         // y = 3·x₀; x₁, x₂ are noise.
         let x = array![
-            [1.0_f64, 0.7, -0.2], [2.0, -1.3, 0.4], [3.0, 0.5, -0.1],
-            [4.0, 1.9, 2.4], [5.0, -0.6, 1.1]
+            [1.0_f64, 0.7, -0.2],
+            [2.0, -1.3, 0.4],
+            [3.0, 0.5, -0.1],
+            [4.0, 1.9, 2.4],
+            [5.0, -0.6, 1.1]
         ];
         let y = array![3.0_f64, 6.0, 9.0, 12.0, 15.0];
         let m = OrthogonalMatchingPursuit::fit(x.view(), y.view(), 1).unwrap();

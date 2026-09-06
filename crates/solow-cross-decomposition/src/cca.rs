@@ -80,7 +80,7 @@ impl CCA {
         let ly = cholesky(&syy)?;
         // M = Lₓ⁻¹ Σ_xy Lᵧ⁻ᵀ  →  solve Lₓ X = Σ_xy   then  Lᵧ Yᵀ = Xᵀ.
         let m1 = solve_lower(&lx, &sxy)?; // (p × q)
-        // Solve Lᵧᵀ · Zᵀ = m1ᵀ  →  Z = solve_lower_transposed on rows.
+                                          // Solve Lᵧᵀ · Zᵀ = m1ᵀ  →  Z = solve_lower_transposed on rows.
         let m2t = solve_lower(&ly, &m1.t().to_owned())?; // (q × p)
         let m = m2t.t().to_owned(); // (p × q)
         let (u, s, v) = super::pls_svd::svd_helper(&m, 300, 1e-12);
@@ -185,7 +185,9 @@ fn solve_lower(l: &Array2<f64>, b: &Array2<f64>) -> Result<Array2<f64>> {
 fn solve_upper_from_lower(l: &Array2<f64>, b: &[f64]) -> Result<Vec<f64>> {
     let n = l.nrows();
     if b.len() != n {
-        return Err(Error::Shape("solve_upper_from_lower: length mismatch".into()));
+        return Err(Error::Shape(
+            "solve_upper_from_lower: length mismatch".into(),
+        ));
     }
     let mut x = vec![0.0_f64; n];
     for i in (0..n).rev() {
@@ -206,12 +208,13 @@ mod tests {
     #[test]
     fn cca_gives_descending_correlations() {
         let x = array![
-            [1.0, 2.0, 3.0], [2.0, 3.0, 5.0], [3.0, 5.0, 8.0],
-            [4.0, 7.0, 11.0], [5.0, 9.0, 14.0]
+            [1.0, 2.0, 3.0],
+            [2.0, 3.0, 5.0],
+            [3.0, 5.0, 8.0],
+            [4.0, 7.0, 11.0],
+            [5.0, 9.0, 14.0]
         ];
-        let y = array![
-            [2.0, 1.0], [3.0, 2.0], [5.0, 3.0], [7.0, 4.0], [9.0, 5.0]
-        ];
+        let y = array![[2.0, 1.0], [3.0, 2.0], [5.0, 3.0], [7.0, 4.0], [9.0, 5.0]];
         let m = CCA::fit(x.view(), y.view(), 2).unwrap();
         assert_eq!(m.correlations.len(), 2);
         assert!(m.correlations[0] >= m.correlations[1]);

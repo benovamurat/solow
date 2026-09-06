@@ -55,8 +55,8 @@ impl SkewedChi2Sampler {
         for j in 0..n_components {
             for i in 0..p {
                 let u = rng.uniform01().clamp(1e-10, 1.0 - 1e-10);
-                w[[i, j]] = (std::f64::consts::FRAC_1_PI)
-                    * (std::f64::consts::FRAC_PI_2 * u).tan().ln();
+                w[[i, j]] =
+                    (std::f64::consts::FRAC_1_PI) * (std::f64::consts::FRAC_PI_2 * u).tan().ln();
             }
         }
         let mut b = Array1::<f64>::zeros(n_components);
@@ -76,7 +76,9 @@ impl SkewedChi2Sampler {
     /// Transform.
     pub fn transform(&self, x: ArrayView2<'_, f64>) -> Result<Array2<f64>> {
         if x.ncols() != self.n_features {
-            return Err(Error::Shape("SkewedChi2Sampler::transform: shape mismatch".into()));
+            return Err(Error::Shape(
+                "SkewedChi2Sampler::transform: shape mismatch".into(),
+            ));
         }
         for i in 0..x.nrows() {
             for j in 0..x.ncols() {

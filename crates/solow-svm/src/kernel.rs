@@ -39,11 +39,7 @@ pub struct Svc {
 
 impl Svc {
     /// Fit with defaults `C = 1.0`, `max_iter = 200`, `tol = 1e-3`.
-    pub fn fit(
-        x: ArrayView2<'_, f64>,
-        y: &[i64],
-        kernel: KernelKind,
-    ) -> Result<Self> {
+    pub fn fit(x: ArrayView2<'_, f64>, y: &[i64], kernel: KernelKind) -> Result<Self> {
         Self::fit_with(x, y, kernel, 1.0, 200, 1e-3)
     }
 
@@ -67,7 +63,10 @@ impl Svc {
             return Err(Error::Value("Svc::fit_with: need exactly 2 classes".into()));
         }
         let (c0, c1) = (labels[0], labels[1]);
-        let ys: Vec<f64> = y.iter().map(|&yi| if yi == c1 { 1.0 } else { -1.0 }).collect();
+        let ys: Vec<f64> = y
+            .iter()
+            .map(|&yi| if yi == c1 { 1.0 } else { -1.0 })
+            .collect();
         let (alpha, b) = smo_binary(&x, &ys, &kernel, c, max_iter, tol)?;
         let mut sv_rows: Vec<usize> = Vec::new();
         let mut coefs: Vec<f64> = Vec::new();
@@ -110,8 +109,13 @@ impl Svc {
 
     /// Predict labels.
     pub fn predict(&self, x: ArrayView2<'_, f64>) -> Array1<i64> {
-        self.decision_function(x)
-            .map(|z| if *z >= 0.0 { self.classes.1 } else { self.classes.0 })
+        self.decision_function(x).map(|z| {
+            if *z >= 0.0 {
+                self.classes.1
+            } else {
+                self.classes.0
+            }
+        })
     }
 }
 
@@ -132,11 +136,7 @@ pub struct Svr {
 
 impl Svr {
     /// Fit with defaults `C = 1.0`, `epsilon = 0.1`, `max_iter = 200`, `tol = 1e-3`.
-    pub fn fit(
-        x: ArrayView2<'_, f64>,
-        y: &[f64],
-        kernel: KernelKind,
-    ) -> Result<Self> {
+    pub fn fit(x: ArrayView2<'_, f64>, y: &[f64], kernel: KernelKind) -> Result<Self> {
         Self::fit_with(x, y, kernel, 1.0, 0.1, 200, 1e-3)
     }
 
@@ -215,7 +215,11 @@ pub(crate) fn kernel_value(
             }
             (-gamma * s).exp()
         }
-        KernelKind::Polynomial { gamma, coef0, degree } => {
+        KernelKind::Polynomial {
+            gamma,
+            coef0,
+            degree,
+        } => {
             let mut s = 0.0_f64;
             for i in 0..a.len() {
                 s += a[i] * b[i];
@@ -259,9 +263,15 @@ pub(crate) fn smo_binary(
                 let a_i_old = alpha[i];
                 let a_j_old = alpha[j];
                 let (l, h) = if y[i] != y[j] {
-                    ((alpha[j] - alpha[i]).max(0.0), (c + alpha[j] - alpha[i]).min(c))
+                    (
+                        (alpha[j] - alpha[i]).max(0.0),
+                        (c + alpha[j] - alpha[i]).min(c),
+                    )
                 } else {
-                    ((alpha[i] + alpha[j] - c).max(0.0), (alpha[i] + alpha[j]).min(c))
+                    (
+                        (alpha[i] + alpha[j] - c).max(0.0),
+                        (alpha[i] + alpha[j]).min(c),
+                    )
                 };
                 if (h - l).abs() < 1e-8 {
                     continue;
@@ -278,10 +288,12 @@ pub(crate) fn smo_binary(
                     continue;
                 }
                 alpha[i] = a_i_old + y[i] * y[j] * (a_j_old - alpha[j]);
-                let b1 = b - ei
+                let b1 = b
+                    - ei
                     - y[i] * (alpha[i] - a_i_old) * k_ii
                     - y[j] * (alpha[j] - a_j_old) * k_ij;
-                let b2 = b - ej
+                let b2 = b
+                    - ej
                     - y[i] * (alpha[i] - a_i_old) * k_ij
                     - y[j] * (alpha[j] - a_j_old) * k_jj;
                 b = if 0.0 < alpha[i] && alpha[i] < c {
@@ -367,13 +379,7 @@ pub(crate) fn smo_regression(
     Ok((eta, b))
 }
 
-fn predict_reg(
-    eta: &[f64],
-    kernel: &KernelKind,
-    rows: &[Array1<f64>],
-    i: usize,
-    b: f64,
-) -> f64 {
+fn predict_reg(eta: &[f64], kernel: &KernelKind, rows: &[Array1<f64>], i: usize, b: f64) -> f64 {
     let mut s = b;
     for k in 0..eta.len() {
         if eta[k].abs() < 1e-12 {
@@ -392,13 +398,21 @@ mod tests {
     #[test]
     fn kernel_svc_rbf_learns_a_ring_bump_dataset() {
         let x = array![
-            [0.0_f64, 0.0], [0.1, 0.1], [0.2, 0.2],
-            [5.0, 5.0], [5.1, 5.1], [5.2, 5.2]
+            [0.0_f64, 0.0],
+            [0.1, 0.1],
+            [0.2, 0.2],
+            [5.0, 5.0],
+            [5.1, 5.1],
+            [5.2, 5.2]
         ];
         let y = vec![-1_i64, -1, -1, 1, 1, 1];
         let m = Svc::fit(x.view(), &y, KernelKind::Rbf { gamma: 0.1 }).unwrap();
         let p = m.predict(x.view());
-        for i in 0..3 { assert_eq!(p[i], -1); }
-        for i in 3..6 { assert_eq!(p[i], 1); }
+        for i in 0..3 {
+            assert_eq!(p[i], -1);
+        }
+        for i in 3..6 {
+            assert_eq!(p[i], 1);
+        }
     }
 }

@@ -18,7 +18,9 @@ impl LabelBinarizer {
     /// Fit.
     pub fn fit(y: &[i64]) -> Result<Self> {
         if y.is_empty() {
-            return Err(Error::Value("LabelBinarizer::fit: empty label vector".into()));
+            return Err(Error::Value(
+                "LabelBinarizer::fit: empty label vector".into(),
+            ));
         }
         let mut classes: Vec<i64> = y.to_vec();
         classes.sort();
@@ -55,25 +57,39 @@ impl LabelBinarizer {
         let n = y.nrows();
         if self.is_binary {
             if y.ncols() != 1 {
-                return Err(Error::Shape("LabelBinarizer::inverse_transform: expected 1 column".into()));
+                return Err(Error::Shape(
+                    "LabelBinarizer::inverse_transform: expected 1 column".into(),
+                ));
             }
-            Ok((0..n).map(|i| if y[[i, 0]] >= 0.5 { self.classes[1] } else { self.classes[0] }).collect())
+            Ok((0..n)
+                .map(|i| {
+                    if y[[i, 0]] >= 0.5 {
+                        self.classes[1]
+                    } else {
+                        self.classes[0]
+                    }
+                })
+                .collect())
         } else {
             if y.ncols() != self.classes.len() {
-                return Err(Error::Shape("LabelBinarizer::inverse_transform: column count mismatch".into()));
+                return Err(Error::Shape(
+                    "LabelBinarizer::inverse_transform: column count mismatch".into(),
+                ));
             }
             let k = self.classes.len();
-            Ok((0..n).map(|i| {
-                let mut best = 0;
-                let mut best_v = y[[i, 0]];
-                for c in 1..k {
-                    if y[[i, c]] > best_v {
-                        best_v = y[[i, c]];
-                        best = c;
+            Ok((0..n)
+                .map(|i| {
+                    let mut best = 0;
+                    let mut best_v = y[[i, 0]];
+                    for c in 1..k {
+                        if y[[i, c]] > best_v {
+                            best_v = y[[i, c]];
+                            best = c;
+                        }
                     }
-                }
-                self.classes[best]
-            }).collect())
+                    self.classes[best]
+                })
+                .collect())
         }
     }
 }

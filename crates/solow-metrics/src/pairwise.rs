@@ -43,10 +43,12 @@ pub fn pairwise_distances(
     let mut out = Array2::<f64>::zeros((n, m));
     for i in 0..n {
         for j in 0..m {
-            out[[i, j]] = distance(a.row(i).to_owned().as_slice().unwrap(),
-                                    b.row(j).to_owned().as_slice().unwrap(),
-                                    metric,
-                                    d);
+            out[[i, j]] = distance(
+                a.row(i).to_owned().as_slice().unwrap(),
+                b.row(j).to_owned().as_slice().unwrap(),
+                metric,
+                d,
+            );
         }
     }
     Ok(out)
@@ -118,7 +120,11 @@ fn distance(a: &[f64], b: &[f64], metric: PairwiseMetric, d: usize) -> f64 {
 }
 
 /// RBF (Gaussian) kernel `exp(−γ ‖x − y‖²)`.
-pub fn rbf_kernel(a: ArrayView2<'_, f64>, b: ArrayView2<'_, f64>, gamma: f64) -> Result<Array2<f64>> {
+pub fn rbf_kernel(
+    a: ArrayView2<'_, f64>,
+    b: ArrayView2<'_, f64>,
+    gamma: f64,
+) -> Result<Array2<f64>> {
     if a.ncols() != b.ncols() {
         return Err(Error::Shape("rbf_kernel: shape mismatch".into()));
     }
@@ -215,10 +221,7 @@ pub fn laplacian_kernel(
 }
 
 /// Cosine similarity `x·y / (‖x‖ · ‖y‖)`.
-pub fn cosine_similarity(
-    a: ArrayView2<'_, f64>,
-    b: ArrayView2<'_, f64>,
-) -> Result<Array2<f64>> {
+pub fn cosine_similarity(a: ArrayView2<'_, f64>, b: ArrayView2<'_, f64>) -> Result<Array2<f64>> {
     if a.ncols() != b.ncols() {
         return Err(Error::Shape("cosine_similarity: shape mismatch".into()));
     }

@@ -53,23 +53,17 @@ pub struct CalibratedClassifierCV<C: ScoreClassifier> {
 
 impl<C: ScoreClassifier> CalibratedClassifierCV<C> {
     /// Fit — trains `base` on the full data then calibrates its scores.
-    pub fn fit(
-        mut base: C,
-        x: ArrayView2<'_, f64>,
-        y: &[u8],
-        method: Method,
-    ) -> Result<Self> {
+    pub fn fit(mut base: C, x: ArrayView2<'_, f64>, y: &[u8], method: Method) -> Result<Self> {
         if x.nrows() != y.len() {
-            return Err(Error::Shape("CalibratedClassifierCV: y/x length mismatch".into()));
+            return Err(Error::Shape(
+                "CalibratedClassifierCV: y/x length mismatch".into(),
+            ));
         }
         base.fit(x, y)?;
         let scores = base.decision_function(x)?;
         let (sig, iso) = match method {
             Method::Sigmoid => (Some(platt_fit(scores.as_slice().unwrap(), y)), None),
-            Method::Isotonic => (
-                None,
-                Some(isotonic_fit(scores.as_slice().unwrap(), y)),
-            ),
+            Method::Isotonic => (None, Some(isotonic_fit(scores.as_slice().unwrap(), y))),
         };
         Ok(Self {
             base,
@@ -151,8 +145,11 @@ fn platt_fit(scores: &[f64], y: &[u8]) -> (f64, f64) {
 
 fn isotonic_fit(scores: &[f64], y: &[u8]) -> (Vec<f64>, Vec<f64>) {
     // Pool-adjacent-violators (PAV) on scores sorted ascending.
-    let mut pairs: Vec<(f64, f64)> =
-        scores.iter().zip(y.iter()).map(|(&s, &yi)| (s, yi as f64)).collect();
+    let mut pairs: Vec<(f64, f64)> = scores
+        .iter()
+        .zip(y.iter())
+        .map(|(&s, &yi)| (s, yi as f64))
+        .collect();
     pairs.sort_by(|a, b| a.0.partial_cmp(&b.0).unwrap());
     let n = pairs.len();
     let mut values: Vec<f64> = pairs.iter().map(|p| p.1).collect();
@@ -268,10 +265,14 @@ mod tests {
     fn calibrated_sigmoid_gives_monotone_probabilities() {
         let x = array![[0.0_f64], [0.5], [1.0], [1.5], [2.0], [2.5]];
         let y = vec![0_u8, 0, 0, 1, 1, 1];
-        let c = CalibratedClassifierCV::fit(Toy { threshold: 0.0 }, x.view(), &y, Method::Sigmoid).unwrap();
+        let c = CalibratedClassifierCV::fit(Toy { threshold: 0.0 }, x.view(), &y, Method::Sigmoid)
+            .unwrap();
         let probs = c.predict_proba1(x.view()).unwrap();
         for i in 1..6 {
-            assert!(probs[i] >= probs[i - 1] - 1e-8, "monotonicity broken at row {i}");
+            assert!(
+                probs[i] >= probs[i - 1] - 1e-8,
+                "monotonicity broken at row {i}"
+            );
         }
     }
 
@@ -279,10 +280,14 @@ mod tests {
     fn calibrated_isotonic_gives_monotone_probabilities() {
         let x = array![[0.0_f64], [0.5], [1.0], [1.5], [2.0], [2.5]];
         let y = vec![0_u8, 0, 0, 1, 1, 1];
-        let c = CalibratedClassifierCV::fit(Toy { threshold: 0.0 }, x.view(), &y, Method::Isotonic).unwrap();
+        let c = CalibratedClassifierCV::fit(Toy { threshold: 0.0 }, x.view(), &y, Method::Isotonic)
+            .unwrap();
         let probs = c.predict_proba1(x.view()).unwrap();
         for i in 1..6 {
-            assert!(probs[i] >= probs[i - 1] - 1e-8, "monotonicity broken at row {i}");
+            assert!(
+                probs[i] >= probs[i - 1] - 1e-8,
+                "monotonicity broken at row {i}"
+            );
         }
     }
 }

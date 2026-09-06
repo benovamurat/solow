@@ -20,14 +20,20 @@ impl StratifiedShuffleSplit {
     /// Construct.
     pub fn new(n_splits: usize, test_size: f64, seed: u64) -> Result<Self> {
         if n_splits == 0 {
-            return Err(Error::Value("StratifiedShuffleSplit: n_splits must be ≥ 1".into()));
+            return Err(Error::Value(
+                "StratifiedShuffleSplit: n_splits must be ≥ 1".into(),
+            ));
         }
         if !(0.0..1.0).contains(&test_size) {
             return Err(Error::Value(format!(
                 "StratifiedShuffleSplit: test_size must be in (0, 1) (got {test_size})"
             )));
         }
-        Ok(Self { n_splits, test_size, seed })
+        Ok(Self {
+            n_splits,
+            test_size,
+            seed,
+        })
     }
 
     /// Split with class labels.
@@ -82,14 +88,20 @@ impl GroupShuffleSplit {
     /// Construct.
     pub fn new(n_splits: usize, test_size: f64, seed: u64) -> Result<Self> {
         if n_splits == 0 {
-            return Err(Error::Value("GroupShuffleSplit: n_splits must be ≥ 1".into()));
+            return Err(Error::Value(
+                "GroupShuffleSplit: n_splits must be ≥ 1".into(),
+            ));
         }
         if !(0.0..1.0).contains(&test_size) {
             return Err(Error::Value(
                 "GroupShuffleSplit: test_size must be in (0, 1)".into(),
             ));
         }
-        Ok(Self { n_splits, test_size, seed })
+        Ok(Self {
+            n_splits,
+            test_size,
+            seed,
+        })
     }
 
     /// Split with group labels.
@@ -178,10 +190,13 @@ mod tests {
         let folds = s.split(&y).unwrap();
         assert_eq!(folds.len(), 3);
         for f in &folds {
-            let (n0, n1) = f
-                .test
-                .iter()
-                .fold((0_usize, 0_usize), |(a, b), &i| if y[i] == 0 { (a + 1, b) } else { (a, b + 1) });
+            let (n0, n1) = f.test.iter().fold((0_usize, 0_usize), |(a, b), &i| {
+                if y[i] == 0 {
+                    (a + 1, b)
+                } else {
+                    (a, b + 1)
+                }
+            });
             // Test set fractions should each be ≈ 20% of their class.
             assert!(n0 > 0 && n1 > 0);
         }

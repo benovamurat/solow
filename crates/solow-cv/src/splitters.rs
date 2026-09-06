@@ -360,7 +360,7 @@ impl Splitter for TimeSeriesSplit {
 /// Leave-one-out cross-validation.
 ///
 /// Yields `n` folds where each fold's test set is a single observation.
-/// Equivalent to [`KFold::new(n)`] without shuffling; provided as a
+/// Equivalent to [`KFold`]`::new(n)` without shuffling; provided as a
 /// standalone type for API clarity.
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[derive(Clone, Copy, Debug, Default)]

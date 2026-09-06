@@ -163,10 +163,7 @@ mod tests {
 
     #[test]
     fn label_spreading_infers_labels_for_a_two_cluster_case() {
-        let x = array![
-            [0.0_f64], [0.1], [0.2],
-            [5.0], [5.1], [5.2]
-        ];
+        let x = array![[0.0_f64], [0.1], [0.2], [5.0], [5.1], [5.2]];
         let y = vec![0_i64, -1, -1, -1, -1, 1];
         let ls = LabelSpreading::fit(x.view(), &y).unwrap();
         for i in 0..3 {

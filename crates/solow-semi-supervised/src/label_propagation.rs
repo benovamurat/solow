@@ -165,10 +165,7 @@ mod tests {
 
     #[test]
     fn label_propagation_infers_labels_for_a_clear_two_cluster_case() {
-        let x = array![
-            [0.0_f64], [0.1], [0.2], [0.3],
-            [5.0], [5.1], [5.2], [5.3]
-        ];
+        let x = array![[0.0_f64], [0.1], [0.2], [0.3], [5.0], [5.1], [5.2], [5.3]];
         // Only the first and last rows are labelled.
         let y = vec![0_i64, -1, -1, -1, -1, -1, -1, 1];
         let lp = LabelPropagation::fit(x.view(), &y).unwrap();

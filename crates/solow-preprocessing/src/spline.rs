@@ -46,7 +46,9 @@ impl SplineTransformer {
         include_bias: bool,
     ) -> Result<Self> {
         if n_knots < 2 {
-            return Err(Error::Value("SplineTransformer: n_knots must be ≥ 2".into()));
+            return Err(Error::Value(
+                "SplineTransformer: n_knots must be ≥ 2".into(),
+            ));
         }
         if degree == 0 {
             return Err(Error::Value("SplineTransformer: degree must be ≥ 1".into()));
@@ -85,12 +87,18 @@ impl SplineTransformer {
     /// (x − κ₁)ᵈ₊, …, (x − κₘ)ᵈ₊}` per column.
     pub fn transform(&self, x: ArrayView2<'_, f64>) -> Result<Array2<f64>> {
         if x.ncols() != self.n_features_in {
-            return Err(Error::Shape("SplineTransformer::transform: column count mismatch".into()));
+            return Err(Error::Shape(
+                "SplineTransformer::transform: column count mismatch".into(),
+            ));
         }
         let n = x.nrows();
         let d = x.ncols();
         let per_col_basis = self.degree + self.knots[0].len();
-        let stride = if self.include_bias { per_col_basis + 1 } else { per_col_basis };
+        let stride = if self.include_bias {
+            per_col_basis + 1
+        } else {
+            per_col_basis
+        };
         let mut out = Array2::<f64>::zeros((n, d * stride));
         for i in 0..n {
             for j in 0..d {

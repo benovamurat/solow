@@ -46,7 +46,9 @@ impl BernoulliRbm {
         let n = x.nrows();
         let d = x.ncols();
         if n_components == 0 || d == 0 || n == 0 {
-            return Err(Error::Value("BernoulliRbm: empty input or n_components = 0".into()));
+            return Err(Error::Value(
+                "BernoulliRbm: empty input or n_components = 0".into(),
+            ));
         }
         // Init weights ~ 𝒩(0, 0.01).
         let mut state = seed.wrapping_add(0xBEEF_D00D_F00D);
@@ -90,7 +92,11 @@ impl BernoulliRbm {
                 let mut hs = Array2::<f64>::zeros((bs, n_components));
                 for r in 0..bs {
                     for h in 0..n_components {
-                        hs[[r, h]] = if uniform01(&mut state) < ph[[r, h]] { 1.0 } else { 0.0 };
+                        hs[[r, h]] = if uniform01(&mut state) < ph[[r, h]] {
+                            1.0
+                        } else {
+                            0.0
+                        };
                     }
                 }
                 // Negative phase — reconstruct visible then re-compute hidden.
@@ -165,7 +171,9 @@ impl BernoulliRbm {
         let d = x.ncols();
         let h = self.components.nrows();
         if d != self.components.ncols() {
-            return Err(Error::Shape("BernoulliRbm::transform: shape mismatch".into()));
+            return Err(Error::Shape(
+                "BernoulliRbm::transform: shape mismatch".into(),
+            ));
         }
         let mut out = Array2::<f64>::zeros((n, h));
         for i in 0..n {
@@ -212,7 +220,9 @@ mod tests {
     #[test]
     fn rbm_output_has_the_right_shape() {
         let x = array![
-            [1.0_f64, 0.0, 1.0, 0.0], [1.0, 1.0, 0.0, 0.0], [0.0, 0.0, 1.0, 1.0]
+            [1.0_f64, 0.0, 1.0, 0.0],
+            [1.0, 1.0, 0.0, 0.0],
+            [0.0, 0.0, 1.0, 1.0]
         ];
         let rbm = BernoulliRbm::fit_with(x.view(), 3, 0.1, 2, 5, 42).unwrap();
         let z = rbm.transform(x.view()).unwrap();

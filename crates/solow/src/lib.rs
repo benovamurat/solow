@@ -112,12 +112,12 @@
 pub use solow_bayes as bayes;
 pub use solow_calibration as calibration;
 pub use solow_cluster as cluster;
-pub use solow_datasets as datasets;
 pub use solow_copula as copula;
 pub use solow_core as core;
 pub use solow_covariance as covariance;
 pub use solow_cross_decomposition as cross_decomposition;
 pub use solow_cv as cv;
+pub use solow_datasets as datasets;
 pub use solow_decomposition as decomposition;
 pub use solow_discrete as discrete;
 pub use solow_discriminant as discriminant;
@@ -148,11 +148,11 @@ pub use solow_nonparametric as nonparametric;
 pub use solow_optimize as optimize;
 pub use solow_othermod as othermod;
 pub use solow_pipeline as pipeline;
-pub use solow_semi_supervised as semi_supervised;
 pub use solow_preprocessing as preprocessing;
 pub use solow_regime as regime;
 pub use solow_regression as regression;
 pub use solow_robust as robust;
+pub use solow_semi_supervised as semi_supervised;
 pub use solow_statespace as statespace;
 pub use solow_stats as stats;
 pub use solow_summary as summary;
@@ -194,7 +194,7 @@ pub mod prelude {
     pub use solow_fit::{glm, gls, logit, ols, poisson, probit, wls, DataFrame, NamedFit};
 
     // Workhorse estimators.
-    pub use solow_discrete::{DiscreteResults, Logit, LogisticRegressionCV, Poisson, Probit};
+    pub use solow_discrete::{DiscreteResults, LogisticRegressionCV, Logit, Poisson, Probit};
     pub use solow_glm::{
         Family, GammaRegressor, Glm, GlmResults, Link, PoissonRegressor, TweedieRegressor,
     };
@@ -208,8 +208,7 @@ pub mod prelude {
         accumulated_local_effects, accuracy_score, adjusted_mutual_info_score, adjusted_rand_score,
         average_precision_score, binary_focal_loss, calinski_harabasz_score, chi2_kernel,
         classification_report, cliffs_delta, cohens_d, completeness_score, cosine_similarity,
-        cramers_v,
-        davies_bouldin_score, diebold_mariano, eta_squared, expected_calibration_error,
+        cramers_v, davies_bouldin_score, diebold_mariano, eta_squared, expected_calibration_error,
         fowlkes_mallows_score, friedman_test, giacomini_white_test, glass_delta, hedges_g,
         homogeneity_score, huber_loss, laplacian_kernel, linear_kernel, log_cosh_loss, log_loss,
         mean_absolute_error, mean_squared_error, multiclass_brier_score, multiclass_focal_loss,
@@ -217,19 +216,19 @@ pub mod prelude {
         pairwise_distances, partial_dependence, permutation_importance, polynomial_kernel,
         psis_loo, r2_score, ranked_probability_score, rbf_kernel, roc_auc_score,
         root_mean_squared_error, sigmoid_kernel, silhouette_score, top_label_calibration_error,
-        v_measure_score, waic, wilcoxon_signed_rank, AccumulatedLocalEffects, Average,
-        BinStrategy, ClassificationReport, ClassificationRow, DmLoss, FeatureImportance,
-        FriedmanResult, IsotonicRegression, JackknifePlus, MiAverage, MulticlassAuc,
-        PairwiseMetric, PartialDependence, PlattScaling, PredictionInterval, PsisLooResult,
-        RegressionReport, SplitConformal, TemperatureScaling, WaicResult, WilcoxonResult,
+        v_measure_score, waic, wilcoxon_signed_rank, AccumulatedLocalEffects, Average, BinStrategy,
+        ClassificationReport, ClassificationRow, DmLoss, FeatureImportance, FriedmanResult,
+        IsotonicRegression, JackknifePlus, MiAverage, MulticlassAuc, PairwiseMetric,
+        PartialDependence, PlattScaling, PredictionInterval, PsisLooResult, RegressionReport,
+        SplitConformal, TemperatureScaling, WaicResult, WilcoxonResult,
     };
 
     // Dataset generators and lightweight utility helpers
     // (class-weight and resampling helpers).
     pub use solow_datasets::{
         compute_class_weight, compute_sample_weight, load_breast_cancer, load_diabetes, load_iris,
-        load_wine, make_blobs, make_circles, make_classification, make_low_rank_matrix,
-        make_moons, make_regression, make_swiss_roll, resample_indices_no_replace,
+        load_wine, make_blobs, make_circles, make_classification, make_low_rank_matrix, make_moons,
+        make_regression, make_swiss_roll, resample_indices_no_replace,
         resample_indices_with_replace,
     };
 
@@ -238,12 +237,11 @@ pub mod prelude {
     // permutation-test curves.
     pub use solow_cv::{
         bootstrap_ci, circular_block_bootstrap_indices, cross_val_score, learning_curve,
-        moving_block_bootstrap_indices, permutation_test_score,
-        stationary_bootstrap_indices, validation_curve, BootstrapCi, BootstrapMethod,
-        CombinatorialPurgedKFold, CrossValScores, GroupKFold, GroupShuffleSplit, KFold,
-        LeaveOneOut, LeavePOut, PurgedKFold, RepeatedKFold, RepeatedStratifiedKFold, ShuffleSplit,
-        Split, Splitter, StratifiedGroupKFold, StratifiedKFold, StratifiedShuffleSplit,
-        TimeSeriesSplit,
+        moving_block_bootstrap_indices, permutation_test_score, stationary_bootstrap_indices,
+        validation_curve, BootstrapCi, BootstrapMethod, CombinatorialPurgedKFold, CrossValScores,
+        GroupKFold, GroupShuffleSplit, KFold, LeaveOneOut, LeavePOut, PurgedKFold, RepeatedKFold,
+        RepeatedStratifiedKFold, ShuffleSplit, Split, Splitter, StratifiedGroupKFold,
+        StratifiedKFold, StratifiedShuffleSplit, TimeSeriesSplit,
     };
 
     // Time-series analysis, AR, ARMA, cointegration, unit-root, and filters.
@@ -283,14 +281,12 @@ pub mod prelude {
     };
 
     // Missing-value imputation.
-    pub use solow_impute::{
-        IterativeImputer, KnnImputer, SimpleImputer, SimpleStrategy,
-    };
+    pub use solow_impute::{IterativeImputer, KnnImputer, SimpleImputer, SimpleStrategy};
 
     // Preprocessing (scalers, encoders, feature construction, power/quantile,
     // binarizer, label / multilabel binarizer, function transformer, spline, target encoder).
     pub use solow_preprocessing::{
-        Binarizer, BinStrategy as PreprocBinStrategy, FunctionTransformer, KBinsDiscretizer,
+        BinStrategy as PreprocBinStrategy, Binarizer, FunctionTransformer, KBinsDiscretizer,
         LabelBinarizer, LabelEncoder, MaxAbsScaler, MinMaxScaler, MultiLabelBinarizer, NormKind,
         Normalizer, OneHotEncoder, OrdinalEncoder, PolynomialFeatures, PowerMethod,
         PowerTransformer, QuantileOutput, QuantileTransformer, RobustScaler, SplineTransformer,
@@ -308,8 +304,8 @@ pub mod prelude {
     // + LOF + multi-variate KernelDensity).
     pub use solow_neighbors::{
         BallTree, KNeighborsClassifier, KNeighborsRegressor, KdTree, KdeKernel, KernelDensity,
-        LocalOutlierFactor, NearestCentroid, RadiusNeighborsClassifier,
-        RadiusNeighborsRegressor, WeightKind,
+        LocalOutlierFactor, NearestCentroid, RadiusNeighborsClassifier, RadiusNeighborsRegressor,
+        WeightKind,
     };
 
     // Decision trees (CART + Extra-Trees).
@@ -380,7 +376,7 @@ pub mod prelude {
     pub use solow_calibration::{CalibratedClassifierCV, Method as CalibrationMethod};
 
     // Cross-decomposition, PLS / CCA.
-    pub use solow_cross_decomposition::{PLSCanonical, PLSRegression, PLSSVD, CCA};
+    pub use solow_cross_decomposition::{PLSCanonical, PLSRegression, CCA, PLSSVD};
 
     // Kernel approximation.
     pub use solow_kernel_approx::{
@@ -421,10 +417,10 @@ pub mod prelude {
     // two/k-sample tests and the three canonical correlation coefficients.
     pub use solow_stats::{
         anderson_darling, anova_lm, bartlett, chi2_contingency, describe, durbin_watson, f_test,
-        fligner, het_white, jarque_bera, kendalltau, ks_2samp, kruskal, levene, mannwhitneyu,
+        fligner, het_white, jarque_bera, kendalltau, kruskal, ks_2samp, levene, mannwhitneyu,
         mcnemar, meta_fixed_effect, meta_random_effects, multipletests, pearsonr, runs_test,
-        shapiro_wilk, spearmanr, wald_test, CorrelationResult, DescrStatsW, FTestResult,
-        GofResult, LeveneCenter, MetaModel, MetaResult, MetaStudy, NpTestResult,
-        VarianceTestResult, WaldResult,
+        shapiro_wilk, spearmanr, wald_test, CorrelationResult, DescrStatsW, FTestResult, GofResult,
+        LeveneCenter, MetaModel, MetaResult, MetaStudy, NpTestResult, VarianceTestResult,
+        WaldResult,
     };
 }

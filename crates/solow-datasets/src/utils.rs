@@ -10,7 +10,9 @@ use crate::Lcg;
 /// total weight to the training set (the reference `compute_sample_weight('balanced')`).
 pub fn compute_sample_weight(y: &[i64]) -> Result<Array1<f64>> {
     if y.is_empty() {
-        return Err(Error::Value("compute_sample_weight: empty label vector".into()));
+        return Err(Error::Value(
+            "compute_sample_weight: empty label vector".into(),
+        ));
     }
     let mut counts: std::collections::BTreeMap<i64, usize> = Default::default();
     for &yi in y {
@@ -30,7 +32,9 @@ pub fn compute_sample_weight(y: &[i64]) -> Result<Array1<f64>> {
 /// `n_samples / (n_classes * n_samples_in_class)`.
 pub fn compute_class_weight(y: &[i64]) -> Result<Vec<(i64, f64)>> {
     if y.is_empty() {
-        return Err(Error::Value("compute_class_weight: empty label vector".into()));
+        return Err(Error::Value(
+            "compute_class_weight: empty label vector".into(),
+        ));
     }
     let mut counts: std::collections::BTreeMap<i64, usize> = Default::default();
     for &yi in y {

@@ -49,7 +49,9 @@ impl DummyRegressor {
             DummyRegressorStrategy::Constant(c) => c,
             DummyRegressorStrategy::Quantile(q) => {
                 if !(0.0..=1.0).contains(&q) {
-                    return Err(Error::Value("DummyRegressor: quantile must be in [0, 1]".into()));
+                    return Err(Error::Value(
+                        "DummyRegressor: quantile must be in [0, 1]".into(),
+                    ));
                 }
                 let mut v: Vec<f64> = y.iter().copied().collect();
                 v.sort_by(|a, b| a.partial_cmp(b).unwrap());
@@ -106,11 +108,9 @@ impl DummyClassifier {
         let classes: Vec<i64> = counts.keys().copied().collect();
         let class_prior: Vec<f64> = classes.iter().map(|c| counts[c] as f64 / n).collect();
         let constant = match strategy {
-            DummyClassifierStrategy::MostFrequent => *counts
-                .iter()
-                .max_by_key(|(_, &c)| c)
-                .unwrap()
-                .0,
+            DummyClassifierStrategy::MostFrequent => {
+                *counts.iter().max_by_key(|(_, &c)| c).unwrap().0
+            }
             DummyClassifierStrategy::Prior => {
                 let (best, _) = class_prior
                     .iter()

@@ -36,7 +36,9 @@ impl Binarizer {
     /// Transform.
     pub fn transform(&self, x: ArrayView2<'_, f64>) -> Result<Array2<f64>> {
         if x.ncols() != self.n_features_in {
-            return Err(Error::Shape("Binarizer::transform: column count mismatch".into()));
+            return Err(Error::Shape(
+                "Binarizer::transform: column count mismatch".into(),
+            ));
         }
         let mut out = Array2::<f64>::zeros((x.nrows(), x.ncols()));
         for i in 0..x.nrows() {

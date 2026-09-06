@@ -22,7 +22,9 @@ pub trait BinaryClassifier {
 
     /// Predicted labels.
     fn predict(&self, x: ArrayView2<'_, f64>) -> Result<Array1<u8>> {
-        Ok(self.predict_proba1(x)?.map(|p| if *p >= 0.5 { 1 } else { 0 }))
+        Ok(self
+            .predict_proba1(x)?
+            .map(|p| if *p >= 0.5 { 1 } else { 0 }))
     }
 }
 

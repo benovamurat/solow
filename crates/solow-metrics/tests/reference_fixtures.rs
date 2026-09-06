@@ -308,8 +308,16 @@ fn pairwise_kernels_match_reference_bitwise() {
     let f = load("pairwise_kernels.json");
     let a = f2d(&f["a"]);
     let b = f2d(&f["b"]);
-    assert_matrix_close("rbf_1.0", rbf_kernel(a.view(), b.view(), 1.0).unwrap(), &f["rbf_1.0"]);
-    assert_matrix_close("linear", linear_kernel(a.view(), b.view()).unwrap(), &f["linear"]);
+    assert_matrix_close(
+        "rbf_1.0",
+        rbf_kernel(a.view(), b.view(), 1.0).unwrap(),
+        &f["rbf_1.0"],
+    );
+    assert_matrix_close(
+        "linear",
+        linear_kernel(a.view(), b.view()).unwrap(),
+        &f["linear"],
+    );
     assert_matrix_close(
         "polynomial_3",
         polynomial_kernel(a.view(), b.view(), 0.5, 1.0, 3).unwrap(),

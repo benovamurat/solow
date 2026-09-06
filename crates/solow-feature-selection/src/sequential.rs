@@ -125,22 +125,16 @@ mod tests {
 
     #[test]
     fn sequential_forward_picks_the_top_scoring_column() {
-        let x = array![
-            [1.0_f64, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]
-        ];
+        let x = array![[1.0_f64, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]];
         // Reward the column whose sum is largest.
-        let sfs = SequentialFeatureSelector::fit(
-            x.view(),
-            1,
-            SfsDirection::Forward,
-            |sub| {
-                let mut s = 0.0_f64;
-                for v in sub.iter() {
-                    s += v;
-                }
-                Ok(s)
-            },
-        ).unwrap();
+        let sfs = SequentialFeatureSelector::fit(x.view(), 1, SfsDirection::Forward, |sub| {
+            let mut s = 0.0_f64;
+            for v in sub.iter() {
+                s += v;
+            }
+            Ok(s)
+        })
+        .unwrap();
         assert_eq!(sfs.selected, vec![2]);
     }
 }

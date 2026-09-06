@@ -27,12 +27,7 @@ pub struct GaussianProcessRegressor<K: Kernel> {
 
 impl<K: Kernel> GaussianProcessRegressor<K> {
     /// Fit with the given kernel and additive noise `α`.
-    pub fn fit(
-        kernel: K,
-        x: ArrayView2<'_, f64>,
-        y: &[f64],
-        alpha: f64,
-    ) -> Result<Self> {
+    pub fn fit(kernel: K, x: ArrayView2<'_, f64>, y: &[f64], alpha: f64) -> Result<Self> {
         let n = x.nrows();
         if y.len() != n {
             return Err(Error::Shape(format!(
@@ -189,12 +184,7 @@ mod tests {
     fn gp_interpolates_training_points_at_small_noise() {
         let x = array![[-2.0_f64], [-1.0], [0.0], [1.0], [2.0]];
         let y_vals = x.iter().map(|xi| xi.sin()).collect::<Vec<_>>();
-        let gp = GaussianProcessRegressor::fit(
-            Rbf::new(1.0),
-            x.view(),
-            &y_vals,
-            1e-8,
-        ).unwrap();
+        let gp = GaussianProcessRegressor::fit(Rbf::new(1.0), x.view(), &y_vals, 1e-8).unwrap();
         let pred = gp.predict(x.view());
         for i in 0..5 {
             assert!((pred[i] - y_vals[i]).abs() < 1e-4);

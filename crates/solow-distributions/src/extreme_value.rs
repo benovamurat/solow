@@ -32,7 +32,11 @@ impl Gev {
         if !(scale > 0.0 && scale.is_finite()) {
             return Err(Error::Value("Gev: scale must be > 0".into()));
         }
-        Ok(Self { location, scale, shape })
+        Ok(Self {
+            location,
+            scale,
+            shape,
+        })
     }
 
     /// CDF.
@@ -43,7 +47,11 @@ impl Gev {
         } else {
             let arg = 1.0 + self.shape * z;
             if arg <= 0.0 {
-                if self.shape > 0.0 { 0.0 } else { 1.0 }
+                if self.shape > 0.0 {
+                    0.0
+                } else {
+                    1.0
+                }
             } else {
                 (-arg.powf(-1.0 / self.shape)).exp()
             }
@@ -58,8 +66,7 @@ impl Gev {
         if self.shape.abs() < 1e-12 {
             self.location - self.scale * (-p.ln()).ln()
         } else {
-            self.location
-                + self.scale / self.shape * ((-p.ln()).powf(-self.shape) - 1.0)
+            self.location + self.scale / self.shape * ((-p.ln()).powf(-self.shape) - 1.0)
         }
     }
 
@@ -100,7 +107,11 @@ impl Gev {
                 break;
             }
         }
-        Ok(Self { location: mu, scale: sigma, shape: xi })
+        Ok(Self {
+            location: mu,
+            scale: sigma,
+            shape: xi,
+        })
     }
 }
 
@@ -187,7 +198,10 @@ impl Gpd {
                 break;
             }
         }
-        Ok(Self { scale: sigma, shape: xi })
+        Ok(Self {
+            scale: sigma,
+            shape: xi,
+        })
     }
 }
 
@@ -242,10 +256,7 @@ mod tests {
         for p in [0.1, 0.3, 0.5, 0.7, 0.9] {
             let q = d.quantile(p);
             let back = d.cdf(q);
-            assert!(
-                (back - p).abs() < 1e-6,
-                "p={p} -> q={q} -> back={back}"
-            );
+            assert!((back - p).abs() < 1e-6, "p={p} -> q={q} -> back={back}");
         }
     }
 

@@ -234,7 +234,11 @@ pub(crate) fn center_scale(m: ArrayView2<'_, f64>, scale: bool) -> (Array1<f64>,
     (mean, std)
 }
 
-pub(crate) fn to_scaled(m: ArrayView2<'_, f64>, mean: &Array1<f64>, std: &Array1<f64>) -> Array2<f64> {
+pub(crate) fn to_scaled(
+    m: ArrayView2<'_, f64>,
+    mean: &Array1<f64>,
+    std: &Array1<f64>,
+) -> Array2<f64> {
     let n = m.nrows();
     let d = m.ncols();
     let mut out = Array2::<f64>::zeros((n, d));
@@ -447,8 +451,14 @@ mod tests {
     fn pls_predicts_close_to_y_on_a_linear_signal() {
         // y = 2·x₁ + 3·x₂
         let x = array![
-            [1.0, 2.0], [2.0, 1.0], [3.0, 3.0], [4.0, 2.0],
-            [5.0, 4.0], [6.0, 5.0], [7.0, 4.0], [8.0, 6.0]
+            [1.0, 2.0],
+            [2.0, 1.0],
+            [3.0, 3.0],
+            [4.0, 2.0],
+            [5.0, 4.0],
+            [6.0, 5.0],
+            [7.0, 4.0],
+            [8.0, 6.0]
         ];
         let y_data: Vec<f64> = (0..8)
             .flat_map(|i| {

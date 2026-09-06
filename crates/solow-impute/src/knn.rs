@@ -40,7 +40,9 @@ impl KnnImputer {
     /// Transform.
     pub fn transform(&self, x: ArrayView2<'_, f64>) -> Result<Array2<f64>> {
         if x.ncols() != self.n_features_in {
-            return Err(Error::Shape("KnnImputer::transform: column count mismatch".into()));
+            return Err(Error::Shape(
+                "KnnImputer::transform: column count mismatch".into(),
+            ));
         }
         let n = x.nrows();
         let d = x.ncols();
@@ -117,6 +119,10 @@ mod tests {
         let m = KnnImputer::fit_with(x.view(), 3).unwrap();
         let z = m.transform(x.view()).unwrap();
         // The imputed value should be close to the mean of the closest rows (small cluster).
-        assert!(z[[5, 1]] < 1.0, "expected small imputed value, got {}", z[[5, 1]]);
+        assert!(
+            z[[5, 1]] < 1.0,
+            "expected small imputed value, got {}",
+            z[[5, 1]]
+        );
     }
 }
