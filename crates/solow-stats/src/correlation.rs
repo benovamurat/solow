@@ -173,7 +173,7 @@ fn regularised_incomplete_beta(x: f64, a: f64, b: f64) -> f64 {
     if x < (a + 1.0) / (a + b + 2.0) {
         front * betacf(x, a, b)
     } else {
-        1.0 - front * betacf(1.0 - x, b, a) * (front / front).max(1.0)
+        1.0 - front * betacf(1.0 - x, b, a)
     }
 }
 
