@@ -1,72 +1,93 @@
 # solow-metrics
 
-Model-evaluation metrics for the Solow statistical stack — the numbers you
-report after a fit, not the ones an estimator uses internally.
+**Model evaluation metrics for Rust.** Regression, classification, calibration, cluster, forecast, and Bayesian model-comparison metrics. Post-hoc probability calibrators. Distribution-free conformal prediction. Model-agnostic interpretability tools.
 
-## Coverage
+Part of the [Solow](https://crates.io/crates/solow) statistics and machine learning stack.
 
-- **Regression** — MSE, RMSE, MAE, median AE, max error, MAPE, sMAPE, MSLE,
-  RMSLE, R², explained variance, mean pinball loss, D² (absolute and Tweedie),
-  Huber and log-cosh robust losses, and a `RegressionReport` bundle.
-- **GLM / Tweedie deviance** — `mean_tweedie_deviance`, `mean_poisson_deviance`,
-  `mean_gamma_deviance`, `d2_tweedie_score` — the natural goodness-of-fit
-  scores for a fitted Poisson or Gamma GLM.
-- **Classification** — confusion matrix, accuracy, balanced accuracy,
-  precision / recall / Fβ with `Binary` / `Macro` / `Micro` / `Weighted`
-  averaging, Matthews correlation, Cohen's κ (linear and quadratic), binary
-  and multiclass log-loss, Brier score, hinge loss, binary ROC / PR curves
-  and AUC / AP, one-vs-rest and Hand-Till one-vs-one multiclass ROC-AUC,
-  multiclass Brier, ranked probability score, top-1 ECE, and binary /
-  multiclass focal loss.
-- **Calibration** — reliability curves (uniform or quantile bins), ECE, MCE,
-  Sanders/Murphy Brier decomposition with within-bin dispersion, and post-hoc
-  calibrators (`PlattScaling`, `IsotonicRegression`, `TemperatureScaling`).
-- **Conformal prediction** — distribution-free prediction intervals with
-  finite-sample coverage guarantees: `SplitConformal` (Vovk-Gammerman-Shafer)
-  and `JackknifePlus` (Barber-Candes-Ramdas-Tibshirani 2021).
-- **Forecasting** — MASE, RMSSE, pinball loss, interval coverage, Winkler
-  score, plus the Harvey-Leybourne-Newbold small-sample-corrected
-  Diebold-Mariano test and the Giacomini-White conditional predictive
-  ability test.
-- **Model comparison** — non-parametric (Friedman + Nemenyi + Wilcoxon
-  signed-rank) and Bayesian (WAIC + PSIS-LOO with Pareto-`k̂` diagnostic).
-- **Interpretability** — permutation importance, partial dependence,
-  accumulated local effects (Apley & Zhu 2020).
+## Install
 
-Every metric agrees with its canonical definition (or the published
-Diebold-Mariano / Harvey-Leybourne-Newbold / López de Prado reference)
-to machine precision on the fixture suite.
+```toml
+[dependencies]
+solow-metrics = "0.7"
+```
+
+## Quick example
+
+```rust
+use solow_metrics::{r2_score, roc_auc_score, classification_report};
+
+let r2 = r2_score(y_true.view(), y_pred.view(), None)?;
+let auc = roc_auc_score(y_true.view(), y_score.view())?;
+let report = classification_report(y_true.view(), y_pred.view(), None)?;
+```
+
+## What is inside
+
+### Regression
+
+MSE, RMSE, MAE, median AE, max error, R², explained variance, MAPE, sMAPE, MSLE, RMSLE, pinball, D² absolute, D² Tweedie, mean Poisson deviance, mean Gamma deviance, robust Huber and log-cosh losses.
+
+### Classification
+
+Confusion matrix, accuracy, balanced accuracy, precision, recall, F-beta (binary / macro / micro / weighted), Matthews correlation, Cohen kappa, hinge loss, binary and multiclass log loss, ROC curve, ROC-AUC (binary + OvR + Hand-Till OvO), precision-recall curve, average precision, top-k accuracy, binary and multiclass focal losses.
+
+### Calibration
+
+Reliability curve (uniform or quantile bins), ECE, MCE, top-1 ECE, multiclass Brier, ranked probability score, three-term Brier decomposition (reliability, resolution, uncertainty). Post-hoc calibrators: `PlattScaling`, `IsotonicRegression`, `TemperatureScaling`.
+
+### Cluster evaluation
+
+Silhouette, adjusted Rand, adjusted MI, normalized MI, homogeneity, completeness, v-measure, Fowlkes-Mallows, Calinski-Harabasz, Davies-Bouldin.
+
+### Pairwise kernels and distances
+
+`pairwise_distances`, `rbf_kernel`, `linear_kernel`, `polynomial_kernel`, `sigmoid_kernel`, `laplacian_kernel`, `cosine_similarity`, `chi2_kernel`.
+
+### Forecast comparison
+
+MASE, RMSSE, pinball, Winkler interval score, Harvey-Leybourne-Newbold `diebold_mariano`, `giacomini_white_test` (conditional predictive ability, generalization of DM).
+
+### Model comparison
+
+`friedman_test` with Iman-Davenport adjustment, `nemenyi_critical_difference`, `wilcoxon_signed_rank` with tie correction, WAIC, PSIS-LOO with per-observation Pareto-k̂ diagnostic.
+
+### Effect sizes
+
+Cohen's d, Hedges' g, Glass's delta, eta², omega², Cliff's delta, Cramer's V.
+
+### Distribution-free intervals
+
+`SplitConformal`, `JackknifePlus` (Barber-Candes-Ramdas-Tibshirani 2021).
+
+### Interpretability
+
+`permutation_importance` (Breiman-Fisher), `partial_dependence`, `accumulated_local_effects` (Apley-Zhu 2020).
+
+### Reporting
+
+`classification_report` renders a printable per-class precision / recall / F1 / support table.
 
 ## Numerical care
 
-The core losses (`mean_squared_error`, `mean_absolute_error`, `r2_score`,
-`explained_variance_score`) use the Kahan / Neumaier compensated summation
-and Welford one-pass variance primitives shipped in
-[`solow-core::numeric`](https://docs.rs/solow-core), so long sums over
-residuals of mixed magnitudes don't lose low-order bits.
+Core losses (`mean_squared_error`, `mean_absolute_error`, `r2_score`, `explained_variance_score`) use the Kahan / Neumaier compensated summation and Welford one-pass variance primitives from `solow-core::numeric`. Long sums of mixed-magnitude residuals do not lose low-order bits.
 
-## Features
+## `serde` support
 
-- `serde` — derives `Serialize` / `Deserialize` on every public result and
-  report struct so an entire evaluation loop can be persisted as JSON.
+Every public result and report struct derives `Serialize` and `Deserialize` under the opt-in `serde` feature.
 
-## Example
-
-```rust
-use ndarray::array;
-use solow_metrics::{mean_squared_error, r2_score};
-
-let y_true = array![3.0, -0.5, 2.0, 7.0];
-let y_pred = array![2.5, 0.0, 2.0, 8.0];
-
-let mse = mean_squared_error(y_true.view(), y_pred.view(), None).unwrap();
-let r2  = r2_score(y_true.view(), y_pred.view(), None).unwrap();
-
-assert!((mse - 0.375).abs() < 1e-12);
-assert!((r2 - (1.0 - 1.5 / 29.1875)).abs() < 1e-10);
+```toml
+[dependencies]
+solow-metrics = { version = "0.7", features = ["serde"] }
 ```
+
+An entire evaluation loop can then be persisted as JSON and diffed across runs, model versions, or CI jobs.
+
+## Correctness
+
+Every metric agrees with its canonical mathematical definition (or the published Diebold-Mariano / Harvey-Leybourne-Newbold / López de Prado / Vehtari-Gelman-Gabry reference) to machine precision on the committed fixture suite.
+
+`#![forbid(unsafe_code)]`.
 
 ## License
 
-Licensed under either of [Apache License 2.0](LICENSE-APACHE) or
-[MIT license](LICENSE-MIT) at your option.
+BSD-3-Clause. See the [Solow workspace](https://github.com/benovamurat/solow) for the full stack.

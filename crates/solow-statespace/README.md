@@ -1,32 +1,54 @@
 # solow-statespace
 
-Linear-Gaussian state-space models and SARIMAX estimation.
+**State-space models for Rust.** Kalman filter and smoother, SARIMAX, unobserved-components structural time series, dynamic factor models, multivariate state space.
 
-The crate provides two layers:
+Part of the [Solow](https://crates.io/crates/solow) statistics and machine learning stack.
 
-* [`kalman`] — a time-invariant [`StateSpace`] with an
-  exact Kalman [`filter`](kalman::StateSpace::filter) (returning the Gaussian
-  log-likelihood and the filtered/predicted state sequences) and a
-  fixed-interval [`smoother`](kalman::StateSpace::smooth).
-* [`sarimax`] — a [`Sarimax`] seasonal ARIMA estimator
-  built on the Kalman filter and fit by maximum likelihood. The AR/MA and
-  seasonal polynomials are mapped into the Harvey companion-form state space,
-  stationarity/invertibility are enforced by the Monahan reparametrization,
-  and the model is optimized with BFGS over `-loglike`.
+## Install
 
-```
-use ndarray::Array1;
-use solow_statespace::{Sarimax, SarimaxOrder};
-
-// A short AR(1)-like series.
-let y = Array1::from_vec(vec![
-    0.2, 0.5, 0.1, -0.3, 0.4, 0.8, 0.3, -0.1, 0.0, 0.6, 0.9, 0.2, -0.4, 0.1,
-]);
-let model = Sarimax::new(y, SarimaxOrder::new(1, 0, 0)).unwrap();
-let res = model.fit().unwrap();
-assert_eq!(res.params.len(), 2); // [ar.L1, sigma2]
+```toml
+[dependencies]
+solow-statespace = "0.7"
 ```
 
----
+## Quick example
 
-Part of **[Solow](https://github.com/benovamurat/solow)** — a complete statistical-modeling, econometrics & data-visualization toolkit for Rust. · [Docs](https://docs.rs/solow-statespace) · License: BSD-3-Clause
+```rust
+use solow_statespace::Sarimax;
+
+let m = Sarimax::builder(y)
+    .order(1, 1, 1)
+    .seasonal(1, 1, 1, 12)
+    .exog(x)
+    .fit()?;
+
+println!("{}", m.summary());
+let fc = m.forecast(24)?;
+```
+
+## What is inside
+
+| Model | What it does |
+|---|---|
+| `StateSpace` | Generic time-invariant linear state-space model with univariate observations. Kalman filter + fixed-interval smoother. |
+| `MvStateSpace` | Multivariate observation variant of the above. |
+| `Sarimax` | Seasonal ARIMA with exogenous regressors, fit by exact maximum likelihood through the Kalman likelihood. |
+| `UnobservedComponents` | Structural time series (local level / local linear trend / seasonal / cycle) with configurable component set. |
+| `DynamicFactor` | Dynamic factor model for panels of observed series with a small number of latent factors. |
+
+### Every fit returns
+
+- Kalman-filtered and smoothed states with per-step covariance.
+- One-step-ahead prediction errors and their variances.
+- Log-likelihood, AIC, BIC.
+- Multi-step-ahead forecasts with prediction intervals.
+
+## Correctness
+
+- Cross-verified against committed golden reference fixtures on every CI run.
+- Ill-conditioned SARIMAX seasonalities produce numerically stable filter passes via the square-root Kalman path.
+- `#![forbid(unsafe_code)]`.
+
+## License
+
+BSD-3-Clause. See the [Solow workspace](https://github.com/benovamurat/solow) for the full stack.

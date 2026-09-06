@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust vector autoregression: VAR, VECM with Johansen cointegration test, structural VAR, impulse response functions, forecast error variance decomposition."
 keywords = ["var", "vecm", "svar", "cointegration", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

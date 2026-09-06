@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust ensemble methods for machine learning: random forest classifier and regressor, extra trees classifier and regressor, gradient boosting classifier and regressor, histogram gradient boosting classifier and regressor, bagging classifier and regressor, AdaBoost classifier and regressor, voting classifier and regressor, stacking classifier and regressor, isolation forest."
 keywords = ["random-forest", "gradient-boosting", "adaboost", "ensemble", "machine-learning"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

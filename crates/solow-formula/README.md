@@ -32,8 +32,8 @@ Categorical factors are coded with structural avoidance of redundancy: with
 an intercept (or a lower-order term) spanning the constant direction the
 reduced `k-1`-column contrast is used, and where a full-rank encoding is
 needed the full `k`-column matrix (carrying the constant/mean column) is
-emitted — matching patsy's `code_without_intercept` / `code_with_intercept`.
+emitted, matching patsy's `code_without_intercept` / `code_with_intercept`.
 
 ---
 
-Part of **[Solow](https://github.com/benovamurat/solow)** — a complete statistical-modeling, econometrics & data-visualization toolkit for Rust. · [Docs](https://docs.rs/solow-formula) · License: BSD-3-Clause
+Part of **[Solow](https://github.com/benovamurat/solow)**, a complete statistical-modeling, econometrics & data-visualization toolkit for Rust. · [Docs](https://docs.rs/solow-formula) · License: BSD-3-Clause

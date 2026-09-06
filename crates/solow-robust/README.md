@@ -31,12 +31,12 @@ assert!((res.params[1] - 0.5).abs() < 0.05);
 
 ## Components
 
-* [`norms`] — robust criterion functions ([`norms::HuberT`],
+* [`norms`], robust criterion functions ([`norms::HuberT`],
   [`norms::TukeyBiweight`], [`norms::AndrewWave`], [`norms::LeastSquares`]).
-* [`scale`] — robust scale estimators ([`scale::mad`], [`scale::Huber`],
+* [`scale`], robust scale estimators ([`scale::mad`], [`scale::Huber`],
   [`scale::HuberScale`]).
-* [`Rlm`] / [`RlmResults`] — the model and its fitted result.
+* [`Rlm`] / [`RlmResults`], the model and its fitted result.
 
 ---
 
-Part of **[Solow](https://github.com/benovamurat/solow)** — a complete statistical-modeling, econometrics & data-visualization toolkit for Rust. · [Docs](https://docs.rs/solow-robust) · License: BSD-3-Clause
+Part of **[Solow](https://github.com/benovamurat/solow)**, a complete statistical-modeling, econometrics & data-visualization toolkit for Rust. · [Docs](https://docs.rs/solow-robust) · License: BSD-3-Clause

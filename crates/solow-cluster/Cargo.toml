@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust unsupervised clustering for machine learning: k-means with k-means++, mini-batch k-means, bisecting k-means, DBSCAN, HDBSCAN, OPTICS, mean shift, affinity propagation, spectral clustering, agglomerative clustering with single, complete, average, and Ward linkage, Birch, Gaussian mixture, Bayesian Gaussian mixture."
 keywords = ["clustering", "kmeans", "dbscan", "machine-learning", "unsupervised"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

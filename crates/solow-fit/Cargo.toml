@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust ergonomic formula-driven fit surface for the solow statistics stack: ols, wls, gls, glm, logit, probit, poisson from R-style formula strings."
 keywords = ["formula", "fit", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

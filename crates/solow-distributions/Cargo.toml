@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust statistical distributions and special functions: normal, Student t, chi-squared, F, gamma, beta, Weibull, log-normal, Poisson, negative binomial, GEV, GPD, plus lgamma, digamma, erf, incomplete beta and gamma."
 keywords = ["distributions", "probability", "statistics", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 num-traits.workspace = true

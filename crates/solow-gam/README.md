@@ -26,4 +26,4 @@ assert!(res.edf_total > 0.0);
 
 ---
 
-Part of **[Solow](https://github.com/benovamurat/solow)** — a complete statistical-modeling, econometrics & data-visualization toolkit for Rust. · [Docs](https://docs.rs/solow-gam) · License: BSD-3-Clause
+Part of **[Solow](https://github.com/benovamurat/solow)**, a complete statistical-modeling, econometrics & data-visualization toolkit for Rust. · [Docs](https://docs.rs/solow-gam) · License: BSD-3-Clause

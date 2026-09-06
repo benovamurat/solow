@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust generalized additive models (GAM): penalized B-splines, cyclic cubic splines, smoothing-parameter selection by generalized cross-validation."
 keywords = ["gam", "splines", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

@@ -35,7 +35,7 @@ pip install target/wheels/solow-*.whl
 ```
 
 Because the extension is built abi3 (`abi3-py39`), one wheel is forward-compatible
-with every CPython from 3.9 up — no per-version rebuild needed.
+with every CPython from 3.9 up, no per-version rebuild needed.
 
 ### Plain Cargo build (no maturin)
 
@@ -44,7 +44,7 @@ crate directory** so the bundled `.cargo/config.toml` is discovered (Cargo walks
 up from the working directory, not the manifest path):
 
 ```sh
-# from crates/solow-py — NOT from the repo root
+# from crates/solow-py, NOT from the repo root
 PYO3_PYTHON=$(which python3) cargo build --release
 ```
 
@@ -74,7 +74,7 @@ building from the repo root (or with maturin) is the reliable path otherwise.
 ## Usage
 
 All models take `endog` (1-D `float64`) and `exog` (2-D `float64`). As with the
-canonical reference, **you supply any intercept column yourself** — no constant
+canonical reference, **you supply any intercept column yourself**, no constant
 is added automatically. Invalid shapes or non-convergence raise `ValueError`.
 
 The results object does not ship a `.summary()` method, but every statistic the
@@ -246,8 +246,8 @@ SOLOW_REFERENCE=<reference-package> python3 tools/reference/verify_solow_py.py
 ```
 
 `tools/reference/verify_solow_py_ext.py` extends this to the rest of the surface
-— WLS, GLS, Probit, OLS robust standard errors (HC0–HC3 / HAC / cluster),
-AutoReg, and `acf` / `pacf` — loading the reference's `tsa.ar_model` and
+, WLS, GLS, Probit, OLS robust standard errors (HC0–HC3 / HAC / cluster),
+AutoReg, and `acf` / `pacf`, loading the reference's `tsa.ar_model` and
 `tsa.stattools` submodules indirectly through the same env var:
 
 ```sh

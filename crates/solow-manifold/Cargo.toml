@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust manifold learning and nonlinear dimensionality reduction: Isomap, locally linear embedding (LLE), multidimensional scaling (MDS), spectral embedding, t-SNE."
 keywords = ["manifold", "isomap", "lle", "tsne", "embedding"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

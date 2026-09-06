@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust time series analysis: ACF, PACF, ADF, KPSS, cointegration, Granger causality, AutoReg, ARMA, STL, seasonal decomposition, Holt-Winters, HP, BK, CF filters, Zivot-Andrews, GARCH(1,1), CUSUM, PELT change-point detection, EWMA control chart."
 keywords = ["timeseries", "arima", "kpss", "adf", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

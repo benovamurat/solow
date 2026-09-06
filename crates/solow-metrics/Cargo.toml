@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust regression, classification, forecast, and cluster evaluation metrics for machine learning: MSE, MAE, R2, RMSE, ROC AUC, average precision, log loss, calibration error, silhouette, adjusted Rand, normalized mutual information, homogeneity, completeness, v-measure, pairwise kernels and distances, effect sizes (Cohen d, Hedges g, Cliff delta, Cramer V), classification report."
 keywords = ["statistics", "metrics", "regression", "classification", "forecasting"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

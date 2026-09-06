@@ -1,9 +1,7 @@
 //! # Solow
 //!
 //! The comprehensive statistics and machine learning stack for Rust.
-//! 57 focused crates. Memory safe. Pure Rust. Deterministic.
-//!
-//! ## What is here
+//! 54 focused crates. Memory safe. Deterministic. Pure Rust.
 //!
 //! Linear and generalized linear models, discrete choice, robust
 //! regression, time series and state-space models, survival analysis,
@@ -11,16 +9,34 @@
 //! support vector machines, neural networks, kernel methods,
 //! dimensionality reduction, and change-point detection.
 //!
-//! This umbrella crate re-exports the full public API of the workspace,
-//! so a consumer can depend on a single crate. Every subcrate is also
-//! reachable at `solow::<module>::*`:
-//! [`solow::regression`](regression), [`solow::glm`](glm),
-//! [`solow::discrete`](discrete), [`solow::tsa`](tsa),
-//! [`solow::cluster`](cluster), [`solow::ensemble`](ensemble),
-//! [`solow::svm`](svm), [`solow::neural`](neural), and so on.
+//! This umbrella crate re-exports the full public API of the workspace
+//! behind a single ergonomic [`prelude`]. Depend on `solow` once and you
+//! have every module reachable at `solow::<module>::*`:
+//! [`regression`], [`glm`], [`discrete`], [`stats`], [`tsa`],
+//! [`statespace`], [`var`], [`regime`], [`mixed`], [`gee`], [`gam`],
+//! [`duration`], [`multivariate`], [`cross_decomposition`],
+//! [`covariance`], [`cluster`], [`tree`], [`ensemble`], [`svm`],
+//! [`neural`], [`naive_bayes`], [`neighbors`], [`discriminant`],
+//! [`decomposition`], [`manifold`], [`kernel_approx`],
+//! [`semi_supervised`], [`multi`], [`calibration`], [`gp`], [`cv`],
+//! [`metrics`], [`pipeline`], [`feature_selection`], [`preprocessing`],
+//! [`text`], [`impute`], [`datasets`], [`bayes`], [`emplike`],
+//! [`copula`], [`formula`], [`fit`], [`nonparametric`], [`robust`],
+//! [`othermod`], [`distributions`], [`viz`], [`graphics`], [`summary`].
 //!
-//! Most users work through the [`prelude`], which brings the common
-//! model types, results, and helpers into scope in one glob import.
+//! ## Why Solow
+//!
+//! * **Memory safe.** `#![forbid(unsafe_code)]` on every crate.
+//! * **Deterministic.** Every stochastic estimator uses a portable
+//!   MMIX-LCG PRNG. A fixed seed reproduces bit-identical fits across
+//!   runs, platforms, and CI hosts.
+//! * **Cross-verified.** Every deterministic estimator is checked
+//!   against committed golden reference fixtures on every CI run.
+//!   Closed-form solvers agree bit-wise to `1e-10`.
+//! * **Pure Rust.** No system LAPACK. No BLAS. No Python runtime.
+//!   No C dependencies beyond libc.
+//! * **Single binary.** Deploys anywhere Rust runs, including
+//!   WebAssembly.
 //!
 //! ## Quick start
 //!
@@ -34,29 +50,64 @@
 //! assert!(res.rsquared > 0.98);
 //! ```
 //!
+//! The [`prelude`] pulls in the everyday surface: error and numeric
+//! types, the formula-driven fit helpers (`ols`, `wls`, `gls`, `glm`,
+//! `logit`, `probit`, `poisson`), the workhorse estimators
+//! ([`LinearModel`](regression::LinearModel), [`Glm`](glm::Glm),
+//! [`Logit`](discrete::Logit), [`Svc`](svm::Svc),
+//! [`RandomForestClassifier`](ensemble::RandomForestClassifier),
+//! [`GradientBoostingRegressor`](ensemble::GradientBoostingRegressor),
+//! [`MlpClassifier`](neural::MlpClassifier), [`KMeans`](cluster::KMeans),
+//! [`Dbscan`](cluster::Dbscan), [`Pca`](multivariate::Pca),
+//! [`Sarimax`](statespace::Sarimax), [`Var`](var::Var), and dozens
+//! more), the everyday metrics (`mean_squared_error`, `r2_score`,
+//! `accuracy_score`, `roc_auc_score`, `log_loss`,
+//! `classification_report`, `silhouette_score`, `pairwise_distances`),
+//! and the cross-validation splitters and helpers ([`KFold`](cv::KFold),
+//! [`StratifiedKFold`](cv::StratifiedKFold),
+//! [`TimeSeriesSplit`](cv::TimeSeriesSplit),
+//! [`PurgedKFold`](cv::PurgedKFold), `cross_val_score`, `bootstrap_ci`).
+//!
 //! ## Beyond the classical stack
 //!
 //! Capabilities that few libraries expose as first-class modules:
 //!
-//! * change-point detection: CUSUM, PELT
-//!   (Killick, Fearnhead, Eckley 2012), Binary Segmentation,
-//! * `GARCH(1, 1)` with iterated multi-step variance forecast,
-//! * extreme value analysis: `GEV`, `GPD` with `return_level(T)` and
-//!   peaks-over-threshold fit,
-//! * effect sizes: Cohen d, Hedges g, Glass delta, eta squared, omega
-//!   squared, Cliff delta, Cramer V,
-//! * meta-analysis: fixed-effect and DerSimonian-Laird random-effects
-//!   with Cochran Q, I squared, tau squared,
-//! * two-sided CUSUM and EWMA (Roberts 1959) control charts,
-//! * moving, circular, and stationary block bootstrap for time series.
+//! * **Change-point detection**: `pelt`
+//!   (Killick, Fearnhead, Eckley 2012), `cusum`, `binary_segmentation`.
+//! * **Volatility**: `Garch11` with iterated multi-step variance
+//!   forecast.
+//! * **Extreme value analysis**: `Gev`, `Gpd` with `return_level(T)`
+//!   and peaks-over-threshold fit.
+//! * **Effect sizes**: Cohen d, Hedges g, Glass delta, eta squared,
+//!   omega squared, Cliff delta, Cramer V.
+//! * **Meta-analysis**: fixed-effect and DerSimonian-Laird
+//!   random-effects with Cochran Q, I², τ².
+//! * **Control charts**: two-sided CUSUM and EWMA (Roberts 1959) with
+//!   signed alarm streams.
+//! * **Block bootstrap**: moving, circular, and stationary variants
+//!   for time series.
+//! * **Conformal prediction**: `SplitConformal`, `JackknifePlus`
+//!   for distribution-free prediction intervals.
 //!
 //! ## Correctness
 //!
-//! Every deterministic estimator is cross-verified against committed
-//! golden reference fixtures on every CI run. Closed-form solvers match
-//! bit-wise to `1e-10`. Iterative solvers match parameters to `1e-6` or
-//! predictions to `5e-2` where reference solvers themselves disagree at
-//! that scale. Every crate lives under `#![forbid(unsafe_code)]`.
+//! Correctness is the product. Solow ships a multi-layer verification
+//! stack.
+//!
+//! * **Reference fixtures**: every deterministic estimator has a
+//!   committed golden fixture generated from a well-known reference
+//!   implementation. A Rust replay test re-checks each fixture on every
+//!   CI run.
+//! * **NIST StRD certified cases**: re-run on every CI. Worst-case
+//!   certified relative error across the suite is `2.5e-10`. Longley
+//!   (cond ~10¹⁰) matches certified coefficients to `~1e-13` because
+//!   the QR/SVD path never forms `XᵀX`.
+//! * **Zero unsafe**: `#![forbid(unsafe_code)]` on every crate.
+//! * **Deterministic PRNG**: every stochastic estimator uses a portable
+//!   MMIX-LCG. A fixed seed produces bit-identical output across runs,
+//!   platforms, and CI hosts.
+//!
+//! Run the full CI locally with `cargo test --workspace` (1000+ tests).
 
 pub use solow_bayes as bayes;
 pub use solow_calibration as calibration;

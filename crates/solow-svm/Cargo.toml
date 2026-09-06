@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust support vector machines: linear SVC (Pegasos), linear SVR (epsilon-insensitive), SVC and SVR with linear, RBF, polynomial, and sigmoid kernels via SMO, nu-SVC, nu-SVR, one-class SVM."
 keywords = ["svm", "svc", "linear-svc", "hinge-loss", "machine-learning"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust discriminant analysis for machine learning classification: linear discriminant analysis (Fisher 1936) and quadratic discriminant analysis with pooled and per-class covariance."
 keywords = ["lda", "qda", "discriminant", "classifier", "machine-learning"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

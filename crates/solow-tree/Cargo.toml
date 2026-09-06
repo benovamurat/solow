@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust decision trees for machine learning: decision tree classifier and regressor, extra tree classifier and regressor, with Gini, entropy, MSE, and MAE splitters and deterministic tie-breaking."
 keywords = ["decision-tree", "cart", "gini", "entropy", "machine-learning"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust empirical-likelihood inference. Nonparametric tests of the mean and variance, empirical-likelihood confidence intervals via profile log-likelihood."
 keywords = ["empirical-likelihood", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

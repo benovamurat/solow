@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust statistical tests and diagnostics: t-tests, ANOVA, Wald, F-test, Levene, Bartlett, Fligner, Shapiro-Wilk, Anderson-Darling, Kolmogorov-Smirnov, Mann-Whitney U, Kruskal-Wallis, McNemar, chi-squared, Pearson, Spearman, Kendall correlations, meta-analysis, robust HC and HAC covariances, VIF, mediation, power analysis."
 keywords = ["statistics", "wald", "anova", "hypothesis", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

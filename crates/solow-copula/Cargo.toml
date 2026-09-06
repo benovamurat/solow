@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust copulas: Gaussian, Student t, Clayton, Frank, Gumbel, Joe. Sampling, log-likelihood, Kendall tau, Spearman rho, tail dependence coefficients."
 keywords = ["copula", "dependence", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust feature preprocessing for machine learning: standard, min-max, robust, and max-abs scalers, Normalizer, polynomial features, Yeo-Johnson and Box-Cox power transforms, quantile transformer, K-bin discretizer, one-hot, ordinal, label and multi-label encoders, binarizer, target encoder, spline transformer, function transformer."
 keywords = ["preprocessing", "scaling", "encoder", "machine-learning", "features"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

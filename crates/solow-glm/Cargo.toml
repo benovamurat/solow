@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust generalized linear models by IRLS: Gaussian, Poisson, Binomial, Gamma, and Tweedie families with log, logit, probit, and identity links. Deterministic solvers, memory safe."
 keywords = ["glm", "irls", "poisson", "regression", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

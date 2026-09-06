@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust feature selection for machine learning: select-K-best with ANOVA F, regression F, or mutual information, variance threshold, recursive feature elimination (RFE), percentile, FPR, FDR, FWE, and sequential feature selector."
 keywords = ["feature-selection", "rfe", "select-k-best", "machine-learning", "preprocessing"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

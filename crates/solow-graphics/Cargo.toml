@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust statistical graphics: QQ plot, PP plot, ACF and PACF plots, residual diagnostics, influence plots, regression plots rendered as SVG."
 keywords = ["diagnostics", "qqplot", "plotting", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

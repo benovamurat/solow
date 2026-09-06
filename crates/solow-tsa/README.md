@@ -1,31 +1,91 @@
 # solow-tsa
 
-Time-series analysis primitives and models for the Solow statistical stack,
-validated against an authoritative reference.
+**Time series analysis for Rust.** ACF, PACF, ARMA, AutoReg, STL, Holt-Winters, HP / BK / CF filters, unit-root and cointegration tests, GARCH(1,1) volatility, change-point detection (CUSUM / PELT / Binary Segmentation), EWMA control chart.
 
-The crate provides:
+Part of the [Solow](https://crates.io/crates/solow) statistics and machine learning stack.
 
-- Sample second-moment estimators: [`acovf`], [`acf`], [`pacf`], [`ccf`].
-- The Ljung-Box [`q_stat`] portmanteau statistic.
-- Design helpers [`lagmat`] and [`add_trend`].
-- The augmented Dickey-Fuller unit-root test [`adfuller`].
-- The autoregressive estimator [`AutoReg`].
+## Install
 
-```
-use ndarray::Array1;
-use solow_tsa::{acf, AutoReg, Trend};
-
-// A short AR(1)-like series.
-let y = Array1::from_vec(vec![
-    0.0, 0.4, 0.1, 0.5, 0.2, 0.6, 0.3, 0.7, 0.35, 0.75, 0.4, 0.8,
-]);
-let a = acf(&y, 3, false).unwrap();
-assert!((a[0] - 1.0).abs() < 1e-12);
-
-let res = AutoReg::new(y, 1, Trend::C).unwrap().fit().unwrap();
-assert_eq!(res.params.len(), 2); // const + 1 lag
+```toml
+[dependencies]
+solow-tsa = "0.7"
 ```
 
----
+## Quick example
 
-Part of **[Solow](https://github.com/benovamurat/solow)** — a complete statistical-modeling, econometrics & data-visualization toolkit for Rust. · [Docs](https://docs.rs/solow-tsa) · License: BSD-3-Clause
+```rust
+use solow_tsa::{AutoReg, adfuller, pelt};
+
+let ar = AutoReg::new(&y).max_lags(12).ic("aic").fit()?;
+let (adf_stat, pval, _) = adfuller(&y, None)?;
+let change_points = pelt(&y, 3.0)?;
+```
+
+## What is inside
+
+### Autocorrelation and lag design
+
+`acf`, `pacf`, `ccf`, Ljung-Box Q, `lagmat`, `add_trend`.
+
+### Unit root and cointegration
+
+| Function | What it does |
+|---|---|
+| `adfuller` | Augmented Dickey-Fuller unit root test with lag selection. |
+| `kpss` | Kwiatkowski-Phillips-Schmidt-Shin stationarity test. |
+| `coint` | Engle-Granger two-step cointegration test. |
+| `zivot_andrews` | Unit root test allowing a single structural break. |
+| `range_unit_root` | Range unit root test. |
+| `granger_causality` | Wald test for Granger causality. |
+
+### AR, ARMA, and smoothing
+
+| Estimator | What it does |
+|---|---|
+| `AutoReg` | Autoregression AR(p) with automatic order selection (AIC or BIC). |
+| `ArmaProcess` | ARMA(p, q) process arithmetic and simulation. |
+| `SimpleExpSmoothing`, `Holt`, `ExponentialSmoothing` | Exponential smoothing and Holt-Winters. |
+
+### Decomposition and filters
+
+| Function | What it does |
+|---|---|
+| `STL` | Seasonal-trend decomposition using LOESS, robust variant supported. |
+| `seasonal_decompose` | Classical additive or multiplicative decomposition. |
+| `hp_filter` | Hodrick-Prescott filter. |
+| `bk_filter` | Baxter-King band-pass filter. |
+| `cf_filter` | Christiano-Fitzgerald asymmetric filter. |
+
+### Volatility
+
+| Estimator | What it does |
+|---|---|
+| `Garch11` | GARCH(1, 1) MLE with iterated multi-step variance forecast. |
+
+### Change-point detection
+
+| Function | What it does |
+|---|---|
+| `pelt` | Killick-Fearnhead-Eckley 2012 PELT (pruned exact linear time). |
+| `cusum` | CUSUM detector for a mean shift. |
+| `binary_segmentation` | Recursive binary segmentation. |
+
+### Control charts
+
+| Function | What it does |
+|---|---|
+| `ewma` | Roberts 1959 EWMA control chart with signed alarm stream. |
+| Two-sided `cusum` | Bidirectional CUSUM with configurable reference and decision interval. |
+
+### Heteroskedasticity
+
+`breakvar_heteroskedasticity`, `arch_lm_test`.
+
+## Correctness
+
+- Every estimator cross-verified against committed golden reference fixtures.
+- `#![forbid(unsafe_code)]`.
+
+## License
+
+BSD-3-Clause. See the [Solow workspace](https://github.com/benovamurat/solow) for the full stack.

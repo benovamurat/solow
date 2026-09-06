@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust neural networks: multi-layer perceptron classifier and regressor with ReLU, tanh, logistic, and identity activations and SGD or Adam optimizers, Bernoulli restricted Boltzmann machine."
 keywords = ["neural-network", "mlp", "backprop", "sgd", "machine-learning"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

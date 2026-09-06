@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust nearest-neighbor structures and estimators for machine learning: KD-tree, ball tree, k-nearest-neighbors classifier and regressor, radius-neighbors classifier and regressor, nearest centroid, local outlier factor (LOF), kernel density estimator."
 keywords = ["kdtree", "nearest-neighbor", "knn", "machine-learning", "search"]
 categories = ["science", "mathematics", "data-structures"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

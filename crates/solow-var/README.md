@@ -26,4 +26,4 @@ assert_eq!(res.coefs.len(), 1);
 
 ---
 
-Part of **[Solow](https://github.com/benovamurat/solow)** — a complete statistical-modeling, econometrics & data-visualization toolkit for Rust. · [Docs](https://docs.rs/solow-var) · License: BSD-3-Clause
+Part of **[Solow](https://github.com/benovamurat/solow)**, a complete statistical-modeling, econometrics & data-visualization toolkit for Rust. · [Docs](https://docs.rs/solow-var) · License: BSD-3-Clause

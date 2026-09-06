@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust regime-switching time series: Markov switching regression, Markov switching autoregression, filtered and smoothed regime probabilities."
 keywords = ["markov-switching", "regime", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

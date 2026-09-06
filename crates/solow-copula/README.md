@@ -20,4 +20,4 @@ reference (`distributions.copula.api`) in `tests/reference.rs`.
 
 ---
 
-Part of **[Solow](https://github.com/benovamurat/solow)** — a complete statistical-modeling, econometrics & data-visualization toolkit for Rust. · [Docs](https://docs.rs/solow-copula) · License: BSD-3-Clause
+Part of **[Solow](https://github.com/benovamurat/solow)**, a complete statistical-modeling, econometrics & data-visualization toolkit for Rust. · [Docs](https://docs.rs/solow-copula) · License: BSD-3-Clause

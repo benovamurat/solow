@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust semi-supervised learning: self-training classifier, label propagation, label spreading."
 keywords = ["semi-supervised", "label-propagation", "self-training", "classification"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

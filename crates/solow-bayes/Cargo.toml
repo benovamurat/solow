@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust Bayesian mixed generalized linear models by variational Bayes. Binomial and Poisson likelihoods, normal random effects, closed-form evidence lower bound."
 keywords = ["bayesian", "map", "vb", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

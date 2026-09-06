@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust cross-validation and resampling for machine learning: KFold, StratifiedKFold, TimeSeriesSplit, LeaveOneOut, LeavePOut, ShuffleSplit, GroupKFold, StratifiedGroupKFold, PurgedKFold, CombinatorialPurgedKFold, RepeatedKFold, StratifiedShuffleSplit, GroupShuffleSplit, bootstrap CI, block bootstrap, learning curve, validation curve, permutation test."
 keywords = ["statistics", "cross-validation", "resampling", "model-selection", "time-series"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

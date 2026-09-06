@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust probability calibration for classifiers: calibrated classifier CV with Platt sigmoid and isotonic regression post-hoc calibration."
 keywords = ["calibration", "platt-scaling", "isotonic", "machine-learning"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

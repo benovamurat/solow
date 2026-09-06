@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust naive Bayes classifiers for machine learning: Gaussian, multinomial, Bernoulli, complement, and categorical naive Bayes with Laplace or Lidstone smoothing."
 keywords = ["naive-bayes", "classifier", "gaussian", "multinomial", "machine-learning"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

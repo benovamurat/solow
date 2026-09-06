@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust linear regression and regularization: OLS, WLS, GLS, GLSAR, Ridge, Lasso, ElasticNet, cross-validated regularization, LARS, LassoLars, LassoLarsIC, OrthogonalMatchingPursuit, Huber, quantile, RANSAC, TheilSen, SGD, Perceptron, Passive Aggressive, Bayesian Ridge, ARD, multi-task, kernel ridge. Deterministic, memory safe."
 keywords = ["regression", "ols", "wls", "gls", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

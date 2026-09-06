@@ -7,11 +7,11 @@ independently of the (intentionally un-pixel-exact) SVG output.
 
 Provided:
 
-* [`ProbPlot`] / [`qqplot`] — theoretical vs. sample quantiles of a
+* [`ProbPlot`] / [`qqplot`], theoretical vs. sample quantiles of a
   probability plot, plus the fitted reference line ([`QqLine`]).
-* [`plot_acf`] / [`plot_pacf`] — the (biased) autocorrelation and the
+* [`plot_acf`] / [`plot_pacf`], the (biased) autocorrelation and the
   Yule-Walker partial autocorrelation, with a white-noise confidence band.
-* [`plot_resid_fitted`] — a residuals-vs-fitted diagnostic scatter.
+* [`plot_resid_fitted`], a residuals-vs-fitted diagnostic scatter.
 
 ```
 use solow_graphics::ProbPlot;
@@ -26,4 +26,4 @@ let _ = line.slope;
 
 ---
 
-Part of **[Solow](https://github.com/benovamurat/solow)** — a complete statistical-modeling, econometrics & data-visualization toolkit for Rust. · [Docs](https://docs.rs/solow-graphics) · License: BSD-3-Clause
+Part of **[Solow](https://github.com/benovamurat/solow)**, a complete statistical-modeling, econometrics & data-visualization toolkit for Rust. · [Docs](https://docs.rs/solow-graphics) · License: BSD-3-Clause

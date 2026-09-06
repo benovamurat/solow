@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust text feature extraction for NLP: count vectorizer, TF-IDF vectorizer, hashing vectorizer, feature hasher, dict vectorizer with configurable tokenizer, n-grams, min and max document frequency, and stop words."
 keywords = ["text", "vectorizer", "tfidf", "n-gram", "machine-learning"]
 categories = ["science", "mathematics", "text-processing"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

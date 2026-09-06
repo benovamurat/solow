@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust kernel approximation via random features: RBF sampler (random Fourier features), Nystroem, additive chi-squared sampler, skewed chi-squared sampler, polynomial count sketch."
 keywords = ["kernel", "random-features", "nystroem", "rbf", "machine-learning"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

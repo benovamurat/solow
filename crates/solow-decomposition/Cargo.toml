@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust matrix decomposition for machine learning: PCA, kernel PCA, FastICA, NMF, mini-batch NMF, truncated SVD (LSA), incremental PCA, sparse PCA, dictionary learning, mini-batch dictionary learning, latent Dirichlet allocation, Gaussian and sparse random projection."
 keywords = ["kernel-pca", "ica", "nmf", "decomposition", "machine-learning"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

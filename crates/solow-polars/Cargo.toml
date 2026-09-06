@@ -25,6 +25,8 @@ publish = false
 [workspace]
 members = []
 
+readme = "README.md"
+
 [dependencies]
 # Default features (csv, parquet, fmt, temporal, …) are disabled to keep the
 # build minimal: we only need the in-memory DataFrame/Series core. `dtype-i8`

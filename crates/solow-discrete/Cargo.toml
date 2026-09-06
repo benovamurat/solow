@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust discrete choice and count regression: logit, probit, Poisson, negative binomial, generalized Poisson, multinomial logit, ordered logit and probit, zero-inflated Poisson, hurdle, conditional logit and Poisson, truncated Poisson, cross-validated logistic regression."
 keywords = ["logit", "probit", "poisson", "mnlogit", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

@@ -6,9 +6,9 @@ sample, following Owen (2001) and validated against the reference
 
 The entry point is [`DescStat`], which exposes
 
-* [`DescStat::test_mean`] — EL test of a hypothesized mean `mu0`,
-* [`DescStat::ci_mean`] — EL confidence interval for the mean,
-* [`DescStat::test_var`] — EL test of a hypothesized variance `sig2_0`.
+* [`DescStat::test_mean`], EL test of a hypothesized mean `mu0`,
+* [`DescStat::ci_mean`], EL confidence interval for the mean,
+* [`DescStat::test_var`], EL test of a hypothesized variance `sig2_0`.
 
 ## Method
 
@@ -25,4 +25,4 @@ the resulting `-2 logELR` over the nuisance mean.
 
 ---
 
-Part of **[Solow](https://github.com/benovamurat/solow)** — a complete statistical-modeling, econometrics & data-visualization toolkit for Rust. · [Docs](https://docs.rs/solow-emplike) · License: BSD-3-Clause
+Part of **[Solow](https://github.com/benovamurat/solow)**, a complete statistical-modeling, econometrics & data-visualization toolkit for Rust. · [Docs](https://docs.rs/solow-emplike) · License: BSD-3-Clause

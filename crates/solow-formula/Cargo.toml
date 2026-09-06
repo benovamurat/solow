@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust formula parser and design-matrix builder for statistical models. Intercept, interactions, treatment contrasts, categorical encoding. R and patsy syntax compatible."
 keywords = ["formula", "regression", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Pure Rust linear algebra for statistics and machine learning: SVD, eigendecomposition, Cholesky, QR, LU, matrix pseudoinverse. No system LAPACK or BLAS. Memory safe."
 keywords = ["linalg", "svd", "cholesky", "matrix", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

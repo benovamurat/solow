@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust multiclass and multi-output meta-estimators: one-vs-rest, one-vs-one, output code, multi-output regressor and classifier, classifier chain, regressor chain."
 keywords = ["multi-class", "multi-output", "one-vs-rest", "chain", "classification"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

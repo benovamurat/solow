@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust generalized estimating equations (GEE): Gaussian, Poisson, Binomial, Gamma families with exchangeable, autoregressive, and unstructured working correlations."
 keywords = ["gee", "regression", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

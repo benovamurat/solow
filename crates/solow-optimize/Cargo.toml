@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust unconstrained optimizers for statistical model fitting: Newton, BFGS, line search, and finite-difference gradient and Hessian."
 keywords = ["optimization", "newton", "bfgs", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

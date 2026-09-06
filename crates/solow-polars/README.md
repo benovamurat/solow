@@ -21,7 +21,7 @@ use polars::prelude::*;
 use solow_polars::ols_from_frame;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // Any Polars DataFrame — here built inline, but it could come from a CSV,
+    // Any Polars DataFrame, here built inline, but it could come from a CSV,
     // Parquet file, a SQL query, or a lazy pipeline `.collect()`.
     let df = df![
         "sales"   => [12.0_f64, 19.0, 23.0, 28.0, 35.0, 41.0],
@@ -43,7 +43,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ## Generalized linear models
 
-The same path works for GLMs — pass a `solow_glm::Family`:
+The same path works for GLMs, pass a `solow_glm::Family`:
 
 ```rust
 use polars::prelude::*;

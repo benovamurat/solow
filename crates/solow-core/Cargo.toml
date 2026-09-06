@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust numerical error types, array-shape checks, and design-matrix helpers. Foundation crate for the solow statistics and machine learning stack."
 keywords = ["statistics", "numeric", "science", "kahan", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

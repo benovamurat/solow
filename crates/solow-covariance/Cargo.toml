@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust covariance matrix estimators: empirical covariance, shrunk covariance, Ledoit-Wolf, Oracle Approximating Shrinkage (OAS), Rousseeuw FAST-MCD minimum covariance determinant, graphical lasso, elliptic envelope outlier detection."
 keywords = ["covariance", "ledoit-wolf", "graphical-lasso", "shrinkage", "robust"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

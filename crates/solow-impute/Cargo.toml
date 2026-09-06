@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust missing-data imputation: simple imputation (mean, median, most frequent, constant), K-nearest-neighbors imputation, iterative multivariate imputation (MICE), Rubin combining rules."
 keywords = ["imputation", "missing-data", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

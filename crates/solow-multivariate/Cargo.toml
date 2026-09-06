@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust multivariate analysis: principal component analysis (PCA), factor analysis with varimax rotation, MANOVA, canonical correlation analysis (CCA)."
 keywords = ["pca", "factor", "manova", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

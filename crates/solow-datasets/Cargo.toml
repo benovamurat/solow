@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust dataset generators and toy loaders for machine learning: make classification, regression, blobs, moons, circles, Swiss roll, and low-rank matrix. Loads iris, wine, diabetes, breast cancer. Class-weight and sample-weight utilities, resample helpers."
 keywords = ["dataset", "make-classification", "make-regression", "make-blobs", "toy-data"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

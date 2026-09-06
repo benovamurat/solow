@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust machine-learning pipelines and hyperparameter search: pipeline, feature union, column transformer, transformed-target regressor, grid search CV, randomized search CV, halving grid search, halving random search."
 keywords = ["pipeline", "grid-search", "hyperparameter", "cross-validation", "machine-learning"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

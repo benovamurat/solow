@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust Gaussian process regression and classification: Gaussian process regressor and classifier with RBF, Matern, rational quadratic, dot product, constant, and white kernels and sum, product, exponentiation kernel composition."
 keywords = ["gaussian-process", "kriging", "regression", "kernel", "bayesian"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

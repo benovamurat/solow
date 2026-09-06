@@ -11,6 +11,7 @@ documentation.workspace = true
 description = "Rust partial least squares and canonical correlation for machine learning: PLS regression, PLS canonical, PLS SVD, canonical correlation analysis (CCA) with the NIPALS solver."
 keywords = ["pls", "cca", "cross-decomposition", "regression", "multivariate"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

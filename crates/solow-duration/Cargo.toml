@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust survival and duration analysis: Kaplan-Meier estimator, Nelson-Aalen cumulative hazard, Cox proportional hazards, log-rank test, survival function estimator."
 keywords = ["survival", "kaplan-meier", "cox", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

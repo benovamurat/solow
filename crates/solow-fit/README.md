@@ -1,6 +1,6 @@
 # solow-fit
 
-Ergonomic, formula-driven model fitting for the Solow statistical stack —
+Ergonomic, formula-driven model fitting for the Solow statistical stack , 
 the one-call bridge from an R/patsy-style formula string plus named data to a
 fully fitted model whose coefficients are *labeled* with the design column
 names. This is the from-scratch equivalent of the reference library's
@@ -16,17 +16,17 @@ ordered column names, ready to [`summary`](NamedFit::summary).
 
 The formula layer ([`solow_formula`]) already emits the `Intercept` column
 when the formula carries one, so these functions pass the design straight
-through to the estimator without re-adding a constant — the formula path and
+through to the estimator without re-adding a constant, the formula path and
 the manual `add_constant` + estimator path therefore produce *identical*
 coefficients and standard errors (see the crate's tests, which assert
 agreement to `≤ 1e-12`).
 
 ## Models
 
-* [`ols`] / [`wls`] / [`gls`] — linear regression ([`LinearResults`]).
-* [`glm`] — generalized linear models with a [`Family`] and optional
+* [`ols`] / [`wls`] / [`gls`], linear regression ([`LinearResults`]).
+* [`glm`], generalized linear models with a [`Family`] and optional
   [`Link`] ([`GlmResults`]).
-* [`logit`] / [`probit`] / [`poisson`] — discrete-choice and count models
+* [`logit`] / [`probit`] / [`poisson`], discrete-choice and count models
   ([`DiscreteResults`]).
 
 ## One import
@@ -49,4 +49,4 @@ println!("{}", fit.summary());
 
 ---
 
-Part of **[Solow](https://github.com/benovamurat/solow)** — a complete statistical-modeling, econometrics & data-visualization toolkit for Rust. · [Docs](https://docs.rs/solow-fit) · License: BSD-3-Clause
+Part of **[Solow](https://github.com/benovamurat/solow)**, a complete statistical-modeling, econometrics & data-visualization toolkit for Rust. · [Docs](https://docs.rs/solow-fit) · License: BSD-3-Clause

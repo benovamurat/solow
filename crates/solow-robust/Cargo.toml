@@ -9,6 +9,7 @@ repository.workspace = true
 description = "Rust robust linear regression by M-estimation. Huber, Tukey biweight, Andrew, Hampel, and Ramsay influence functions with iteratively reweighted least squares."
 keywords = ["robust", "rlm", "huber", "solow"]
 categories = ["science", "mathematics"]
+readme = "README.md"
 
 [dependencies]
 ndarray.workspace = true

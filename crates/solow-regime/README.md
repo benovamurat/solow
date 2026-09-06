@@ -5,10 +5,10 @@ likelihood via the Hamilton filter.
 
 Two models are provided:
 
-* [`MarkovRegression`] — a first-order `k`-regime switching regression. The
+* [`MarkovRegression`], a first-order `k`-regime switching regression. The
   intercept (and optional exogenous regressors) and, optionally, the error
   variance may switch across regimes.
-* [`MarkovAutoregression`] — a `k`-regime switching autoregression of a given
+* [`MarkovAutoregression`], a `k`-regime switching autoregression of a given
   `order`. The mean, the autoregressive coefficients, and optionally the
   variance may switch across regimes.
 
@@ -31,4 +31,4 @@ and the probability of moving from regime 1 to regime 0.
 
 ---
 
-Part of **[Solow](https://github.com/benovamurat/solow)** — a complete statistical-modeling, econometrics & data-visualization toolkit for Rust. · [Docs](https://docs.rs/solow-regime) · License: BSD-3-Clause
+Part of **[Solow](https://github.com/benovamurat/solow)**, a complete statistical-modeling, econometrics & data-visualization toolkit for Rust. · [Docs](https://docs.rs/solow-regime) · License: BSD-3-Clause
