@@ -54,7 +54,35 @@
 
 # Machine learning
 
-- [Preprocessing, clustering, neighbours & penalised regression](./machine-learning.md)
+- [Overview](./machine-learning.md)
+- [Preprocessing](./preprocessing.md)
+- [Clustering](./cluster.md)
+- [Nearest neighbors](./neighbors.md)
+- [Decision trees](./tree.md)
+- [Ensemble methods](./ensemble.md)
+- [Support vector machines](./svm.md)
+- [Neural networks](./neural.md)
+- [Naive Bayes](./naive-bayes.md)
+- [Discriminant analysis](./discriminant.md)
+- [Feature selection](./feature-selection.md)
+- [Pipelines & hyperparameter search](./pipeline.md)
+- [Probability calibration](./calibration.md)
+- [Semi-supervised learning](./semi-supervised.md)
+- [Multi-class & multi-output](./multi.md)
+- [Text feature extraction](./text.md)
+- [Datasets and toy loaders](./datasets.md)
+
+# Dimensionality reduction
+
+- [Matrix decomposition (PCA, NMF, ICA)](./decomposition.md)
+- [Manifold learning](./manifold.md)
+- [Kernel approximation](./kernel-approx.md)
+
+# Advanced
+
+- [Covariance estimation](./covariance.md)
+- [Cross-decomposition (PLS, CCA)](./cross-decomposition.md)
+- [Gaussian processes](./gp.md)
 
 # Examples gallery
 
@@ -87,5 +115,4 @@
 - [API reference](./api-reference.md)
 - [Using Solow from Python](./python.md)
 - [Verification & methodology](./verification.md)
-- [Migration from the reference (Python)](./migration.md)
 - [Crate reference](./crates.md)
